@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+/* Design tokens: white and warm neutrals, dark charcoal text, one muted teal accent. */
+@theme {
+  --color-paper: #faf9f7;
+  --color-surface: #ffffff;
+  --color-sunken: #f3f1ed;
+  --color-line: #e5e1da;
+  --color-line-strong: #cfc9bf;
+  --color-ink: #1f1e1c;
+  --color-ink-soft: #3d3a36;
+  --color-muted: #625d56;
+  --color-accent: #2f6b66;
+  --color-accent-strong: #24534f;
+  --color-accent-soft: #e7f0ee;
+  --color-ok: #2f6b3a;
+  --color-ok-soft: #e9f2ea;
+  --color-warn: #8a5a12;
+  --color-warn-soft: #fbf1df;
+  --color-danger: #9b2c2c;
+  --color-danger-soft: #fbeaea;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: var(--font-serif-display), ui-serif, Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --radius-card: 0.875rem;
+  --shadow-card: 0 1px 2px rgb(31 30 28 / 0.04), 0 4px 16px rgb(31 30 28 / 0.04);
+}
+
+@layer base {
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    background: var(--color-paper);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--color-accent-soft);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Long-form text: guides, legal pages and calculator explanations. */
+  .prose-body {
+    color: var(--color-ink-soft);
+    max-width: 72ch;
+  }
+  .prose-body > * + * {
+    margin-top: 1rem;
+  }
+  .prose-body h2 {
+    font-family: var(--font-serif);
+    color: var(--color-ink);
+    font-size: 1.6rem;
+    line-height: 1.25;
+    font-weight: 600;
+    margin-top: 2.75rem;
+    letter-spacing: -0.01em;
+  }
+  .prose-body h3 {
+    color: var(--color-ink);
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-top: 2rem;
+  }
+  .prose-body a {
+    color: var(--color-accent-strong);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+  .prose-body a:hover {
+    text-decoration-thickness: 2px;
+  }
+  .prose-body ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+  }
+  .prose-body ol {
+    list-style: decimal;
+    padding-left: 1.25rem;
+  }
+  .prose-body li + li {
+    margin-top: 0.4rem;
+  }
+  .prose-body code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--color-sunken);
+    border: 1px solid var(--color-line);
+    border-radius: 0.35rem;
+    padding: 0.05rem 0.35rem;
+    white-space: nowrap;
+  }
+  .prose-body strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+
+}
+
+/*
+ * KaTeX overrides. These stay outside @layer on purpose: KaTeX's own stylesheet is
+ * unlayered, and unlayered rules always beat layered ones.
+ */
+
+/* Display math scrolls inside its own box instead of widening the page. */
+.math-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  -webkit-overflow-scrolling: touch;
+  padding-block: 0.25rem;
+}
+.math-scroll .katex-display {
+  margin: 0;
+}
+.katex {
+  font-size: 1.08em;
+}
+
+/* Left-aligned display math (input preview and result panel). */
+.math-left .katex-display > .katex {
+  text-align: left;
+}
