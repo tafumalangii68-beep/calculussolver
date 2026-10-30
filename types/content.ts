@@ -40,3 +40,10 @@ export interface SolverExample {
   point?: string;
   side?: "both" | "left" | "right";
 }
+
+export interface Illustration {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+}

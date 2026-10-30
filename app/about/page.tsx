@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Figure } from "@/components/content/Figure";
 import { ProsePage } from "@/components/content/ProsePage";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
@@ -15,6 +16,10 @@ export default function AboutPage() {
       description={description}
       lead={<p>{siteConfig.name} is an independent educational project: a free calculus solver that shows its work and keeps your data on your device.</p>}
     >
+      <Figure
+        image={{ src: "/images/about.webp", alt: "A tidy study desk with an open notebook, a pencil, a laptop and a small plant", width: 1600, height: 800 }}
+      />
+
       <h2>What we built and why</h2>
       <p>
         Many calculus tools give a final answer with little or no explanation, or put the steps behind a paywall. {siteConfig.name}{" "}

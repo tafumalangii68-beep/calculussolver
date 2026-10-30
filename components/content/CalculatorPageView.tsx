@@ -5,6 +5,7 @@ import { calculators } from "@/data/calculators";
 import { webApplicationLd } from "@/lib/seo";
 import { calculatorNav } from "@/lib/site-config";
 import { FaqSection } from "./FaqSection";
+import { Figure } from "./Figure";
 import { JsonLd } from "./JsonLd";
 import { LinkCards } from "./LinkCards";
 import { PageIntro } from "./PageIntro";
@@ -42,6 +43,7 @@ export function CalculatorPageView({ page }: { page: CalculatorPage }) {
       <div className="mt-16 grid grid-cols-1 gap-16">
         <section aria-labelledby="definition" className="prose-body">
           <SectionHeading id="definition">{page.definition.heading}</SectionHeading>
+          {page.image && <Figure image={page.image} />}
           {page.definition.paragraphs.map((p) => (
             <p key={p}>{p}</p>
           ))}

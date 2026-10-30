@@ -2,7 +2,7 @@
 // intent; worked examples are machine-checked by tests/content.test.ts.
 
 import type { CalculatorSlug } from "@/lib/site-config";
-import type { Faq, SolverExample, WorkedExample } from "@/types/content";
+import type { Faq, Illustration, SolverExample, WorkedExample } from "@/types/content";
 import type { Operation } from "@/types/solver";
 
 const t = String.raw;
@@ -19,6 +19,8 @@ export interface CalculatorPage {
   metaDescription: string;
   h1: string;
   intro: string;
+  /** Optional illustration shown with the definition section. */
+  image?: Illustration;
   operations: Operation[];
   solverExamples: SolverExample[];
   definition: { heading: string; paragraphs: string[]; formula?: string };
@@ -35,6 +37,7 @@ export interface CalculatorPage {
 export const calculators: Record<CalculatorSlug, CalculatorPage> = {
   "derivative-calculator": {
     slug: "derivative-calculator",
+    image: { src: "/images/derivative.webp", alt: "A curve with tangent lines at three points: rising, flat at the peak, and falling", width: 1600, height: 800 },
     metaTitle: "Derivative Calculator with Steps (1st to 10th Order)",
     metaDescription:
       "Free derivative calculator that shows every step: power, product, quotient and chain rules, plus second and higher-order derivatives. Runs in your browser.",
@@ -154,6 +157,7 @@ export const calculators: Record<CalculatorSlug, CalculatorPage> = {
 
   "integral-calculator": {
     slug: "integral-calculator",
+    image: { src: "/images/integral.webp", alt: "Thin rectangles filling the area under a curve, approximating its integral", width: 1600, height: 800 },
     metaTitle: "Integral Calculator with Steps – Definite and Indefinite",
     metaDescription:
       "Solve indefinite and definite integrals step by step: u-substitution, integration by parts, partial fractions and improper integrals, with every antiderivative verified.",
@@ -391,6 +395,7 @@ export const calculators: Record<CalculatorSlug, CalculatorPage> = {
 
   "taylor-series-calculator": {
     slug: "taylor-series-calculator",
+    image: { src: "/images/taylor-series.webp", alt: "Several approximating curves hugging an original curve closely near one central point", width: 1600, height: 800 },
     metaTitle: "Taylor Series Calculator – Taylor and Maclaurin Polynomials",
     metaDescription:
       "Compute Taylor and Maclaurin polynomials up to order 10 about any center, with a table of exact derivatives and coefficients for every term.",
@@ -488,6 +493,7 @@ export const calculators: Record<CalculatorSlug, CalculatorPage> = {
 
   "critical-points-calculator": {
     slug: "critical-points-calculator",
+    image: { src: "/images/critical-points.webp", alt: "A curve with a flat tangent at the top of a hill and at the bottom of a valley, marking a local maximum and minimum", width: 1600, height: 800 },
     metaTitle: "Critical Points Calculator – Find Local Maxima and Minima",
     metaDescription:
       "Find critical points where f′(x) = 0 or is undefined, then classify each as a local maximum, minimum or neither with the second or first derivative test.",

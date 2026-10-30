@@ -1,7 +1,7 @@
 // Long-form guides. Each covers an intent the calculator pages do not:
 // learning the rules and choosing a technique, rather than computing an answer.
 
-import type { Faq, WorkedExample } from "@/types/content";
+import type { Faq, Illustration, WorkedExample } from "@/types/content";
 
 const t = String.raw;
 
@@ -17,6 +17,7 @@ export interface Guide {
   metaTitle: string;
   description: string;
   intro: string;
+  image: Illustration;
   sections: { id: string; heading: string; blocks: Block[] }[];
   examples: WorkedExample[];
   faqs: Faq[];
@@ -26,6 +27,7 @@ export interface Guide {
 export const guides: Guide[] = [
   {
     slug: "derivative-rules",
+    image: { src: "/images/guide-derivative-rules.webp", alt: "Connected gears and circles, representing derivative rules that combine and chain together", width: 1600, height: 800 },
     title: "Derivative Rules: A Complete Guide with Examples",
     metaTitle: "Derivative Rules Explained – Power, Product, Quotient, Chain",
     description:
@@ -145,6 +147,7 @@ export const guides: Guide[] = [
   },
   {
     slug: "integration-techniques",
+    image: { src: "/images/guide-integration.webp", alt: "One path branching into several routes, each ending at a different shape, representing the choice of integration technique", width: 1600, height: 800 },
     title: "Integration Techniques: How to Choose the Right Method",
     metaTitle: "Integration Techniques – Substitution, Parts, Partial Fractions",
     description:

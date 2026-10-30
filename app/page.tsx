@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FaqSection } from "@/components/content/FaqSection";
+import { Figure } from "@/components/content/Figure";
 import { JsonLd } from "@/components/content/JsonLd";
 import { LinkCards } from "@/components/content/LinkCards";
 import { Tex } from "@/components/content/Tex";
@@ -75,6 +76,14 @@ export default function HomePage() {
             It is designed for high school, AP and college calculus students, for teachers preparing examples, and for anyone
             teaching themselves. All computation happens on your device, so it is fast, private and works without an account.
           </p>
+          <Figure
+            image={{
+              src: "/images/hero.webp",
+              alt: "A curve with a tangent line at one point and the area under the curve shaded, the two central ideas of calculus",
+              width: 1536,
+              height: 1024,
+            }}
+          />
         </section>
 
         <section aria-labelledby="use" className="prose-body">

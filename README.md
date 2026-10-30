@@ -44,7 +44,7 @@ The site needs no environment variables or secrets.
 ## Project structure
 
 ```
-app/                     Routes, root layout, sitemap.ts, robots.ts, opengraph-image.tsx, icon.svg, not-found.tsx
+app/                     Routes, root layout, sitemap.ts, robots.ts, opengraph-image.png, icon.svg, not-found.tsx
   <calculator>/page.tsx  One small file per calculator page (content lives in data/)
   guides/                Guide index and the two guides
 components/
@@ -60,6 +60,7 @@ lib/
   routes.ts              List of indexable routes (used by the sitemap)
 data/                    Page content: calculators, guides, homepage, FAQ
 types/                   Shared TypeScript types
+public/images/           Page illustrations (WebP, lazy-loaded via components/content/Figure.tsx)
 tests/                   Vitest suites
 ```
 

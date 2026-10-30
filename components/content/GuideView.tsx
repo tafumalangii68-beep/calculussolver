@@ -3,6 +3,7 @@ import type { Guide } from "@/data/guides";
 import { articleLd } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 import { FaqSection } from "./FaqSection";
+import { Figure } from "./Figure";
 import { JsonLd } from "./JsonLd";
 import { PageIntro } from "./PageIntro";
 import { formatDate } from "./ProsePage";
@@ -26,6 +27,8 @@ export function GuideView({ guide }: { guide: Guide }) {
           Last reviewed: <time dateTime={siteConfig.contentUpdated}>{formatDate(siteConfig.contentUpdated)}</time>
         </p>
       </PageIntro>
+
+      <Figure image={guide.image} className="mt-8 max-w-3xl" />
 
       <nav aria-label="On this page" className="mt-8 max-w-3xl rounded-card border border-line bg-surface p-5">
         <p className="text-sm font-semibold text-ink">On this page</p>
