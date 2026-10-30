@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   applicationName: siteConfig.name,
   formatDetection: { telephone: false },
+  verification: { google: "_YeJOIbO149EP72dVMRjJqHVexGU12OUg0LegLX8Gz0" },
 };
 
 export const viewport: Viewport = {
