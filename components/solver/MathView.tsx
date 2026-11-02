@@ -29,7 +29,7 @@ export function MathView({ latex, display = false, className, label }: { latex: 
 
   const Tag = display ? "div" : "span";
   return (
-    <Tag className={`${display ? "math-scroll" : ""} ${className ?? ""}`} aria-label={label}>
+    <Tag className={`${display ? "math-scroll" : ""} ${className ?? ""}`} role={label ? "group" : undefined} aria-label={label}>
       <span ref={ref} />
       {!ready && <span className="font-mono text-sm text-muted">{latex.length > 120 ? "Rendering…" : latex}</span>}
     </Tag>

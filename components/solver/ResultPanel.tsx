@@ -40,7 +40,7 @@ function CopyButton({ text, label }: { text: string; label: string }) {
 function Steps({ section }: { section: StepSection }) {
   return (
     <section className="mt-6">
-      <h4 className="text-sm font-semibold uppercase tracking-wider text-muted">{section.title}</h4>
+      <h3 className="text-sm font-semibold uppercase tracking-wider text-muted">{section.title}</h3>
       <ol className="mt-3 space-y-3">
         {section.steps.map((step, i) => (
           <li
@@ -111,7 +111,7 @@ export function ResultPanel({ result }: { result: SolveResult }) {
   const check = result.check;
   return (
     <div className="rounded-card border border-line bg-paper p-5 sm:p-6">
-      <h3 className="sr-only">Result</h3>
+      <h2 className="sr-only">Result</h2>
       <MathView latex={result.problemLatex} display className="math-left text-ink-soft" label="Problem" />
       <div className="mt-3 rounded-lg border border-accent/30 bg-surface px-4 py-4">
         <p className="text-xs font-semibold uppercase tracking-wider text-accent-strong">Answer</p>

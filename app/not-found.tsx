@@ -16,7 +16,7 @@ export default function NotFound() {
       <p className="mt-3 max-w-2xl text-lg text-ink-soft">
         The link may be broken, or the page may have moved. The solver and the calculators below are a good place to continue.
       </p>
-      <Link href="/" className="mt-6 inline-block rounded-lg bg-accent px-5 py-2.5 font-semibold text-white hover:bg-accent-strong">
+      <Link href="/" className="mt-6 inline-block rounded-lg bg-accent px-5 py-2.5 font-semibold text-white hover:bg-accent-hover">
         Go to the Calculus Solver
       </Link>
       <div className="mt-10">

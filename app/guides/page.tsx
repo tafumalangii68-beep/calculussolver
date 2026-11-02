@@ -1,5 +1,6 @@
 import { LinkCards } from "@/components/content/LinkCards";
 import { PageIntro } from "@/components/content/PageIntro";
+import { posts } from "@/data/blog";
 import { guides } from "@/data/guides";
 import { buildMetadata, webPageLd } from "@/lib/seo";
 import { JsonLd } from "@/components/content/JsonLd";
@@ -23,6 +24,12 @@ export default function GuidesPage() {
         <h2 id="all-guides" className="font-serif text-2xl font-semibold text-ink">Guides</h2>
         <div className="mt-4">
           <LinkCards cards={guides.map((g) => ({ href: `/guides/${g.slug}`, title: g.title, description: g.description }))} />
+        </div>
+      </section>
+      <section aria-labelledby="from-blog" className="mt-14">
+        <h2 id="from-blog" className="font-serif text-2xl font-semibold text-ink">From the blog</h2>
+        <div className="mt-4">
+          <LinkCards cards={posts.map((p) => ({ href: `/blog/${p.slug}`, title: p.title, description: p.description }))} />
         </div>
       </section>
       <section aria-labelledby="tools" className="mt-14">

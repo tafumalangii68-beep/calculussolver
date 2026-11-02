@@ -32,6 +32,8 @@ export interface CalculatorPage {
   faqs: Faq[];
   related: CalculatorSlug[];
   guide?: { href: string; label: string };
+  /** Slugs of blog posts to recommend in the Related section. */
+  articles?: string[];
 }
 
 export const calculators: Record<CalculatorSlug, CalculatorPage> = {
@@ -152,6 +154,7 @@ export const calculators: Record<CalculatorSlug, CalculatorPage> = {
       { q: "How does the calculator know which rule to apply?", a: "It looks at the outermost operation of the expression. A sum gets the sum rule, a product the product rule, a quotient the quotient rule, and a function of something other than plain x gets the chain rule. It then works inward." },
     ],
     related: ["critical-points-calculator", "taylor-series-calculator", "integral-calculator"],
+    articles: ["how-to-find-the-derivative-of-a-function"],
     guide: { href: "/guides/derivative-rules", label: "Derivative rules explained with examples" },
   },
 
@@ -489,6 +492,7 @@ export const calculators: Record<CalculatorSlug, CalculatorPage> = {
       { q: "Why can't I center ln(x) at 0?", a: "ln(x) is undefined at 0, so it has no derivatives there and no Taylor polynomial. Use a = 1, or expand ln(1 + x) about 0 instead." },
     ],
     related: ["derivative-calculator", "limit-calculator", "integral-calculator"],
+    articles: ["how-to-find-the-derivative-of-a-function"],
   },
 
   "critical-points-calculator": {
@@ -592,6 +596,7 @@ export const calculators: Record<CalculatorSlug, CalculatorPage> = {
       { q: "Can I change where the calculator searches?", a: "Yes. Edit the “Search from” and “Search to” boxes. Narrow intervals give the numerical search more precision; wide ones help when you don't know where the points are." },
     ],
     related: ["derivative-calculator", "limit-calculator", "taylor-series-calculator"],
+    articles: ["how-to-find-the-derivative-of-a-function"],
     guide: { href: "/guides/derivative-rules", label: "Derivative rules refresher" },
   },
 };

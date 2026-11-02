@@ -5,7 +5,9 @@ import "./globals.css";
 import { CookieConsent } from "@/components/cookies/CookieConsent";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import { ScrollableRegions } from "@/components/layout/ScrollableRegions";
 import { siteConfig } from "@/lib/site-config";
+import { themeInitScript } from "@/lib/theme";
 
 // Body text uses the system UI font (no download); only headings use a web font.
 const serif = Source_Serif_4({ subsets: ["latin"], variable: "--font-serif-display", display: "swap", weight: ["600"] });
@@ -20,14 +22,21 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#faf9f7",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#faf9f7" },
+    { media: "(prefers-color-scheme: dark)", color: "#161514" },
+  ],
   width: "device-width",
   initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={serif.variable}>
+    // suppressHydrationWarning: the inline script sets data-theme before React hydrates.
+    <html lang="en" className={serif.variable} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="flex min-h-screen flex-col antialiased">
         <a
           href="#main"
@@ -41,6 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
           </main>
           <Footer />
+          <ScrollableRegions />
         </CookieConsent>
       </body>
     </html>

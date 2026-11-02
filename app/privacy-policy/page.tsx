@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ContactEmail } from "@/components/content/ContactEmail";
 import { ProsePage } from "@/components/content/ProsePage";
 import { CONSENT_KEY } from "@/lib/consent";
+import { THEME_KEY } from "@/lib/theme";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 
@@ -49,10 +50,21 @@ export default function PrivacyPolicyPage() {
 
       <h2>Browser storage and cookies</h2>
       <p>
-        The website does not set any cookies. It stores exactly one item in your browser&apos;s local storage, named{" "}
-        <code>{CONSENT_KEY}</code>. It records your cookie-banner choice (whether optional categories are allowed) and the date
-        you made it, so the banner does not reappear on every page. It contains no identifier and is never sent to us. See the{" "}
-        <Link href="/cookie-policy">Cookie Policy</Link> for details.
+        The website does not set any cookies. It stores at most two items in your browser&apos;s local storage:
+      </p>
+      <ul>
+        <li>
+          <code>{CONSENT_KEY}</code> records your cookie-banner choice (whether optional categories are allowed) and the date
+          you made it, so the banner does not reappear on every page.
+        </li>
+        <li>
+          <code>{THEME_KEY}</code> records whether you chose light or dark mode. It is only saved if you use the theme button;
+          otherwise the site follows your device&apos;s setting and stores nothing.
+        </li>
+      </ul>
+      <p>
+        Neither item contains an identifier, and neither is ever sent to us. See the <Link href="/cookie-policy">Cookie Policy</Link>{" "}
+        for details.
       </p>
 
       <h2>Cookie consent and optional services</h2>

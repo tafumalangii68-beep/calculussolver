@@ -16,7 +16,7 @@ export const siteConfig = {
    */
   contactEmail: null as string | null,
   /** Date the legal pages were last reviewed (YYYY-MM-DD). */
-  legalUpdated: "2026-10-30",
+  legalUpdated: "2026-11-02",
   /** Date content pages were last reviewed (YYYY-MM-DD). */
   contentUpdated: "2026-10-30",
   /**

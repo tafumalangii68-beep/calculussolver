@@ -34,7 +34,7 @@ export function MailtoForm({ email }: { email: string }) {
         </label>
         <textarea id="contact-message" rows={6} value={message} onChange={(e) => setMessage(e.target.value)} className={field} />
       </div>
-      <button type="submit" className="mt-4 rounded-lg bg-accent px-5 py-2.5 font-semibold text-white hover:bg-accent-strong">
+      <button type="submit" className="mt-4 rounded-lg bg-accent px-5 py-2.5 font-semibold text-white hover:bg-accent-hover">
         Open in my email app
       </button>
       <p className="mt-3 text-sm text-muted" aria-live="polite">

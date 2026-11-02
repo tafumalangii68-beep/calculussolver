@@ -45,8 +45,8 @@ function Banner({ onSettings }: { onSettings: () => void }) {
     >
       <div className="mx-auto flex max-w-6xl flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <p className="max-w-3xl text-sm text-ink-soft">
-          This site uses only <strong className="font-semibold text-ink">necessary browser storage</strong> to remember this
-          choice. There are no analytics or advertising cookies, and your math problems never leave your device.{" "}
+          This site uses only <strong className="font-semibold text-ink">necessary browser storage</strong> to remember your
+          settings. There are no analytics or advertising cookies, and your math problems never leave your device.{" "}
           <Link href="/privacy-policy" className="text-accent-strong underline underline-offset-2">
             Privacy Policy
           </Link>
@@ -65,7 +65,7 @@ function Banner({ onSettings }: { onSettings: () => void }) {
           <button
             type="button"
             onClick={() => saveConsent({ analytics: true, marketing: true })}
-            className="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white hover:bg-accent-strong"
+            className="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white hover:bg-accent-hover"
           >
             Accept All
           </button>
@@ -110,7 +110,7 @@ function SettingsDialog({ current, onClose }: { current: ConsentRecord | null; o
       ref={ref}
       onClose={onClose}
       aria-labelledby="cookie-settings-title"
-      className="m-auto w-[min(36rem,calc(100vw-2rem))] rounded-card border border-line bg-surface p-0 text-ink shadow-card backdrop:bg-ink/40"
+      className="m-auto w-[min(36rem,calc(100vw-2rem))] rounded-card border border-line bg-surface p-0 text-ink shadow-card backdrop:bg-black/50"
     >
       <div className="max-h-[85vh] overflow-y-auto p-6">
         <h2 id="cookie-settings-title" className="font-serif text-2xl font-semibold">
@@ -127,8 +127,8 @@ function SettingsDialog({ current, onClose }: { current: ConsentRecord | null; o
               <div>
                 <h3 className="font-semibold">Necessary storage</h3>
                 <p className="mt-1 text-sm text-muted">
-                  Remembers this cookie choice in your browser&apos;s local storage. Required for the site to respect your
-                  preference, so it cannot be switched off.
+                  Remembers this cookie choice (and your light or dark theme, if you pick one) in your browser&apos;s local
+                  storage. Required for the site to respect your preferences, so it cannot be switched off.
                 </p>
               </div>
               <span className="shrink-0 rounded-full bg-accent-soft px-2.5 py-1 text-xs font-medium text-accent-strong">Always on</span>
@@ -181,7 +181,7 @@ function SettingsDialog({ current, onClose }: { current: ConsentRecord | null; o
           <button type="button" onClick={() => save({ analytics: false, marketing: false })} className="rounded-lg border border-line-strong px-4 py-2 text-sm font-medium hover:bg-sunken">
             Reject Optional
           </button>
-          <button type="button" onClick={() => save(choice)} className="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white hover:bg-accent-strong">
+          <button type="button" onClick={() => save(choice)} className="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white hover:bg-accent-hover">
             Save preferences
           </button>
         </div>

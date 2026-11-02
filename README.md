@@ -6,6 +6,7 @@ A free, browser-based calculus solver with step-by-step solutions, built with Ne
 - **Private by design:** all math runs in the visitor's browser, in a Web Worker. There are no API keys, environment variables, database, backend, accounts, analytics or third-party requests.
 - **Honest output:** every answer is checked independently before it is shown, and the solver says when it cannot solve a problem.
 - **Static:** every page is prerendered as static HTML.
+- **Light and dark themes:** follows the device setting by default; the header button switches and remembers the choice (`lib/theme.ts`). Colours are tokens in `app/globals.css`, with dark values under `:root[data-theme="dark"]`.
 
 Canonical domain: `https://calculussolver.pro` (configured in `lib/site-config.ts`).
 

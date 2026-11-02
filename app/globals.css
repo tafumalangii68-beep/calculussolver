@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* "dark:" utilities follow the data-theme attribute set on <html> (see app/layout.tsx). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 /* Design tokens: white and warm neutrals, dark charcoal text, one muted teal accent. */
 @theme {
   --color-paper: #faf9f7;
@@ -12,6 +15,8 @@
   --color-muted: #625d56;
   --color-accent: #2f6b66;
   --color-accent-strong: #24534f;
+  /* Hover colour for filled accent buttons (white text). */
+  --color-accent-hover: #24534f;
   --color-accent-soft: #e7f0ee;
   --color-ok: #2f6b3a;
   --color-ok-soft: #e9f2ea;
@@ -130,6 +135,16 @@
  * unlayered, and unlayered rules always beat layered ones.
  */
 
+/*
+ * Sideways-scrolling boxes must be the positioning parent of their contents. Otherwise
+ * absolutely positioned children (screen-reader-only captions, inputs and KaTeX's MathML)
+ * escape the box and widen the whole page on phones.
+ */
+.overflow-x-auto,
+.math-scroll {
+  position: relative;
+}
+
 /* Display math scrolls inside its own box instead of widening the page. */
 .math-scroll {
   overflow-x: auto;
@@ -148,4 +163,35 @@
 /* Left-aligned display math (input preview and result panel). */
 .math-left .katex-display > .katex {
   text-align: left;
+}
+
+/*
+ * Dark theme: the same tokens with dark values. Every component uses the tokens,
+ * so nothing else needs to change. Unlayered so it overrides the @theme defaults.
+ */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-paper: #161514;
+  --color-surface: #1e1d1b;
+  --color-sunken: #282623;
+  --color-line: #35322e;
+  --color-line-strong: #4b4741;
+  --color-ink: #ece9e4;
+  --color-ink-soft: #cfcac2;
+  --color-muted: #a49e95;
+  --color-accent: #2c7a73;
+  --color-accent-hover: #24665f;
+  --color-accent-strong: #8ccbc3;
+  --color-accent-soft: #1c302d;
+  --color-ok: #93d3a1;
+  --color-ok-soft: #1b2b1f;
+  --color-warn: #e8bd70;
+  --color-warn-soft: #2f2616;
+  --color-danger: #f2a3a3;
+  --color-danger-soft: #341e1e;
+}
+
+/* Illustrations keep their light card, slightly dimmed so they don't glare. */
+:root[data-theme="dark"] figure img {
+  filter: brightness(0.9);
 }

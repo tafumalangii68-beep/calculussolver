@@ -168,13 +168,13 @@ export function Solver({ operations, examples, title }: SolverProps) {
     >
       <form onSubmit={onSubmit} noValidate>
         {operations.length > 1 && (
-          <fieldset>
+          <fieldset className="min-w-0">
             <legend className="sr-only">Operation</legend>
             <div className="-mx-1 flex gap-1 overflow-x-auto px-1 pb-1">
               {operations.map((op) => (
                 <label
                   key={op}
-                  className={`shrink-0 cursor-pointer rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent ${
+                  className={`relative shrink-0 cursor-pointer rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent ${
                     op === operation ? "border-accent bg-accent text-white" : "border-line text-ink-soft hover:bg-sunken"
                   }`}
                 >
@@ -259,7 +259,7 @@ export function Solver({ operations, examples, title }: SolverProps) {
           <button
             type="submit"
             disabled={state.status === "solving"}
-            className="inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-2.5 font-semibold text-white hover:bg-accent-strong disabled:opacity-70"
+            className="inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-2.5 font-semibold text-white hover:bg-accent-hover disabled:opacity-70"
           >
             {state.status === "solving" && <Loader2 aria-hidden className="h-4 w-4 animate-spin" />}
             {state.status === "solving" ? "Solving…" : "Solve"}
@@ -380,7 +380,7 @@ function OperationOptions({
               ).map(([value, label]) => (
                 <label
                   key={value}
-                  className={`cursor-pointer rounded-lg border px-3 py-2 text-sm has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent ${
+                  className={`relative cursor-pointer rounded-lg border px-3 py-2 text-sm has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent ${
                     fields.side === value ? "border-accent bg-accent-soft text-accent-strong" : "border-line text-ink-soft hover:bg-sunken"
                   }`}
                 >

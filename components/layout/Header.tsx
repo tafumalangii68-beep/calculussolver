@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
 import { NavMenu } from "./NavMenu";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function Header() {
   return (
@@ -12,7 +13,10 @@ export function Header() {
           </span>
           {siteConfig.name}
         </Link>
-        <NavMenu />
+        <div className="flex items-center gap-2">
+          <NavMenu />
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );

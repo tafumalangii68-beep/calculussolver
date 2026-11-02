@@ -6,6 +6,7 @@ import { LinkCards } from "@/components/content/LinkCards";
 import { Tex } from "@/components/content/Tex";
 import { WorkedExample } from "@/components/content/WorkedExample";
 import { Solver } from "@/components/solver/Solver";
+import { posts } from "@/data/blog";
 import { homeExamples, homeFaqs, homeSolverExamples, syntaxGuide } from "@/data/home";
 import { buildMetadata, webApplicationLd, websiteLd } from "@/lib/seo";
 import { calculatorNav, guideNav } from "@/lib/site-config";
@@ -229,7 +230,7 @@ export default function HomePage() {
 
         <section aria-labelledby="explore">
           <h2 id="explore" className="font-serif text-2xl font-semibold text-ink sm:text-3xl">
-            Dedicated calculators and guides
+            Dedicated calculators, guides and tutorials
           </h2>
           <p className="mt-3 max-w-[72ch] text-ink-soft">
             Each calculator focuses on one operation and comes with its own rules, worked examples and common mistakes.
@@ -239,6 +240,7 @@ export default function HomePage() {
               cards={[
                 ...calculatorNav.map((c) => ({ href: `/${c.slug}`, title: c.label, description: c.blurb })),
                 ...guideNav.map((g) => ({ href: g.href, title: g.label, description: "Study guide with worked examples" })),
+                ...posts.map((post) => ({ href: `/blog/${post.slug}`, title: post.title.split(" (")[0], description: "Beginner tutorial on the blog" })),
               ]}
             />
           </div>

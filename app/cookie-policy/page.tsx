@@ -4,8 +4,9 @@ import { ProsePage } from "@/components/content/ProsePage";
 import { CONSENT_KEY } from "@/lib/consent";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
+import { THEME_KEY } from "@/lib/theme";
 
-const description = "Calculus Solver sets no cookies and uses one local storage item to remember your consent choice. See exactly what is stored and how to change it.";
+const description = "Calculus Solver sets no cookies. It uses local storage only to remember your consent choice and, if you pick one, your light or dark theme.";
 
 export const metadata = buildMetadata({ title: "Cookie Policy", description, path: "/cookie-policy" });
 
@@ -16,7 +17,7 @@ export default function CookiePolicyPage() {
       path="/cookie-policy"
       description={description}
       updated={siteConfig.legalUpdated}
-      lead={<p>This site sets no cookies. It uses a single item of browser storage, and only to remember your choice.</p>}
+      lead={<p>This site sets no cookies. It uses browser storage only to remember choices you make: your cookie preference and, if you set one, your theme.</p>}
     >
       <h2>What cookies and browser storage are</h2>
       <p>
@@ -46,6 +47,15 @@ export default function CookiePolicyPage() {
               <td className="py-2 pr-4">Remembers whether you accepted or rejected optional categories, and when.</td>
               <td className="py-2">Until you withdraw consent or clear site data</td>
             </tr>
+            <tr className="border-b border-line align-top">
+              <td className="py-2 pr-4"><code>{THEME_KEY}</code></td>
+              <td className="py-2 pr-4">Local storage</td>
+              <td className="py-2 pr-4">Necessary (set at your request)</td>
+              <td className="py-2 pr-4">
+                Remembers light or dark mode. Saved only when you use the theme button; otherwise your device setting is followed.
+              </td>
+              <td className="py-2">Until you clear site data</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -57,8 +67,8 @@ export default function CookiePolicyPage() {
       <h2>Categories</h2>
       <h3>Necessary storage (always on)</h3>
       <p>
-        Needed so the site can respect your preference without asking on every page. It cannot be switched off, because
-        without it your choice could not be remembered.
+        Needed so the site can remember the choices you make (your cookie preference, and your theme if you set one)
+        without asking on every page. It cannot be switched off, because without it your choices could not be remembered.
       </p>
       <h3>Analytics (optional, off by default)</h3>
       <p>

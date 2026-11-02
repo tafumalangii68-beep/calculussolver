@@ -161,6 +161,11 @@ export const posts: Guide[] = [
             type: "p",
             text: "Simplify f′(x) fully before differentiating again; it makes the second step much shorter. Third and higher derivatives work the same way.",
           },
+          {
+            type: "p",
+            text: "The second derivative is also how you tell a local maximum from a local minimum. To find and classify those points for any function, use",
+            link: { href: "/critical-points-calculator", label: "the critical points calculator" },
+          },
         ],
       },
       {
