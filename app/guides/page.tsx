@@ -35,7 +35,7 @@ export default function GuidesPage() {
       <section aria-labelledby="tools" className="mt-14">
         <h2 id="tools" className="font-serif text-2xl font-semibold text-ink">Calculators to practise with</h2>
         <div className="mt-4">
-          <LinkCards cards={calculatorNav.map((c) => ({ href: `/${c.slug}`, title: c.label, description: c.blurb }))} />
+          <LinkCards cards={calculatorNav.map((c) => ({ href: `/${c.slug}`, title: c.label, description: c.blurb, titleClass: c.titleClass }))} />
         </div>
       </section>
     </div>

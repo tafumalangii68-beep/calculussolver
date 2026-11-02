@@ -20,7 +20,7 @@ export default function NotFound() {
         Go to the Calculus Solver
       </Link>
       <div className="mt-10">
-        <LinkCards cards={calculatorNav.map((c) => ({ href: `/${c.slug}`, title: c.label, description: c.blurb }))} />
+        <LinkCards cards={calculatorNav.map((c) => ({ href: `/${c.slug}`, title: c.label, description: c.blurb, titleClass: c.titleClass }))} />
       </div>
     </div>
   );

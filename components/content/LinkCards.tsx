@@ -5,6 +5,8 @@ export interface LinkCard {
   href: string;
   title: string;
   description: string;
+  /** Colour class for the title; calculator cards use their own colour. */
+  titleClass?: string;
 }
 
 export function LinkCards({ cards }: { cards: LinkCard[] }) {
@@ -16,7 +18,7 @@ export function LinkCards({ cards }: { cards: LinkCard[] }) {
             href={card.href}
             className="group flex h-full flex-col rounded-card border border-line bg-surface p-5 transition-colors hover:border-accent"
           >
-            <span className="flex items-center justify-between gap-2 font-semibold text-ink">
+            <span className={`flex items-center justify-between gap-2 font-semibold ${card.titleClass ?? "text-ink"}`}>
               {card.title}
               <ArrowRight aria-hidden className="h-4 w-4 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
             </span>

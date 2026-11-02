@@ -238,7 +238,7 @@ export default function HomePage() {
           <div className="mt-6">
             <LinkCards
               cards={[
-                ...calculatorNav.map((c) => ({ href: `/${c.slug}`, title: c.label, description: c.blurb })),
+                ...calculatorNav.map((c) => ({ href: `/${c.slug}`, title: c.label, description: c.blurb, titleClass: c.titleClass })),
                 ...guideNav.map((g) => ({ href: g.href, title: g.label, description: "Study guide with worked examples" })),
                 ...posts.map((post) => ({ href: `/blog/${post.slug}`, title: post.title.split(" (")[0], description: "Beginner tutorial on the blog" })),
               ]}

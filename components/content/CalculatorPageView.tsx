@@ -23,17 +23,19 @@ function SectionHeading({ id, children }: { id: string; children: React.ReactNod
 
 export function CalculatorPageView({ page }: { page: CalculatorPage }) {
   const path = `/${page.slug}`;
-  const label = calculatorNav.find((c) => c.slug === page.slug)!.label;
+  const nav = calculatorNav.find((c) => c.slug === page.slug)!;
+  const label = nav.label;
   const related = page.related.map((slug) => ({
     href: `/${slug}`,
     title: calculatorNav.find((c) => c.slug === slug)!.label,
+    titleClass: calculatorNav.find((c) => c.slug === slug)!.titleClass,
     description: calculators[slug].intro.split(". ")[0] + ".",
   }));
 
   return (
     <div className="mx-auto max-w-6xl px-4 pt-8 sm:px-6 sm:pt-10">
       <JsonLd data={webApplicationLd(page.h1, path, page.metaDescription)} />
-      <PageIntro crumbs={[{ name: label, path }]} title={page.h1}>
+      <PageIntro crumbs={[{ name: label, path }]} title={page.h1} titleClass={nav.titleClass}>
         <p>{page.intro}</p>
       </PageIntro>
 
