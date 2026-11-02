@@ -36,12 +36,13 @@ export type CalculatorSlug =
   | "taylor-series-calculator"
   | "critical-points-calculator";
 
-export const calculatorNav: { slug: CalculatorSlug; label: string; blurb: string }[] = [
-  { slug: "derivative-calculator", label: "Derivative Calculator", blurb: "Any order, with every rule shown" },
-  { slug: "integral-calculator", label: "Integral Calculator", blurb: "Indefinite and definite integrals" },
-  { slug: "limit-calculator", label: "Limit Calculator", blurb: "One-sided, two-sided and at infinity" },
-  { slug: "taylor-series-calculator", label: "Taylor Series Calculator", blurb: "Taylor and Maclaurin polynomials" },
-  { slug: "critical-points-calculator", label: "Critical Points Calculator", blurb: "Find and classify extrema" },
+// `titleClass` gives each calculator its own title colour in the menus (tokens in app/globals.css).
+export const calculatorNav: { slug: CalculatorSlug; label: string; blurb: string; titleClass: string }[] = [
+  { slug: "derivative-calculator", label: "Derivative Calculator", blurb: "Any order, with every rule shown", titleClass: "text-calc-derivative" },
+  { slug: "integral-calculator", label: "Integral Calculator", blurb: "Indefinite and definite integrals", titleClass: "text-calc-integral" },
+  { slug: "limit-calculator", label: "Limit Calculator", blurb: "One-sided, two-sided and at infinity", titleClass: "text-calc-limit" },
+  { slug: "taylor-series-calculator", label: "Taylor Series Calculator", blurb: "Taylor and Maclaurin polynomials", titleClass: "text-calc-taylor" },
+  { slug: "critical-points-calculator", label: "Critical Points Calculator", blurb: "Find and classify extrema", titleClass: "text-calc-critical" },
 ];
 
 export const guideNav = [

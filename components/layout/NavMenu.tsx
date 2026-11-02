@@ -70,7 +70,7 @@ export function NavMenu() {
             {calculatorNav.map((c) => (
               <li key={c.slug}>
                 <Link href={`/${c.slug}`} className="block rounded-lg px-3 py-2.5 hover:bg-sunken" aria-current={pathname === `/${c.slug}` ? "page" : undefined}>
-                  <span className="block text-sm font-medium text-ink">{c.label}</span>
+                  <span className={`block text-sm font-semibold ${c.titleClass}`}>{c.label}</span>
                   <span className="block text-xs text-muted">{c.blurb}</span>
                 </Link>
               </li>
@@ -113,7 +113,7 @@ export function NavMenu() {
         <ul className="mt-1 space-y-1">
           {calculatorNav.map((c) => (
             <li key={c.slug}>
-              <Link href={`/${c.slug}`} className="block rounded-md px-3 py-2.5 text-ink hover:bg-sunken">
+              <Link href={`/${c.slug}`} className={`block rounded-md px-3 py-2.5 font-medium hover:bg-sunken ${c.titleClass}`}>
                 {c.label}
               </Link>
             </li>

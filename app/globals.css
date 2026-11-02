@@ -25,6 +25,13 @@
   --color-danger: #9b2c2c;
   --color-danger-soft: #fbeaea;
 
+  /* One colour per calculator, used for its title in the navigation menus. */
+  --color-calc-derivative: #2f6b66;
+  --color-calc-integral: #355c9e;
+  --color-calc-limit: #7a4a8c;
+  --color-calc-taylor: #8a5a12;
+  --color-calc-critical: #a3452c;
+
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-serif: var(--font-serif-display), ui-serif, Georgia, serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -189,6 +196,11 @@
   --color-warn-soft: #2f2616;
   --color-danger: #f2a3a3;
   --color-danger-soft: #341e1e;
+  --color-calc-derivative: #8ccbc3;
+  --color-calc-integral: #9fb8ea;
+  --color-calc-limit: #cda6dc;
+  --color-calc-taylor: #e8bd70;
+  --color-calc-critical: #f2a58f;
 }
 
 /* Illustrations keep their light card, slightly dimmed so they don't glare. */
