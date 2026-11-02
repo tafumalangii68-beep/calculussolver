@@ -70,7 +70,8 @@
     color: var(--color-ink-soft);
     max-width: 72ch;
   }
-  .prose-body > * + * {
+  .prose-body > * + *,
+  .prose-body > section > * + * {
     margin-top: 1rem;
   }
   .prose-body h2 {

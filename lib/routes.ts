@@ -1,3 +1,4 @@
+import { posts } from "@/data/blog";
 import { guides } from "@/data/guides";
 import { calculatorNav, siteConfig } from "./site-config";
 
@@ -7,6 +8,8 @@ export const indexableRoutes: { path: string; priority: number; lastModified: st
   ...calculatorNav.map((c) => ({ path: `/${c.slug}`, priority: 0.9, lastModified: siteConfig.contentUpdated })),
   { path: "/guides", priority: 0.6, lastModified: siteConfig.contentUpdated },
   ...guides.map((g) => ({ path: `/guides/${g.slug}`, priority: 0.7, lastModified: siteConfig.contentUpdated })),
+  { path: "/blog", priority: 0.6, lastModified: siteConfig.contentUpdated },
+  ...posts.map((p) => ({ path: `/blog/${p.slug}`, priority: 0.7, lastModified: p.published ?? siteConfig.contentUpdated })),
   { path: "/how-it-works", priority: 0.6, lastModified: siteConfig.contentUpdated },
   { path: "/faq", priority: 0.5, lastModified: siteConfig.contentUpdated },
   { path: "/about", priority: 0.4, lastModified: siteConfig.contentUpdated },

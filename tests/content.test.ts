@@ -1,6 +1,7 @@
 // Every worked example published on the site must be reproduced by the solver.
 
 import { describe, expect, it } from "vitest";
+import { posts } from "@/data/blog";
 import { calculatorList } from "@/data/calculators";
 import { guides } from "@/data/guides";
 import { homeExamples } from "@/data/home";
@@ -14,6 +15,7 @@ const POINTS = [-1.7, -0.6, 0.35, 0.8, 1.9, 2.6, 4.3];
 const examples: [string, WorkedExample][] = [
   ...calculatorList.flatMap((page) => page.examples.map((e) => [`${page.slug}: ${e.title}`, e] as [string, WorkedExample])),
   ...guides.flatMap((g) => g.examples.map((e) => [`${g.slug}: ${e.title}`, e] as [string, WorkedExample])),
+  ...posts.flatMap((p) => p.examples.map((e) => [`blog/${p.slug}: ${e.title}`, e] as [string, WorkedExample])),
   ...homeExamples.map((e) => [`home: ${e.title}`, e] as [string, WorkedExample]),
 ];
 

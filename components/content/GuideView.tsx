@@ -10,25 +10,29 @@ import { formatDate } from "./ProsePage";
 import { Tex } from "./Tex";
 import { WorkedExample } from "./WorkedExample";
 
-export function GuideView({ guide }: { guide: Guide }) {
-  const path = `/guides/${guide.slug}`;
+const GUIDES = { name: "Guides", path: "/guides" };
+
+/** Long-form article layout, shared by the guides and the blog. */
+export function GuideView({ guide, collection = GUIDES }: { guide: Guide; collection?: { name: string; path: string } }) {
+  const path = `${collection.path}/${guide.slug}`;
+  const date: string = guide.published ?? siteConfig.contentUpdated;
   return (
     <div className="mx-auto max-w-6xl px-4 pt-8 sm:px-6 sm:pt-10">
-      <JsonLd data={articleLd(guide.title, path, guide.description)} />
+      <JsonLd data={articleLd(guide.title, path, guide.description, date)} />
       <PageIntro
         crumbs={[
-          { name: "Guides", path: "/guides" },
-          { name: guide.title.split(":")[0], path },
+          collection,
+          { name: guide.title.split(/[:(]/)[0].trim(), path },
         ]}
         title={guide.title}
       >
         <p>{guide.intro}</p>
         <p className="mt-3 text-sm text-muted">
-          Last reviewed: <time dateTime={siteConfig.contentUpdated}>{formatDate(siteConfig.contentUpdated)}</time>
+          {guide.published ? "Published" : "Last reviewed"}: <time dateTime={date}>{formatDate(date)}</time>
         </p>
       </PageIntro>
 
-      <Figure image={guide.image} className="mt-8 max-w-3xl" />
+      {guide.image && <Figure image={guide.image} className="mt-8 max-w-3xl" />}
 
       <nav aria-label="On this page" className="mt-8 max-w-3xl rounded-card border border-line bg-surface p-5">
         <p className="text-sm font-semibold text-ink">On this page</p>
@@ -55,7 +59,17 @@ export function GuideView({ guide }: { guide: Guide }) {
             {section.blocks.map((block, i) => {
               switch (block.type) {
                 case "p":
-                  return <p key={i}>{block.text}</p>;
+                  return (
+                    <p key={i}>
+                      {block.text}
+                      {block.link && (
+                        <>
+                          {" "}
+                          <Link href={block.link.href}>{block.link.label}</Link>.
+                        </>
+                      )}
+                    </p>
+                  );
                 case "math":
                   return <Tex key={i} display>{block.latex}</Tex>;
                 case "list":
@@ -114,7 +128,7 @@ export function GuideView({ guide }: { guide: Guide }) {
       <FaqSection faqs={guide.faqs} title="Questions about this topic" />
 
       <section className="mt-16 rounded-card bg-ink px-6 py-8 text-paper sm:px-10">
-        <h2 className="font-serif text-2xl font-semibold">Practise what you learned</h2>
+        <h2 className="font-serif text-2xl font-semibold">Practice what you learned</h2>
         <p className="mt-2 max-w-2xl text-paper/80">
           Try the worked examples above in the calculator and compare each step with your own. You can also use the main{" "}
           <Link href="/" className="underline underline-offset-2">Calculus Solver</Link> for every operation in one place.

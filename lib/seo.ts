@@ -88,7 +88,7 @@ export function webPageLd(name: string, path: string, description: string): Json
   };
 }
 
-export function articleLd(headline: string, path: string, description: string): JsonLdObject {
+export function articleLd(headline: string, path: string, description: string, published: string = siteConfig.contentUpdated): JsonLdObject {
   return {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -96,8 +96,8 @@ export function articleLd(headline: string, path: string, description: string): 
     description,
     url: absoluteUrl(path),
     mainEntityOfPage: absoluteUrl(path),
-    datePublished: siteConfig.contentUpdated,
-    dateModified: siteConfig.contentUpdated,
+    datePublished: published,
+    dateModified: published > siteConfig.contentUpdated ? published : siteConfig.contentUpdated,
     inLanguage: siteConfig.language,
     author: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },
     publisher: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },

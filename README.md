@@ -47,6 +47,7 @@ The site needs no environment variables or secrets.
 app/                     Routes, root layout, sitemap.ts, robots.ts, opengraph-image.png, icon.svg, not-found.tsx
   <calculator>/page.tsx  One small file per calculator page (content lives in data/)
   guides/                Guide index and the two guides
+  blog/                  Blog index and posts (content in data/blog.ts)
 components/
   solver/                Solver UI (client): form, keypad, KaTeX view, result panel, useSolver (Web Worker hook)
   content/               Server components: Tex (build-time KaTeX), FAQ, breadcrumbs, JSON-LD, page templates
@@ -133,7 +134,7 @@ Search volumes were **not** researched: no keyword data source was available, so
 
 | Check | Result |
 | ----- | ------ |
-| `npm test` | **125 / 125 passed**: 85 known-answer math tests (derivatives, integrals, improper integrals, limits incl. ±∞ and one-sided, Taylor, critical points, invalid input), 34 published worked examples reproduced by the solver, 6 consent-storage tests |
+| `npm test` | **132 / 132 passed**: 85 known-answer math tests (derivatives, integrals, improper integrals, limits incl. ±∞ and one-sided, Taylor, critical points, invalid input), 41 published worked examples (calculator pages, guides, blog, homepage) reproduced by the solver, 6 consent-storage tests |
 | `npm run typecheck` | Passed |
 | `npm run lint` | Passed (0 problems) |
 | `npm run build` | Passed; 23 routes, all static |

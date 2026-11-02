@@ -51,6 +51,7 @@ export const guideNav = [
 
 export const mainNav = [
   { href: "/guides", label: "Guides" },
+  { href: "/blog", label: "Blog" },
   { href: "/how-it-works", label: "How It Works" },
   { href: "/faq", label: "FAQ" },
   { href: "/about", label: "About" },

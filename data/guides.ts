@@ -6,7 +6,8 @@ import type { Faq, Illustration, WorkedExample } from "@/types/content";
 const t = String.raw;
 
 export type Block =
-  | { type: "p"; text: string }
+  /** A paragraph; an optional link is appended after the text. */
+  | { type: "p"; text: string; link?: { href: string; label: string } }
   | { type: "math"; latex: string }
   | { type: "list"; items: string[] }
   | { type: "table"; caption: string; headers: string[]; rows: string[][] };
@@ -17,7 +18,9 @@ export interface Guide {
   metaTitle: string;
   description: string;
   intro: string;
-  image: Illustration;
+  image?: Illustration;
+  /** Publication date (YYYY-MM-DD) for blog posts; guides show the site's review date instead. */
+  published?: string;
   sections: { id: string; heading: string; blocks: Block[] }[];
   examples: WorkedExample[];
   faqs: Faq[];
@@ -109,6 +112,11 @@ export const guides: Guide[] = [
             ],
           },
           { type: "p", text: "The derivative calculator follows exactly this outside-in process and labels each step with the rule it used, so you can compare your own work line by line." },
+          {
+            type: "p",
+            text: "New to derivatives? Start with the limit definition and a full walkthrough in",
+            link: { href: "/blog/how-to-find-the-derivative-of-a-function", label: "How to Find the Derivative of a Function" },
+          },
         ],
       },
     ],

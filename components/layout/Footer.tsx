@@ -48,6 +48,11 @@ export function Footer() {
               </li>
             ))}
             <li>
+              <Link href="/blog" className={linkClass}>
+                Blog
+              </Link>
+            </li>
+            <li>
               <Link href="/how-it-works" className={linkClass}>
                 How the solver works
               </Link>
