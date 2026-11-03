@@ -3,17 +3,17 @@
 // steps, notes and an honest verification status.
 
 import type { ResultCheck, SolveRequest, SolveResult, SolveSuccess, StepSection } from "@/types/solver";
-import { add, contains, freeSymbols, mul, num, sym, type Node } from "./ast";
+import { add, contains, freeSymbols, isNum, mul, num, pow, sym, type Node } from "./ast";
 import { findCriticalPoints } from "./critical";
 import { differentiate, differentiateWithSteps } from "./derivative";
 import { MathError } from "./errors";
 import { evalAt, evaluate } from "./evaluate";
 import { checkAntiderivative, findAntiderivative } from "./integral";
 import { computeLimit, limitExact, limitNumber } from "./limit";
-import { findSingularity, formatNumber, integrateNumeric, SAMPLE_POINTS } from "./numeric";
-import { parse, parseIn, parsePoint, type PointValue } from "./parser";
+import { findRoots, findSingularity, formatNumber, integrateNumeric, SAMPLE_POINTS } from "./numeric";
+import { parse, parseEquation, parseIn, parsePoint, type PointValue } from "./parser";
 import { toLatex, toText } from "./print";
-import { simplify, substituteExact } from "./simplify";
+import { bestForm, cancelCommonContent, simplify, substituteExact } from "./simplify";
 import { taylorPolynomial } from "./taylor";
 
 export const VARIABLES = ["x", "t", "y", "z", "u", "θ"] as const;
@@ -45,6 +45,33 @@ function wrapped(f: Node): string {
 
 // ---------- derivative ----------
 
+/** Fixed, unremarkable values for letters other than the variable (used only in numerical checks). */
+function paramEnv(nodes: Node[], exclude: string[]): Record<string, number> {
+  const env: Record<string, number> = {};
+  const names = [...new Set(nodes.flatMap((n) => [...freeSymbols(n)]))].filter((s) => !exclude.includes(s));
+  names.forEach((s, i) => (env[s] = 1.37 + 0.41 * i));
+  return env;
+}
+
+/** Compares d/dv of `previous` (by a central finite difference) with `current` at sample points. */
+function finiteDifferenceCheck(previous: Node, current: Node, v: string): ResultCheck | undefined {
+  const env = paramEnv([previous, current], [v]);
+  let agree = 0;
+  let bad = false;
+  for (const x of SAMPLE_POINTS) {
+    const h = 1e-5 * Math.max(1, Math.abs(x));
+    const fd = (evaluate(previous, { ...env, [v]: x + h }) - evaluate(previous, { ...env, [v]: x - h })) / (2 * h);
+    const exact = evaluate(current, { ...env, [v]: x });
+    if (!Number.isFinite(fd) || !Number.isFinite(exact) || Math.abs(exact) > 1e6) continue;
+    if (Math.abs(fd - exact) > 1e-4 * Math.max(1, Math.abs(exact))) bad = true;
+    else agree++;
+  }
+  if (bad) {
+    return { status: "warning", message: "A numerical spot check disagreed at one or more points (this can happen near discontinuities). Please double-check this result." };
+  }
+  return agree >= 3 ? { status: "verified", message: `Checked numerically: the result matches a finite-difference estimate at ${agree} sample points.` } : undefined;
+}
+
 function solveDerivative(req: SolveRequest): SolveSuccess {
   const { node, notes } = parse(req.expression);
   const v = req.variable;
@@ -73,27 +100,7 @@ function solveDerivative(req: SolveRequest): SolveSuccess {
     current = result;
   }
 
-  // Compare against a central finite difference of the previous derivative.
-  let agree = 0;
-  let bad = false;
-  const hasParams = params.length > 0;
-  if (!hasParams) {
-    for (const x of SAMPLE_POINTS) {
-      const h = 1e-5 * Math.max(1, Math.abs(x));
-      const fd = (evalAt(previous, v, x + h) - evalAt(previous, v, x - h)) / (2 * h);
-      const exact = evalAt(current, v, x);
-      if (!Number.isFinite(fd) || !Number.isFinite(exact) || Math.abs(exact) > 1e6) continue;
-      if (Math.abs(fd - exact) > 1e-4 * Math.max(1, Math.abs(exact))) bad = true;
-      else agree++;
-    }
-  }
-  const check: ResultCheck | undefined = hasParams
-    ? undefined
-    : bad
-      ? { status: "warning", message: "A numerical spot check disagreed at one or more points (this can happen near discontinuities). Please double-check this result." }
-      : agree >= 3
-        ? { status: "verified", message: `Checked numerically: the result matches a finite-difference estimate at ${agree} sample points.` }
-        : undefined;
+  const check = finiteDifferenceCheck(previous, current, v);
 
   const dLabel = order === 1 ? `\\frac{d}{d${vTex(v)}}` : `\\frac{d^{${order}}}{d${vTex(v)}^{${order}}}`;
   return {
@@ -455,6 +462,230 @@ function solveCritical(req: SolveRequest): SolveResult {
   };
 }
 
+// ---------- partial derivatives ----------
+
+function solvePartial(req: SolveRequest): SolveSuccess {
+  const { node, notes } = parse(req.expression);
+  const order = req.variable2 ? [req.variable, req.variable2] : [req.variable];
+  for (const w of order) {
+    if (!VARIABLES.includes(w as (typeof VARIABLES)[number])) throw new MathError("Choose a supported variable.");
+  }
+  const letters = [...freeSymbols(node)];
+  notes.push(
+    `When differentiating with respect to ${order[0]}, every other letter${letters.length > 1 ? ` (${letters.filter((s) => s !== order[0]).join(", ")})` : ""} is treated as a constant.`,
+  );
+  if (order.length === 2 && order[0] !== order[1]) {
+    notes.push(`For functions with continuous second partial derivatives, the order does not matter: f_${order[0]}${order[1]} = f_${order[1]}${order[0]} (Clairaut's theorem).`);
+  }
+
+  const sections: StepSection[] = [];
+  const checks: (ResultCheck | undefined)[] = [];
+  let current = node;
+  let subscript = "";
+  for (const w of order) {
+    if (!contains(current, w)) notes.push(`At this stage the expression does not contain ${w}, so its partial derivative with respect to ${w} is 0.`);
+    const { result, steps, truncated } = differentiateWithSteps(current, w, { partial: true });
+    subscript += vTex(w);
+    sections.push({
+      title: `Differentiate with respect to ${w} (other variables held constant)`,
+      steps: [...steps, { rule: "Simplify", latex: `f_{${subscript}} = ${toLatex(result)}`, depth: 0 }],
+      truncated,
+    });
+    checks.push(finiteDifferenceCheck(current, result, w));
+    current = result;
+  }
+
+  const [v, w] = order.map(vTex);
+  const problemLatex = order.length === 1
+    ? `\\frac{\\partial}{\\partial ${v}}\\left[${toLatex(node)}\\right]`
+    : `\\frac{\\partial^{2}}{${v === w ? `\\partial ${v}^{2}` : `\\partial ${w}\\,\\partial ${v}`}}\\left[${toLatex(node)}\\right]`;
+  const warning = checks.find((c) => c?.status === "warning");
+  const check: ResultCheck | undefined = warning ?? (checks.every((c) => c?.status === "verified")
+    ? { status: "verified", message: "Checked numerically: each partial derivative matches a finite-difference estimate, with the other variables held fixed." }
+    : undefined);
+
+  return {
+    ok: true,
+    operation: "partial-derivative",
+    problemLatex,
+    answerLatex: `f_{${subscript}} = ${toLatex(current)}`,
+    answerText: toText(current),
+    method: "Partial differentiation: the usual derivative rules, with every other variable treated as a constant.",
+    sections,
+    notes,
+    check,
+  };
+}
+
+// ---------- implicit differentiation ----------
+
+/** Parses "3, 4" or "(3, 4)" into two exact numbers. */
+function parsePair(input: string): [Node, Node] {
+  let text = input.trim();
+  if (text.startsWith("(") && text.endsWith(")")) text = text.slice(1, -1);
+  let depth = 0;
+  let split = -1;
+  for (let i = 0; i < text.length; i++) {
+    if ("([{".includes(text[i])) depth++;
+    else if (")]}".includes(text[i])) depth--;
+    else if (text[i] === "," && depth === 0) {
+      if (split >= 0) split = -2;
+      else split = i;
+    }
+  }
+  if (split < 0) throw new MathError("Enter the point as two numbers separated by a comma, for example 3, 4.");
+  const [a, b] = [text.slice(0, split), text.slice(split + 1)].map((s, i) => parsePoint(s, i === 0 ? "x-coordinate" : "y-coordinate"));
+  if (a.kind !== "finite" || b.kind !== "finite") throw new MathError("The point must have finite coordinates.");
+  return [simplify(a.node), simplify(b.node)];
+}
+
+/** Checks dy/dx numerically by following the curve F(x, y) = 0 a tiny step either side of points on it. */
+function implicitCheck(F: Node, Fy: Node, dydx: Node, env: Record<string, number>, extra: [number, number] | null): ResultCheck | undefined {
+  const at = (n: Node, x: number, y: number) => evaluate(n, { ...env, x, y });
+  const newton = (x: number, start: number): number | null => {
+    let y = start;
+    for (let i = 0; i < 40; i++) {
+      const f = at(F, x, y);
+      const d = at(Fy, x, y);
+      if (!Number.isFinite(f) || !Number.isFinite(d) || d === 0) return null;
+      const step = f / d;
+      y -= step;
+      if (Math.abs(step) < 1e-13 * Math.max(1, Math.abs(y))) return y;
+    }
+    return Math.abs(at(F, x, y)) < 1e-9 ? y : null;
+  };
+  const points: [number, number][] = extra ? [extra] : [];
+  for (const x0 of [-2.3, -1.1, -0.4, 0.6, 1.4, 2.2, 3.1]) {
+    const roots = findRoots((t) => at(F, x0, t), -20, 20, 2000);
+    if (roots.length) points.push([x0, roots[0]]);
+  }
+  let agree = 0;
+  for (const [x0, y0] of points) {
+    const slope = at(dydx, x0, y0);
+    if (!Number.isFinite(slope) || Math.abs(slope) > 1e6) continue;
+    const h = 1e-5 * Math.max(1, Math.abs(x0));
+    const yp = newton(x0 + h, y0);
+    const ym = newton(x0 - h, y0);
+    if (yp === null || ym === null) continue;
+    const fd = (yp - ym) / (2 * h);
+    if (Math.abs(fd - slope) > 1e-4 * Math.max(1, Math.abs(slope))) {
+      return { status: "warning", message: "A numerical check along the curve disagreed at one point. Please double-check this result." };
+    }
+    agree++;
+  }
+  return agree >= 2
+    ? { status: "verified", message: `Checked numerically: following the curve a tiny step either side of ${agree} points on it gives the same slope.` }
+    : undefined;
+}
+
+function solveImplicit(req: SolveRequest): SolveSuccess {
+  const { lhs, rhs, notes } = parseEquation(req.expression);
+  const x = "x";
+  const y = "y";
+  const F = simplify(add(lhs, mul(num(-1), rhs)));
+  if (!contains(F, y)) {
+    throw new MathError(
+      "The equation does not contain y, so there is nothing to differentiate implicitly.",
+      "Enter an equation relating x and y, such as x^2 + y^2 = 25. For an ordinary function of x, use the derivative calculator.",
+    );
+  }
+  const params = [...freeSymbols(F)].filter((s) => s !== x && s !== y);
+  if (params.length) notes.push(`${params.join(", ")} ${params.length > 1 ? "are" : "is"} treated as ${params.length > 1 ? "constants" : "a constant"}.`);
+
+  const fx = differentiateWithSteps(F, x, { partial: true });
+  const fy = differentiateWithSteps(F, y, { partial: true });
+  if (isNum(fy.result, 0)) throw new MathError("∂F/∂y is zero everywhere, so dy/dx cannot be found from this equation.");
+  const dydx = cancelCommonContent(bestForm(mul(num(-1), fx.result, pow(fy.result, num(-1)))));
+
+  const sections: StepSection[] = [
+    {
+      title: "Rewrite the equation as F(x, y) = 0",
+      steps: [{
+        rule: "Move every term to one side",
+        latex: `${toLatex(lhs)} = ${toLatex(rhs)} \\;\\Longrightarrow\\; F(x, y) = ${toLatex(F)} = 0`,
+        depth: 0,
+      }],
+    },
+    {
+      title: "Partial derivative with respect to x (y held constant)",
+      steps: [...fx.steps, { rule: "Result", latex: `F_{x} = ${toLatex(fx.result)}`, depth: 0 }],
+      truncated: fx.truncated,
+    },
+    {
+      title: "Partial derivative with respect to y (x held constant)",
+      steps: [...fy.steps, { rule: "Result", latex: `F_{y} = ${toLatex(fy.result)}`, depth: 0 }],
+      truncated: fy.truncated,
+    },
+    {
+      title: "Apply the implicit differentiation formula",
+      steps: [{
+        rule: "dy/dx = −F_x / F_y",
+        latex: `\\frac{dy}{dx} = -\\frac{F_{x}}{F_{y}} = -\\frac{${toLatex(fx.result)}}{${toLatex(fy.result)}} = ${toLatex(dydx)}`,
+        note: "This gives the same result as differentiating both sides with respect to x (treating y as a function of x) and solving for dy/dx.",
+        depth: 0,
+      }],
+    },
+  ];
+
+  let answerLatex = `\\frac{dy}{dx} = ${toLatex(dydx)}`;
+  let answerText = toText(dydx);
+  let approx: string | undefined;
+  let extra: [number, number] | null = null;
+
+  if (req.point?.trim()) {
+    const [x0, y0] = parsePair(req.point);
+    const where = `(${toLatex(x0)}, ${toLatex(y0)})`;
+    const env = paramEnv([F], [x, y]);
+    if (params.length === 0) {
+      const residual = evaluate(F, { ...env, x: evaluate(x0), y: evaluate(y0) });
+      if (Math.abs(residual) > 1e-8 * Math.max(1, Math.abs(evaluate(lhs, { x: evaluate(x0), y: evaluate(y0) })))) {
+        throw new MathError(
+          `The point (${toText(x0)}, ${toText(y0)}) is not on the curve: substituting it gives F = ${formatNumber(residual, 6)} instead of 0.`,
+          "Check the coordinates, or leave the point empty to get dy/dx in general.",
+        );
+      }
+      extra = [evaluate(x0), evaluate(y0)];
+    }
+    let slope: Node;
+    try {
+      slope = substituteExact(substituteExact(dydx, x, x0), y, y0);
+    } catch (err) {
+      if (!(err instanceof MathError)) throw err;
+      throw new MathError(
+        `dy/dx is undefined at ${toText(x0)}, ${toText(y0)} because F_y = 0 there.`,
+        "This usually means the curve has a vertical tangent at that point.",
+      );
+    }
+    const intercept = simplify(add(y0, mul(num(-1), slope, x0)));
+    const tangent = simplify(add(mul(slope, sym(x)), intercept));
+    sections.push({
+      title: `Evaluate at ${where.replace(/\\/g, "")}`,
+      steps: [
+        { rule: "Substitute the point", latex: `\\left.\\frac{dy}{dx}\\right|_{${where}} = ${toLatex(slope)}`, depth: 0 },
+        { rule: "Tangent line", latex: `y - ${toLatex(y0)} = ${toLatex(slope)}\\left(x - ${toLatex(x0)}\\right) \\;\\Longrightarrow\\; y = ${toLatex(tangent)}`, note: "Point–slope form of the tangent line at this point.", depth: 0 },
+      ],
+    });
+    answerLatex += `,\\qquad \\left.\\frac{dy}{dx}\\right|_{${where}} = ${toLatex(slope)}`;
+    answerText = `dy/dx = ${answerText}; at (${toText(x0)}, ${toText(y0)}): ${toText(slope)}`;
+    approx = approxOf(slope);
+    notes.push(`Tangent line at the point: y = ${toText(tangent)}.`);
+  }
+
+  notes.push("dy/dx is written in terms of both x and y, which is normal for implicit differentiation.");
+  return {
+    ok: true,
+    operation: "implicit",
+    problemLatex: `\\frac{dy}{dx} \\text{ for } ${toLatex(lhs)} = ${toLatex(rhs)}`,
+    answerLatex,
+    answerText,
+    approx,
+    method: "Implicit differentiation with the formula dy/dx = −F_x / F_y, where F(x, y) = 0.",
+    sections,
+    notes,
+    check: implicitCheck(F, fy.result, dydx, paramEnv([F], [x, y]), extra),
+  };
+}
+
 // ---------- dispatcher ----------
 
 export async function solve(req: SolveRequest): Promise<SolveResult> {
@@ -475,6 +706,10 @@ export async function solve(req: SolveRequest): Promise<SolveResult> {
         return solveTaylor(req);
       case "critical-points":
         return solveCritical(req);
+      case "partial-derivative":
+        return solvePartial(req);
+      case "implicit":
+        return solveImplicit(req);
     }
   } catch (err) {
     if (err instanceof MathError) return { ok: false, error: err.message, hint: err.hint };

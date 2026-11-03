@@ -41,7 +41,7 @@ export function CalculatorPageView({ page }: { page: CalculatorPage }) {
       </PageIntro>
 
       <div className="mt-8">
-        <Solver operations={page.operations} examples={page.solverExamples} title={page.h1} />
+        <Solver operations={page.operations} examples={page.solverExamples} title={page.h1} initialOrder={page.initialOrder} />
       </div>
 
       <div className="mt-16 grid grid-cols-1 gap-16">

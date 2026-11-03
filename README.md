@@ -2,7 +2,7 @@
 
 A free, browser-based calculus solver with step-by-step solutions, built with Next.js (App Router), TypeScript and Tailwind CSS.
 
-- **Operations:** derivatives (orders 1–10), indefinite and definite integrals (including improper ones), limits (two-sided, one-sided and at ±∞), Taylor/Maclaurin polynomials (order up to 10), and critical points with classification.
+- **Operations:** derivatives (orders 1–10), indefinite and definite integrals (including improper ones), limits (two-sided, one-sided and at ±∞), Taylor/Maclaurin polynomials (order up to 10), critical points with classification, partial derivatives (up to second order, including mixed partials) and implicit differentiation (dy/dx, with slope and tangent line at a point).
 - **Private by design:** all math runs in the visitor's browser, in a Web Worker. There are no API keys, environment variables, database, backend, accounts, analytics or third-party requests.
 - **Honest output:** every answer is checked independently before it is shown, and the solver says when it cannot solve a problem.
 - **Static:** every page is prerendered as static HTML.
@@ -115,6 +115,10 @@ Search volumes were **not** researched: no keyword data source was available, so
 | `/limit-calculator`               | limit calculator                  | limit calculator with steps, one-sided limit, limit at infinity, L'Hôpital calculator |
 | `/taylor-series-calculator`       | taylor series calculator          | maclaurin series calculator, taylor polynomial calculator                             |
 | `/critical-points-calculator`     | critical points calculator        | local max and min calculator, find critical numbers                                   |
+| `/second-derivative-calculator`   | second derivative calculator      | concavity, inflection points, f''(x) calculator                                       |
+| `/partial-derivative-calculator`  | partial derivative calculator     | fx fy calculator, mixed partial derivative, ∂f/∂x                                     |
+| `/chain-rule-calculator`          | chain rule calculator             | derivative of composite functions, chain rule with steps                             |
+| `/implicit-differentiation-calculator` | implicit differentiation calculator | dy/dx of an equation, slope and tangent line at a point                       |
 | `/guides/derivative-rules`        | derivative rules                  | product rule, quotient rule, chain rule examples (informational)                      |
 | `/guides/integration-techniques`  | integration techniques            | u-substitution, integration by parts, partial fractions (informational)               |
 | `/how-it-works`, `/faq`, `/about` | trust and E-E-A-T                 | methodology, accuracy, privacy                                                        |
@@ -135,7 +139,7 @@ Search volumes were **not** researched: no keyword data source was available, so
 
 | Check | Result |
 | ----- | ------ |
-| `npm test` | **132 / 132 passed**: 85 known-answer math tests (derivatives, integrals, improper integrals, limits incl. ±∞ and one-sided, Taylor, critical points, invalid input), 41 published worked examples (calculator pages, guides, blog, homepage) reproduced by the solver, 6 consent-storage tests |
+| `npm test` | **169 / 169 passed**: 100 known-answer math tests (derivatives, integrals, improper integrals, limits incl. ±∞ and one-sided, Taylor, critical points, invalid input), 63 published worked examples (calculator pages, guides, blog, homepage) reproduced by the solver, 6 consent-storage tests |
 | `npm run typecheck` | Passed |
 | `npm run lint` | Passed (0 problems) |
 | `npm run build` | Passed; 23 routes, all static |
@@ -160,7 +164,7 @@ Mobile scores varied by about ±5 between runs, mostly in Total Blocking Time; s
 
 ### Known limitations
 
-- Not supported: differential equations, multivariable calculus, implicit differentiation, piecewise functions, complex numbers, series convergence tests.
+- Not supported: differential equations, multiple integrals, vector calculus, second derivatives of implicit equations, piecewise functions, complex numbers, series convergence tests.
 - Trig substitution and some partial-fraction cases are solved by the Algebrite fallback, without detailed steps.
 - Some limits fall back to a clearly labelled numerical estimate.
 - Critical points are only searched within the chosen interval.

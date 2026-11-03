@@ -9,6 +9,8 @@ export const homeSolverExamples: SolverExample[] = [
   { label: "lim sin(x)/x, x→0", operation: "limit", expression: "sin(x)/x", point: "0" },
   { label: "Taylor e^x", operation: "taylor", expression: "e^x", point: "0", order: 5 },
   { label: "Critical x^3 - 3x", operation: "critical-points", expression: "x^3 - 3x" },
+  { label: "∂/∂y x^2 y^3", operation: "partial-derivative", expression: "x^2 y^3", variable: "y" },
+  { label: "dy/dx x^2+y^2=25", operation: "implicit", expression: "x^2 + y^2 = 25" },
 ];
 
 export const syntaxGuide: { input: string; meaning: string; latex: string }[] = [
@@ -65,5 +67,5 @@ export const homeFaqs: Faq[] = [
   { q: "Is my input sent anywhere?", a: "No. The math engine runs inside your browser. Your expressions are never uploaded, logged or stored, and once the page has loaded, solving does not need an internet connection." },
   { q: "How accurate are the answers?", a: "Symbolic answers are exact, and each is checked independently: antiderivatives by differentiation, limits numerically, derivatives against finite differences. Numerical answers are labelled as such and are typically accurate to about 10 significant digits." },
   { q: "Can I use it for homework or exams?", a: "Use it to learn and to check your own work. Follow your teacher's and school's rules: many courses do not allow calculators like this on graded assignments or exams." },
-  { q: "What problems can't it solve?", a: "Differential equations, multivariable calculus, implicit differentiation, series convergence tests and word problems are not supported. Some integrals have no elementary antiderivative, and the solver tells you when that is the case." },
+  { q: "What problems can't it solve?", a: "Differential equations, multiple integrals, vector calculus, series convergence tests and word problems are not supported. For several variables, it handles partial derivatives up to second order. Some integrals have no elementary antiderivative, and the solver tells you when that is the case." },
 ];

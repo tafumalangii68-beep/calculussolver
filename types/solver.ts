@@ -4,7 +4,9 @@ export type Operation =
   | "definite-integral"
   | "limit"
   | "taylor"
-  | "critical-points";
+  | "critical-points"
+  | "partial-derivative"
+  | "implicit";
 
 export type LimitSide = "both" | "left" | "right";
 
@@ -12,6 +14,8 @@ export interface SolveRequest {
   operation: Operation;
   expression: string;
   variable: string;
+  /** Partial derivatives: optional second variable for mixed or repeated partials (f_xy, f_xx). */
+  variable2?: string;
   /** Derivative order, or the highest power kept in a Taylor polynomial. */
   order?: number;
   /** Definite integral bounds. */

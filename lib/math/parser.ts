@@ -400,3 +400,24 @@ export function parsePoint(input: string, label: string): PointValue {
   }
   return { kind: "finite", node };
 }
+
+export interface EquationResult {
+  lhs: Node;
+  rhs: Node;
+  notes: string[];
+}
+
+/** Parses an equation such as "x^2 + y^2 = 25". Without "=", the expression is read as "… = 0". */
+export function parseEquation(input: string): EquationResult {
+  const text = input.replace(/==/g, "=");
+  const parts = text.split("=");
+  if (parts.length > 2) throw new MathError("Enter a single equation with one \"=\" sign.");
+  if (parts.length === 2 && (!parts[0].trim() || !parts[1].trim())) {
+    throw new MathError(`The ${parts[0].trim() ? "right" : "left"} side of the equation is empty.`);
+  }
+  const lhs = parse(parts[0]);
+  const rhs = parts.length === 2 ? parse(parts[1]) : { node: num(0), notes: [] };
+  const notes = [...new Set([...lhs.notes, ...rhs.notes])];
+  if (parts.length === 1) notes.push("No \"=\" sign was entered, so the equation is read as expression = 0.");
+  return { lhs: lhs.node, rhs: rhs.node, notes };
+}

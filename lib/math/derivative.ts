@@ -43,10 +43,17 @@ class Differentiator {
   steps: Step[] = [];
   truncated = false;
 
-  constructor(private v: string, private record: boolean) {}
+  constructor(
+    private v: string,
+    private record: boolean,
+    /** Use ∂ notation: other variables are held constant. */
+    private partial = false,
+  ) {}
 
   private D(n: Node): string {
-    return `\\frac{d}{d${this.v === "θ" ? "\\theta" : this.v}}\\left[${toLatex(n)}\\right]`;
+    const v = this.v === "θ" ? "\\theta" : this.v;
+    const op = this.partial ? `\\frac{\\partial}{\\partial ${v}}` : `\\frac{d}{d${v}}`;
+    return `${op}\\left[${toLatex(n)}\\right]`;
   }
 
   /** Reserves a step slot so parent steps appear before their children. */
@@ -268,8 +275,8 @@ export interface DerivativeWithSteps {
   truncated: boolean;
 }
 
-export function differentiateWithSteps(n: Node, v: string): DerivativeWithSteps {
-  const d = new Differentiator(v, true);
+export function differentiateWithSteps(n: Node, v: string, options: { partial?: boolean } = {}): DerivativeWithSteps {
+  const d = new Differentiator(v, true, options.partial);
   const result = d.d(n);
   return { result: bestForm(result), steps: d.steps, truncated: d.truncated };
 }

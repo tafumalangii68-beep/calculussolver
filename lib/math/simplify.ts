@@ -569,3 +569,41 @@ function replaceSym(n: Node, v: string, value: Node): Node {
   }
 }
 
+
+/**
+ * Cancels a common integer factor between numerator and denominator,
+ * e.g. (6y − 3x²)/(3y² − 6x) → (2y − x²)/(y² − 2x).
+ */
+export function cancelCommonContent(n: Node): Node {
+  const s = simplify(n);
+  if (s.k !== "mul") return s;
+  const top: Node[] = [];
+  const bottom: Node[] = [];
+  for (const f of s.factors) {
+    if (f.k === "pow" && f.exp.k === "num" && f.exp.v.n < 0) bottom.push(simplifyPow(f.base, numR(R.neg(f.exp.v))));
+    else top.push(f);
+  }
+  if (bottom.length === 0) return s;
+  const N = simplifyMul(top);
+  const D = simplifyMul(bottom);
+  const content = (x: Node): number | null => {
+    const terms = x.k === "add" ? x.terms : [x];
+    let g = 0;
+    for (const t of terms) {
+      const { coef } = splitCoefficient(t);
+      if (coef.d !== 1) return null;
+      g = gcdInt(g, Math.abs(coef.n));
+    }
+    return g;
+  };
+  const cn = content(N);
+  const cd = content(D);
+  const g = cn && cd ? gcdInt(cn, cd) : 1;
+  // Rebuilding also folds a leading minus sign into a sum: -(y - 1)/x -> (1 - y)/x.
+  return simplifyMul([simplifyMul([N, num(1, g)]), simplifyPow(simplifyMul([D, num(1, g)]), num(-1))]);
+}
+
+function gcdInt(a: number, b: number): number {
+  while (b) [a, b] = [b, a % b];
+  return a;
+}

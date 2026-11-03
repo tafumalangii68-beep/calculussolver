@@ -21,6 +21,8 @@ export interface WorkedExample {
   check: {
     operation: Operation;
     expression: string;
+    variable?: string;
+    variable2?: string;
     expected: string;
     order?: number;
     lower?: string;
@@ -34,6 +36,8 @@ export interface SolverExample {
   label: string;
   operation: Operation;
   expression: string;
+  variable?: string;
+  variable2?: string;
   order?: number;
   lower?: string;
   upper?: string;

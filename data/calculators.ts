@@ -4,6 +4,7 @@
 import type { CalculatorSlug } from "@/lib/site-config";
 import type { Faq, Illustration, SolverExample, WorkedExample } from "@/types/content";
 import type { Operation } from "@/types/solver";
+import { derivativeCalculators } from "./calculators-derivatives";
 
 const t = String.raw;
 
@@ -22,6 +23,8 @@ export interface CalculatorPage {
   /** Optional illustration shown with the definition section. */
   image?: Illustration;
   operations: Operation[];
+  /** Starting derivative order for the solver (the second derivative calculator uses 2). */
+  initialOrder?: number;
   solverExamples: SolverExample[];
   definition: { heading: string; paragraphs: string[]; formula?: string };
   rules: { heading: string; intro: string; items: Rule[] };
@@ -36,7 +39,7 @@ export interface CalculatorPage {
   articles?: string[];
 }
 
-export const calculators: Record<CalculatorSlug, CalculatorPage> = {
+const coreCalculators: Record<string, CalculatorPage> = {
   "derivative-calculator": {
     slug: "derivative-calculator",
     image: { src: "/images/derivative.webp", alt: "A curve with tangent lines at three points: rising, flat at the peak, and falling", width: 1600, height: 800 },
@@ -140,20 +143,20 @@ export const calculators: Record<CalculatorSlug, CalculatorPage> = {
       { title: "log versus ln", text: "Like most computer algebra systems, the calculator reads log(x) as the natural log ln(x). For base 10, type log10(x) or log(x, 10)." },
     ],
     limitations: [
-      "Implicit differentiation (for example dy/dx from x² + y² = 25) is not supported; enter an explicit function instead.",
-      "Other letters are treated as constants, which gives a partial derivative with respect to the chosen variable. Mixed or multivariable derivatives are not available.",
+      "For dy/dx from an equation such as x² + y² = 25, use the implicit differentiation calculator.",
+      "Other letters are treated as constants here. For ∂ notation and second partials such as fxy, use the partial derivative calculator.",
       "Piecewise, floor, ceiling and factorial functions are not supported.",
       "The derivative of |x| is shown as x/|x|, which is undefined at x = 0. That is correct, but it is easy to overlook.",
       "Answers can be written differently from your textbook (factored versus expanded, sec²x versus 1 + tan²x) and still be equal.",
     ],
     faqs: [
       { q: "How do I find a second or third derivative?", a: "Choose the order from the Order menu (up to the 10th derivative). The solution shows the steps for each order separately, so you can follow how the first derivative feeds into the second." },
-      { q: "Can the derivative calculator do partial derivatives?", a: "Yes, in a limited way. Pick the variable you are differentiating with respect to; every other letter is treated as a constant. For example, with variable x, d/dx (a x² y) = 2axy. It does not compute mixed partials in one step." },
+      { q: "Can the derivative calculator do partial derivatives?", a: "Yes. Here, every letter other than the chosen variable is treated as a constant, so d/dx (a x² y) = 2axy. The dedicated partial derivative calculator adds ∂ notation and second partials such as fxx and fxy." },
       { q: "Why doesn't my answer match the textbook exactly?", a: "Derivatives can be written in many equivalent ways. The calculator chooses a compact form, which may be expanded where your book factors (or the reverse). Check equivalence by expanding both, or by plugging in a value of x." },
-      { q: "Does it support implicit differentiation?", a: "No. The calculator differentiates explicit functions y = f(x). For implicit differentiation, differentiate both sides by hand, using the calculator to check individual pieces." },
+      { q: "Does it support implicit differentiation?", a: "This calculator differentiates explicit functions y = f(x). For an equation such as x² + y² = 25, use the implicit differentiation calculator, which finds dy/dx and the slope at a point." },
       { q: "How does the calculator know which rule to apply?", a: "It looks at the outermost operation of the expression. A sum gets the sum rule, a product the product rule, a quotient the quotient rule, and a function of something other than plain x gets the chain rule. It then works inward." },
     ],
-    related: ["critical-points-calculator", "taylor-series-calculator", "integral-calculator"],
+    related: ["second-derivative-calculator", "chain-rule-calculator", "partial-derivative-calculator", "implicit-differentiation-calculator", "critical-points-calculator"],
     articles: ["how-to-find-the-derivative-of-a-function"],
     guide: { href: "/guides/derivative-rules", label: "Derivative rules explained with examples" },
   },
@@ -601,5 +604,9 @@ export const calculators: Record<CalculatorSlug, CalculatorPage> = {
     guide: { href: "/guides/derivative-rules", label: "Derivative rules refresher" },
   },
 };
+
+export const calculators = Object.fromEntries(
+  [...Object.values(coreCalculators), ...derivativeCalculators].map((page) => [page.slug, page]),
+) as Record<CalculatorSlug, CalculatorPage>;
 
 export const calculatorList = Object.values(calculators);

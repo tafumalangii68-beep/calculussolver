@@ -34,11 +34,19 @@ export type CalculatorSlug =
   | "integral-calculator"
   | "limit-calculator"
   | "taylor-series-calculator"
-  | "critical-points-calculator";
+  | "critical-points-calculator"
+  | "second-derivative-calculator"
+  | "partial-derivative-calculator"
+  | "chain-rule-calculator"
+  | "implicit-differentiation-calculator";
 
 // `titleClass` gives each calculator its own title colour in the menus (tokens in app/globals.css).
 export const calculatorNav: { slug: CalculatorSlug; label: string; blurb: string; titleClass: string }[] = [
   { slug: "derivative-calculator", label: "Derivative Calculator", blurb: "Any order, with every rule shown", titleClass: "text-calc-derivative" },
+  { slug: "second-derivative-calculator", label: "Second Derivative Calculator", blurb: "f″(x), concavity and inflection", titleClass: "text-calc-second" },
+  { slug: "partial-derivative-calculator", label: "Partial Derivative Calculator", blurb: "∂f/∂x, ∂f/∂y and fxy", titleClass: "text-calc-partial" },
+  { slug: "chain-rule-calculator", label: "Chain Rule Calculator", blurb: "Compositions, layer by layer", titleClass: "text-calc-chain" },
+  { slug: "implicit-differentiation-calculator", label: "Implicit Differentiation Calculator", blurb: "dy/dx for equations in x and y", titleClass: "text-calc-implicit" },
   { slug: "integral-calculator", label: "Integral Calculator", blurb: "Indefinite and definite integrals", titleClass: "text-calc-integral" },
   { slug: "limit-calculator", label: "Limit Calculator", blurb: "One-sided, two-sided and at infinity", titleClass: "text-calc-limit" },
   { slug: "taylor-series-calculator", label: "Taylor Series Calculator", blurb: "Taylor and Maclaurin polynomials", titleClass: "text-calc-taylor" },

@@ -13,6 +13,8 @@ const RELATED: Record<Operation, { href: string; label: string }> = {
   limit: { href: "/limit-calculator", label: "Learn how limits are evaluated" },
   taylor: { href: "/taylor-series-calculator", label: "Learn how Taylor polynomials are built" },
   "critical-points": { href: "/critical-points-calculator", label: "Learn how critical points are classified" },
+  "partial-derivative": { href: "/partial-derivative-calculator", label: "Learn how partial derivatives work" },
+  implicit: { href: "/implicit-differentiation-calculator", label: "Learn how implicit differentiation works" },
 };
 
 function CopyButton({ text, label }: { text: string; label: string }) {

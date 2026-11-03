@@ -30,6 +30,8 @@ const SUPPORTED = [
   { op: "Limits", detail: "Two-sided, one-sided and at ±∞, using substitution, factoring and L'Hôpital's rule.", example: t`\lim_{x\to 0}\frac{\sin x}{x}` },
   { op: "Taylor series", detail: "Taylor and Maclaurin polynomials up to order 10 about any center.", example: t`e^{x} \approx 1 + x + \tfrac{x^{2}}{2}` },
   { op: "Critical points", detail: "Solve f′(x) = 0 or undefined, then classify as local max, min or neither.", example: t`f'(x) = 3x^{2} - 3` },
+  { op: "Partial derivatives", detail: "∂f/∂x, ∂f/∂y and second partials such as fxy, holding other variables constant.", example: t`\frac{\partial}{\partial y}\,x^{2}y^{3}` },
+  { op: "Implicit differentiation", detail: "dy/dx for equations in x and y, plus the slope and tangent line at a point.", example: t`x^{2} + y^{2} = 25` },
 ];
 
 const ENTRY_MISTAKES = [
@@ -59,7 +61,7 @@ export default function HomePage() {
         <div className="mt-6">
           <Solver
             title="Calculus Solver"
-            operations={["derivative", "indefinite-integral", "definite-integral", "limit", "taylor", "critical-points"]}
+            operations={["derivative", "indefinite-integral", "definite-integral", "limit", "taylor", "critical-points", "partial-derivative", "implicit"]}
             examples={homeSolverExamples}
           />
         </div>
@@ -214,7 +216,7 @@ export default function HomePage() {
           <h2 id="limits">Limitations</h2>
           <p>No solver handles everything, and this one tells you when it reaches its limits. It does not currently support:</p>
           <ul>
-            <li>Differential equations, multivariable calculus, vector calculus, or implicit differentiation.</li>
+            <li>Differential equations, multiple integrals or vector calculus. (Partial derivatives up to second order are supported.)</li>
             <li>Piecewise functions, floor and ceiling, factorials, or complex numbers.</li>
             <li>Convergence tests for infinite series, or word problems.</li>
             <li>

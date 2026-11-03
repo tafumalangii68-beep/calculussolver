@@ -3,7 +3,7 @@
 import { Keyboard, Loader2, RotateCcw, ShieldCheck } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { MathError } from "@/lib/math/errors";
-import { parse } from "@/lib/math/parser";
+import { parse, parseEquation } from "@/lib/math/parser";
 import { toLatex } from "@/lib/math/print";
 import type { SolverExample } from "@/types/content";
 import type { LimitSide, Operation, SolveRequest } from "@/types/solver";
@@ -19,6 +19,8 @@ export const OPERATION_LABELS: Record<Operation, string> = {
   limit: "Limit",
   taylor: "Taylor series",
   "critical-points": "Critical points",
+  "partial-derivative": "Partial derivative",
+  implicit: "Implicit differentiation",
 };
 
 const VARIABLES = ["x", "t", "y", "z", "u", "θ"];
@@ -35,6 +37,10 @@ interface Fields {
   taylorOrder: number;
   rangeMin: string;
   rangeMax: string;
+  /** Partial derivatives: optional second variable ("" = none). */
+  variable2: string;
+  /** Implicit differentiation: optional point "x, y". */
+  implicitPoint: string;
 }
 
 const DEFAULTS: Fields = {
@@ -49,6 +55,8 @@ const DEFAULTS: Fields = {
   taylorOrder: 5,
   rangeMin: "-10",
   rangeMax: "10",
+  variable2: "",
+  implicitPoint: "",
 };
 
 function toRequest(op: Operation, f: Fields): SolveRequest {
@@ -64,17 +72,23 @@ function toRequest(op: Operation, f: Fields): SolveRequest {
       return { ...base, point: f.center, order: f.taylorOrder };
     case "critical-points":
       return { ...base, rangeMin: f.rangeMin, rangeMax: f.rangeMax };
+    case "partial-derivative":
+      return { ...base, variable2: f.variable2 || undefined };
+    case "implicit":
+      return { ...base, variable: "x", point: f.implicitPoint };
     default:
       return base;
   }
 }
 
 function fromExample(ex: SolverExample, current: Fields): Fields {
-  const next: Fields = { ...current, expression: ex.expression, variable: "x" };
+  const next: Fields = { ...current, expression: ex.expression, variable: ex.variable ?? "x" };
   if (ex.operation === "derivative") next.order = ex.order ?? 1;
   if (ex.operation === "definite-integral") Object.assign(next, { lower: ex.lower ?? "0", upper: ex.upper ?? "1" });
   if (ex.operation === "limit") Object.assign(next, { point: ex.point ?? "0", side: ex.side ?? "both" });
   if (ex.operation === "taylor") Object.assign(next, { center: ex.point ?? "0", taylorOrder: ex.order ?? 5 });
+  if (ex.operation === "partial-derivative") next.variable2 = ex.variable2 ?? "";
+  if (ex.operation === "implicit") next.implicitPoint = ex.point ?? "";
   return next;
 }
 
@@ -91,12 +105,15 @@ export interface SolverProps {
   examples: SolverExample[];
   /** Accessible name for the solver region. */
   title: string;
+  /** Starting derivative order (the second derivative calculator uses 2). */
+  initialOrder?: number;
 }
 
-export function Solver({ operations, examples, title }: SolverProps) {
+export function Solver({ operations, examples, title, initialOrder = 1 }: SolverProps) {
   const uid = useId();
+  const startFields: Fields = { ...DEFAULTS, order: initialOrder };
   const [operation, setOperation] = useState<Operation>(operations[0]);
-  const [fields, setFields] = useState<Fields>(DEFAULTS);
+  const [fields, setFields] = useState<Fields>(startFields);
   const [keypad, setKeypad] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
@@ -115,14 +132,21 @@ export function Solver({ operations, examples, title }: SolverProps) {
 
   const set = <K extends keyof Fields>(key: K, value: Fields[K]) => setFields((f) => ({ ...f, [key]: value }));
 
+  const isImplicit = operation === "implicit";
+  const isPartial = operation === "partial-derivative";
   const preview = useMemo(() => {
     if (!fields.expression.trim()) return null;
     try {
-      return { ok: true as const, latex: toLatex(parse(fields.expression).node) };
+      if (isImplicit) {
+        const { lhs, rhs } = parseEquation(fields.expression);
+        return { ok: true as const, latex: `${toLatex(lhs)} = ${toLatex(rhs)}` };
+      }
+      const name = isPartial ? "f" : `f(${fields.variable === "θ" ? "\\theta" : fields.variable})`;
+      return { ok: true as const, latex: `${name} = ${toLatex(parse(fields.expression).node)}` };
     } catch (err) {
       return { ok: false as const, message: err instanceof MathError ? err.message : "This expression could not be read." };
     }
-  }, [fields.expression]);
+  }, [fields.expression, fields.variable, isImplicit, isPartial]);
 
   const run = (op: Operation, f: Fields) => {
     solve(toRequest(op, f));
@@ -193,10 +217,10 @@ export function Solver({ operations, examples, title }: SolverProps) {
           </fieldset>
         )}
 
-        <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1fr)_auto]">
+        <div className={`mt-4 grid grid-cols-1 gap-3 ${isImplicit ? "" : "sm:grid-cols-[minmax(0,1fr)_auto]"}`}>
           <div>
             <label htmlFor={id("expr")} className={labelClass}>
-              Function f({v})
+              {isImplicit ? "Equation in x and y" : isPartial ? "Function of several variables" : `Function f(${v})`}
             </label>
             <input
               ref={inputRef}
@@ -206,16 +230,16 @@ export function Solver({ operations, examples, title }: SolverProps) {
               autoComplete="off"
               autoCapitalize="off"
               spellCheck={false}
-              placeholder="e.g. x^2 sin(x)"
+              placeholder={isImplicit ? "e.g. x^2 + y^2 = 25" : isPartial ? "e.g. x^2 y + sin(x y)" : "e.g. x^2 sin(x)"}
               value={fields.expression}
               onChange={(e) => set("expression", e.target.value)}
               aria-describedby={id("preview")}
               className={`${inputClass} mt-1 font-mono text-base`}
             />
           </div>
-          <div>
+          <div hidden={isImplicit}>
             <label htmlFor={id("var")} className={labelClass}>
-              Variable
+              {isPartial ? "With respect to" : "Variable"}
             </label>
             <select id={id("var")} value={v} onChange={(e) => set("variable", e.target.value)} className={`${inputClass} mt-1 sm:w-24`}>
               {VARIABLES.map((name) => (
@@ -232,7 +256,7 @@ export function Solver({ operations, examples, title }: SolverProps) {
           {preview?.ok && (
             <span className="flex min-w-0 flex-1 items-center gap-2">
               <span className="shrink-0 text-xs font-medium uppercase tracking-wider text-muted">Reads as</span>
-              <MathView latex={`f(${v === "θ" ? "\\theta" : v}) = ${preview.latex}`} display className="math-left min-w-0 flex-1" />
+              <MathView latex={preview.latex} display className="math-left min-w-0 flex-1" />
             </span>
           )}
           {preview && !preview.ok && <span className="text-sm text-danger">{preview.message}</span>}
@@ -267,7 +291,7 @@ export function Solver({ operations, examples, title }: SolverProps) {
           <button
             type="button"
             onClick={() => {
-              setFields(DEFAULTS);
+              setFields(startFields);
               reset();
               inputRef.current?.focus();
             }}
@@ -326,6 +350,32 @@ function OperationOptions({
 }) {
   const small = `${inputClass} mt-1 font-mono`;
   switch (operation) {
+    case "partial-derivative":
+      return (
+        <div className="mt-4 max-w-xs">
+          <label htmlFor={id("var2")} className={labelClass}>
+            Then with respect to <span className="font-normal text-muted">(optional, for second partials)</span>
+          </label>
+          <select id={id("var2")} value={fields.variable2} onChange={(e) => set("variable2", e.target.value)} className={`${inputClass} mt-1`}>
+            <option value="">None (first partial)</option>
+            {VARIABLES.map((name) => (
+              <option key={name} value={name}>
+                {name}
+              </option>
+            ))}
+          </select>
+        </div>
+      );
+    case "implicit":
+      return (
+        <div className="mt-4 max-w-md">
+          <label htmlFor={id("ipoint")} className={labelClass}>
+            At the point <span className="font-normal text-muted">(optional)</span>
+          </label>
+          <input id={id("ipoint")} value={fields.implicitPoint} onChange={(e) => set("implicitPoint", e.target.value)} className={small} placeholder="e.g. 3, 4" />
+          <p className="mt-1 text-xs text-muted">Finds dy/dx. Add a point on the curve to get the slope and tangent line there.</p>
+        </div>
+      );
     case "derivative":
       return (
         <div className="mt-4 max-w-48">

@@ -258,3 +258,65 @@ describe("claims made in the site content", () => {
     expect(r.answerText).toBe("1/2");
   });
 });
+
+describe("partial derivatives", () => {
+  it.each([
+    ["x^2 y + 3x y^3", "x", undefined, "2x y + 3y^3"],
+    ["x^2 y + 3x y^3", "y", undefined, "x^2 + 9x y^2"],
+    ["x^2 y + 3x y^3", "x", "y", "2x + 9y^2"],
+    ["x^2 y + 3x y^3", "y", "x", "2x + 9y^2"],
+    ["e^(x y)", "x", "x", "y^2 e^(x y)"],
+    ["x y z + sin(x z)", "z", undefined, "x y + x cos(x z)"],
+  ])("∂ of %s wrt %s then %s", async (expression, variable, variable2, expected) => {
+    const r = await ok({ operation: "partial-derivative", expression, variable, variable2 });
+    const env = (x: number) => ({ x, y: 0.7 * x + 0.31, z: 1.3 - 0.4 * x });
+    for (const x of POINTS) {
+      const a = evaluate(parse(r.answerText).node, env(x));
+      const b = evaluate(parse(expected).node, env(x));
+      expect(Math.abs(a - b)).toBeLessThan(1e-8 * Math.max(1, Math.abs(b)));
+    }
+    expect(r.check?.status).toBe("verified");
+    expect(r.problemLatex).toContain("\partial");
+  });
+});
+
+describe("implicit differentiation", () => {
+  it("finds dy/dx for a circle and evaluates it at a point", async () => {
+    const r = await ok({ operation: "implicit", expression: "x^2 + y^2 = 25", point: "3, 4" });
+    expect(r.answerText).toBe("dy/dx = -x/y; at (3, 4): -3/4");
+    expect(r.notes.join(" ")).toContain("y = 25/4 - (3*x)/4");
+    expect(r.check?.status).toBe("verified");
+  });
+
+  it("cancels common factors (folium of Descartes)", async () => {
+    const r = await ok({ operation: "implicit", expression: "x^3 + y^3 = 6xy", point: "3, 3" });
+    expect(r.answerText).toBe("dy/dx = (2*y - x^2)/(y^2 - 2*x); at (3, 3): -1");
+  });
+
+  it("handles exact constants such as e", async () => {
+    const r = await ok({ operation: "implicit", expression: "e^y + x y = e", point: "0, 1" });
+    expect(r.answerText).toContain("at (0, 1): -1/e");
+  });
+
+  it("rejects points that are not on the curve", async () => {
+    const r = await solve({ operation: "implicit", expression: "x^2 + y^2 = 25", point: "3, 5", variable: "x" });
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.error).toMatch(/not on the curve/);
+  });
+
+  it("reports vertical tangents instead of dividing by zero", async () => {
+    const r = await solve({ operation: "implicit", expression: "x^2 + y^2 = 25", point: "5, 0", variable: "x" });
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.hint).toMatch(/vertical tangent/);
+  });
+
+  it("requires y in the equation", async () => {
+    const r = await solve({ operation: "implicit", expression: "x^2 + 3x = 4", variable: "x" });
+    expect(r.ok).toBe(false);
+  });
+
+  it.each(["x^2 = = 4", "x^2 + y^2 = ", "x = y = 1"])("rejects malformed equation %j", async (expression) => {
+    const r = await solve({ operation: "implicit", expression, variable: "x" });
+    expect(r.ok).toBe(false);
+  });
+});

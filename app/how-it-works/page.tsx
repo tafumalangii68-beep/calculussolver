@@ -125,12 +125,30 @@ export default function HowItWorksPage() {
         when f″ is zero or undefined, with the first derivative test.
       </p>
 
+      <h2>9. Partial derivatives</h2>
+      <p>
+        Partial derivatives use the same differentiator, with ∂ notation, and treat every letter other than the chosen variable
+        as a constant. For second partials such as f<sub>xy</sub>, the result of the first stage is differentiated again with
+        respect to the second variable. <strong>Check:</strong> the other variables are fixed at test values and each stage is
+        compared with a finite-difference estimate.
+      </p>
+
+      <h2>10. Implicit differentiation</h2>
+      <p>The equation is rewritten as F(x, y) = 0, and dy/dx comes from the implicit function theorem:</p>
+      <Tex display>{t`\frac{dy}{dx} = -\frac{F_{x}}{F_{y}}`}</Tex>
+      <p>
+        Both partial derivatives are shown step by step, and common numerical factors are cancelled. A point you supply is
+        checked against the equation before the slope and tangent line are computed. <strong>Check:</strong> points on the
+        curve are found numerically, the curve is followed a tiny step either side of each one with Newton&apos;s method, and
+        the measured slope must match the formula.
+      </p>
+
       <h2>Accuracy and limitations</h2>
       <ul>
         <li>Exact answers are exact. Numerical values are typically accurate to about 10 significant digits.</li>
         <li>Computer algebra can produce answers that are equivalent to, but look different from, a textbook&apos;s.</li>
-        <li>The solver does not support differential equations, multivariable calculus, implicit differentiation, piecewise
-          functions or complex numbers.</li>
+        <li>The solver does not support differential equations, multiple integrals, vector calculus, piecewise functions or
+          complex numbers. For several variables it computes partial derivatives up to second order.</li>
         <li>Problems that take more than about 12 seconds are stopped, so the page stays responsive.</li>
       </ul>
       <p>

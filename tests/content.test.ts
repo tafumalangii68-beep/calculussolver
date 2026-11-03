@@ -43,8 +43,10 @@ describe("published worked examples", () => {
     let offset: number | null = null;
     let compared = 0;
     for (const x of POINTS) {
-      const a = evaluate(actual, { x });
-      const b = evaluate(expected, { x });
+      // Multivariable answers (partial and implicit derivatives) are compared at points (x, y, z, t).
+      const env = { x, y: 0.7 * x + 0.31, z: 1.3 - 0.4 * x, t: x };
+      const a = evaluate(actual, env);
+      const b = evaluate(expected, env);
       if (!Number.isFinite(a) || !Number.isFinite(b)) continue;
       const diff = a - b;
       if (constantOffset) offset ??= diff;

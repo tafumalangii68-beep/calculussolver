@@ -65,7 +65,8 @@ export function NavMenu() {
           <ul
             id="calculator-menu"
             hidden={!calcOpen}
-            className="absolute right-0 top-full mt-2 w-80 rounded-card border border-line bg-surface p-2 shadow-card"
+            // Two columns, filled top to bottom: the five derivative calculators, then the rest.
+            className="absolute right-0 top-full mt-2 w-[40rem] grid-flow-col grid-rows-5 rounded-card border border-line bg-surface p-2 shadow-card [&:not([hidden])]:grid"
           >
             {calculatorNav.map((c) => (
               <li key={c.slug}>
