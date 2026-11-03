@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Solver } from "@/components/solver/Solver";
 import type { CalculatorPage } from "@/data/calculators";
 import { getPost } from "@/data/blog";
+import { guides } from "@/data/guides";
 import { calculators } from "@/data/calculators";
 import { webApplicationLd } from "@/lib/seo";
 import { calculatorNav } from "@/lib/site-config";
@@ -124,10 +125,19 @@ export function CalculatorPageView({ page }: { page: CalculatorPage }) {
               cards={[
                 { href: "/", title: "Calculus Solver", description: "All operations in one place: derivatives, integrals, limits and more." },
                 ...related,
-                ...(page.guide ? [{ href: page.guide.href, title: page.guide.label, description: "A study guide with explanations and practice examples." }] : []),
+                ...(page.guide
+                  ? [
+                      {
+                        href: page.guide.href,
+                        title: page.guide.label,
+                        description: "A study guide with explanations and practice examples.",
+                        titleClass: guides.find((g) => page.guide!.href === `/guides/${g.slug}`)?.titleClass,
+                      },
+                    ]
+                  : []),
                 ...(page.articles ?? []).map((slug) => {
                   const post = getPost(slug)!;
-                  return { href: `/blog/${slug}`, title: post.title.split(" (")[0], description: "Step-by-step tutorial on the blog." };
+                  return { href: `/blog/${slug}`, title: post.title.split(" (")[0], description: "Step-by-step tutorial on the blog.", titleClass: post.titleClass };
                 }),
               ]}
             />

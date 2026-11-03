@@ -9,6 +9,8 @@ const t = String.raw;
 export const posts: Guide[] = [
   {
     slug: "how-to-find-the-derivative-of-a-function",
+    titleClass: "text-blog-derivative",
+    image: { src: "/images/blog-derivative.webp", alt: "Secant lines through a curve getting closer to a single point until they become the tangent line, which is how the derivative is defined", width: 1536, height: 1024 },
     published: "2026-11-02",
     title: "How to Find the Derivative of a Function (Step-by-Step Guide with Examples)",
     metaTitle: "How to Find the Derivative of a Function: Step-by-Step Guide",

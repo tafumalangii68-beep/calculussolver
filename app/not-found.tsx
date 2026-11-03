@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Figure } from "@/components/content/Figure";
 import { LinkCards } from "@/components/content/LinkCards";
 import { calculatorNav } from "@/lib/site-config";
 
@@ -19,6 +20,10 @@ export default function NotFound() {
       <Link href="/" className="mt-6 inline-block rounded-lg bg-accent px-5 py-2.5 font-semibold text-white hover:bg-accent-hover">
         Go to the Calculus Solver
       </Link>
+      <Figure
+        image={{ src: "/images/not-found.webp", alt: "A curve that breaks off in mid-air, with a dashed line looping back to where it started", width: 1536, height: 1024 }}
+        className="mt-10 max-w-xl"
+      />
       <div className="mt-10">
         <LinkCards cards={calculatorNav.map((c) => ({ href: `/${c.slug}`, title: c.label, description: c.blurb, titleClass: c.titleClass }))} />
       </div>

@@ -25,6 +25,7 @@ export function GuideView({ guide, collection = GUIDES }: { guide: Guide; collec
           { name: guide.title.split(/[:(]/)[0].trim(), path },
         ]}
         title={guide.title}
+        titleClass={guide.titleClass}
       >
         <p>{guide.intro}</p>
         <p className="mt-3 text-sm text-muted">

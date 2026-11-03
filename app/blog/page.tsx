@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Figure } from "@/components/content/Figure";
 import { JsonLd } from "@/components/content/JsonLd";
 import { PageIntro } from "@/components/content/PageIntro";
 import { formatDate } from "@/components/content/ProsePage";
@@ -20,6 +21,10 @@ export default function BlogPage() {
           <Link href="/guides" className="text-accent-strong underline underline-offset-2">study guides</Link>.
         </p>
       </PageIntro>
+      <Figure
+        image={{ src: "/images/blog.webp", alt: "Three open notebooks, each with a simple sketch: a rising curve, a shaded area under a curve, and a wave", width: 1536, height: 1024 }}
+        className="mt-8 max-w-3xl"
+      />
       <ul className="mt-10 grid max-w-3xl grid-cols-1 gap-4">
         {sorted.map((post) => (
           <li key={post.slug}>
@@ -29,7 +34,7 @@ export default function BlogPage() {
                   <time dateTime={post.published}>{formatDate(post.published)}</time>
                 </p>
               )}
-              <h2 className="mt-1 font-serif text-xl font-semibold text-ink">
+              <h2 className={`mt-1 font-serif text-xl font-semibold ${post.titleClass ?? "text-ink"}`}>
                 <Link href={`/blog/${post.slug}`} className="hover:underline underline-offset-4">
                   {post.title}
                 </Link>

@@ -19,6 +19,8 @@ export interface Guide {
   description: string;
   intro: string;
   image?: Illustration;
+  /** Colour class for this article's title on cards and on its own page. */
+  titleClass?: string;
   /** Publication date (YYYY-MM-DD) for blog posts; guides show the site's review date instead. */
   published?: string;
   sections: { id: string; heading: string; blocks: Block[] }[];
@@ -30,6 +32,7 @@ export interface Guide {
 export const guides: Guide[] = [
   {
     slug: "derivative-rules",
+    titleClass: "text-guide-derivative",
     image: { src: "/images/guide-derivative-rules.webp", alt: "Connected gears and circles, representing derivative rules that combine and chain together", width: 1600, height: 800 },
     title: "Derivative Rules: A Complete Guide with Examples",
     metaTitle: "Derivative Rules Explained – Power, Product, Quotient, Chain",
@@ -155,6 +158,7 @@ export const guides: Guide[] = [
   },
   {
     slug: "integration-techniques",
+    titleClass: "text-guide-integration",
     image: { src: "/images/guide-integration.webp", alt: "One path branching into several routes, each ending at a different shape, representing the choice of integration technique", width: 1600, height: 800 },
     title: "Integration Techniques: How to Choose the Right Method",
     metaTitle: "Integration Techniques – Substitution, Parts, Partial Fractions",

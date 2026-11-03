@@ -79,8 +79,8 @@ export default function HomePage() {
           </p>
           <Figure
             image={{
-              src: "/images/hero.webp",
-              alt: "A curve with a tangent line at one point and the area under the curve shaded, the two central ideas of calculus",
+              src: "/images/hero-v2.webp",
+              alt: "A curve with its tangent line at one point and the area under the curve shaded up to that point, the two central ideas of calculus",
               width: 1536,
               height: 1024,
             }}
@@ -239,8 +239,8 @@ export default function HomePage() {
             <LinkCards
               cards={[
                 ...calculatorNav.map((c) => ({ href: `/${c.slug}`, title: c.label, description: c.blurb, titleClass: c.titleClass })),
-                ...guideNav.map((g) => ({ href: g.href, title: g.label, description: "Study guide with worked examples" })),
-                ...posts.map((post) => ({ href: `/blog/${post.slug}`, title: post.title.split(" (")[0], description: "Beginner tutorial on the blog" })),
+                ...guideNav.map((g) => ({ href: g.href, title: g.label, description: "Study guide with worked examples", titleClass: g.titleClass })),
+                ...posts.map((post) => ({ href: `/blog/${post.slug}`, title: post.title.split(" (")[0], description: "Beginner tutorial on the blog", titleClass: post.titleClass })),
               ]}
             />
           </div>

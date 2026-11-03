@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Figure } from "@/components/content/Figure";
 import { ProsePage } from "@/components/content/ProsePage";
 import { Tex } from "@/components/content/Tex";
 import { buildMetadata } from "@/lib/seo";
@@ -20,6 +21,10 @@ export default function HowItWorksPage() {
       updated={siteConfig.contentUpdated}
       lead={<p>A transparent description of the methods behind every answer, and of what they cannot do.</p>}
     >
+      <Figure
+        image={{ src: "/images/how-it-works.webp", alt: "Diagram: an expression tree flows into a set of gears and ends at a checkmark, showing input being parsed, solved and verified", width: 1600, height: 533 }}
+      />
+
       <h2>1. Reading your input</h2>
       <p>
         Your text is split into numbers, names and symbols, then parsed into an expression tree using the usual order of

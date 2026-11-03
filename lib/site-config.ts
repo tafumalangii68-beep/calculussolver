@@ -46,8 +46,8 @@ export const calculatorNav: { slug: CalculatorSlug; label: string; blurb: string
 ];
 
 export const guideNav = [
-  { href: "/guides/derivative-rules", label: "Derivative Rules" },
-  { href: "/guides/integration-techniques", label: "Integration Techniques" },
+  { href: "/guides/derivative-rules", label: "Derivative Rules", titleClass: "text-guide-derivative" },
+  { href: "/guides/integration-techniques", label: "Integration Techniques", titleClass: "text-guide-integration" },
 ] as const;
 
 export const mainNav = [

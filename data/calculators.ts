@@ -287,6 +287,7 @@ export const calculators: Record<CalculatorSlug, CalculatorPage> = {
 
   "limit-calculator": {
     slug: "limit-calculator",
+    image: { src: "/images/limit.webp", alt: "A curve with a gap at one point, with arrows approaching the gap from the left and from the right", width: 1536, height: 1024 },
     metaTitle: "Limit Calculator with Steps – One-Sided and at Infinity",
     metaDescription:
       "Evaluate limits step by step with direct substitution, factoring, L'Hôpital's rule and degree comparison. Supports one-sided limits and limits at infinity.",
