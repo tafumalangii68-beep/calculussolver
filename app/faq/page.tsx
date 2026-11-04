@@ -1,18 +1,22 @@
 import { ArrowRight, HelpCircle } from "lucide-react";
 import Link from "next/link";
-import { FaqItems } from "@/components/content/FaqSection";
+import { FaqBrowser } from "@/components/content/FaqBrowser";
 import { JsonLd } from "@/components/content/JsonLd";
+import { LinkCards } from "@/components/content/LinkCards";
 import { PageHero } from "@/components/content/PageHero";
+import { SectionHeader } from "@/components/content/SectionHeader";
 import { faqGroups } from "@/data/faq";
 import { buildMetadata, faqLd } from "@/lib/seo";
+import { calculatorNav } from "@/lib/site-config";
 
 const description = "Answers to common questions about Calculus Solver: typing expressions, how answers are checked, privacy, offline use and studying with the solver.";
 
 export const metadata = buildMetadata({ title: "Frequently Asked Questions", description, path: "/faq" });
 
-const groupId = (title: string) => `faq-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-$/, "")}`;
+const RELATED = ["derivative-calculator", "integral-calculator", "limit-calculator"] as const;
 
 export default function FaqPage() {
+  const related = calculatorNav.filter((c) => (RELATED as readonly string[]).includes(c.slug));
   return (
     <>
       <PageHero crumbs={[{ name: "FAQ", path: "/faq" }]} eyebrow="Help centre" icon={<HelpCircle />} title="Frequently Asked Questions">
@@ -22,33 +26,22 @@ export default function FaqPage() {
       </PageHero>
 
       <div className="relative z-10 mx-auto -mt-12 max-w-4xl px-4 sm:px-6">
-        <nav aria-label="FAQ topics" className="rounded-2xl border border-line bg-surface p-4 shadow-card">
-          <ul className="flex flex-wrap gap-2">
-            {faqGroups.map((g) => (
-              <li key={g.title}>
-                <a
-                  href={`#${groupId(g.title)}`}
-                  className="inline-flex items-center rounded-full bg-accent-soft px-4 py-2 text-sm font-semibold text-accent-strong transition-colors hover:bg-brand-gradient hover:text-white"
-                >
-                  {g.title}
-                  <span className="ml-2 rounded-full bg-surface/70 px-1.5 text-xs text-accent-strong">{g.faqs.length}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <FaqBrowser groups={faqGroups} />
+      </div>
 
-        {faqGroups.map((group) => (
-          <section key={group.title} aria-labelledby={groupId(group.title)} className="mt-14">
-            <h2 id={groupId(group.title)} className="scroll-mt-24 font-display text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
-              {group.title}
-            </h2>
-            <div className="mt-5">
-              <FaqItems faqs={group.faqs} />
-            </div>
-          </section>
-        ))}
+      <section aria-labelledby="faq-related" className="mx-auto mt-20 max-w-7xl px-4 sm:px-6">
+        <SectionHeader id="faq-related" eyebrow="Try it" title="Popular" highlight="calculators">
+          <p>
+            Put the answers into practice. All <Link href="/" className="font-semibold text-accent-strong underline underline-offset-2">nine calculators</Link> show
+            their steps.
+          </p>
+        </SectionHeader>
+        <div className="mt-10">
+          <LinkCards cards={related.map((c) => ({ href: `/${c.slug}`, title: c.label, description: c.blurb, titleClass: c.titleClass }))} />
+        </div>
+      </section>
 
+      <div className="mx-auto max-w-4xl px-4 sm:px-6">
         <section aria-labelledby="still" className="mt-16 flex flex-col items-start gap-4 rounded-3xl bg-navy-gradient p-8 text-white sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 id="still" className="font-display text-xl font-extrabold">

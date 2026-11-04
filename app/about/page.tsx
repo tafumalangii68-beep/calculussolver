@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { StudyDesk } from "@/components/content/Illustrations";
+import { FeatureGrid, TrustGrid } from "@/components/content/InfoSections";
 import { ProsePage } from "@/components/content/ProsePage";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
@@ -14,6 +15,12 @@ export default function AboutPage() {
       title="About Us"
       path="/about"
       description={description}
+      after={
+        <>
+          <FeatureGrid />
+          <TrustGrid />
+        </>
+      }
       lead={<p>{siteConfig.name} is an independent educational project: a free calculus solver that shows its work and keeps your data on your device.</p>}
     >
       <StudyDesk />

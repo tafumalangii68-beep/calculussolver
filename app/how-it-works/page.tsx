@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PipelineDiagram } from "@/components/content/Illustrations";
+import { ExampleCalculation, ProcessCards } from "@/components/content/InfoSections";
 import { ProsePage } from "@/components/content/ProsePage";
 import { Tex } from "@/components/content/Tex";
 import { buildMetadata } from "@/lib/seo";
@@ -19,6 +20,8 @@ export default function HowItWorksPage() {
       path="/how-it-works"
       description={description}
       updated={siteConfig.contentUpdated}
+      before={<ProcessCards />}
+      after={<ExampleCalculation />}
       lead={<p>A transparent description of the methods behind every answer, and of what they cannot do.</p>}
     >
       <PipelineDiagram />

@@ -23,6 +23,8 @@ export function ProsePage({
   description,
   updated,
   lead,
+  before,
+  after,
   children,
 }: {
   title: string;
@@ -30,6 +32,10 @@ export function ProsePage({
   description: string;
   updated?: string;
   lead?: React.ReactNode;
+  /** Full-width section between the hero and the text card (it takes the overlap with the hero). */
+  before?: React.ReactNode;
+  /** Full-width sections below the text card. */
+  after?: React.ReactNode;
   children: React.ReactNode;
 }) {
   const kind = PAGE_KIND[path] ?? { eyebrow: "Calculus Solver", icon: <FileText /> };
@@ -55,8 +61,9 @@ export function ProsePage({
       >
         {lead}
       </PageHero>
+      {before && <div className="relative z-10 mx-auto -mt-12 max-w-7xl px-4 sm:px-6">{before}</div>}
       <div
-        className={`relative z-10 mx-auto -mt-12 grid items-start gap-10 px-4 sm:px-6 ${withToc ? "max-w-7xl lg:grid-cols-[minmax(0,1fr)_17rem]" : "max-w-4xl"}`}
+        className={`relative z-10 mx-auto ${before ? "mt-14" : "-mt-12"} grid items-start gap-10 px-4 sm:px-6 ${withToc ? "max-w-7xl lg:grid-cols-[minmax(0,1fr)_17rem]" : "max-w-4xl"}`}
       >
         <div
           id="page-content"
@@ -70,6 +77,7 @@ export function ProsePage({
           </aside>
         )}
       </div>
+      {after && <div className="mx-auto max-w-7xl space-y-20 px-4 pt-20 sm:px-6">{after}</div>}
     </>
   );
 }
