@@ -20,7 +20,7 @@ export async function StudentReviews({ limit = 12 }: { limit?: number }) {
       <div className="mx-auto max-w-2xl text-center">
         <p className="text-xs font-semibold uppercase tracking-[0.28em] text-accent-strong">Student testimonials</p>
         <h2 id="testimonials-heading" className="mt-3 font-serif text-3xl font-semibold leading-tight text-ink sm:text-4xl">
-          What Students Say About Calculus Solver
+          What People Say About Calculus Solver
         </h2>
         <p className="mt-4 text-ink-soft">Discover how students use our step-by-step calculus tools to make learning mathematics easier.</p>
         {summary.count > 0 && (
