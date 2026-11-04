@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { exampleCards } from "@/data/example-cards";
-import { getApprovedReviews, getReviewSummary } from "@/lib/reviews/store";
+import { getApprovedReviews, getReviewSummary, usingDevReviews } from "@/lib/reviews/store";
 import { ExampleCard } from "./ExampleCard";
 import { ReviewMarquee } from "./ReviewMarquee";
 import { Stars } from "./Stars";
@@ -19,6 +19,11 @@ export async function StudentReviews({ limit = 12 }: { limit?: number }) {
 
   return (
     <section aria-labelledby="testimonials-heading" className="overflow-hidden border-y border-line bg-testimonial-bg py-16 sm:py-[85px]">
+      {usingDevReviews() && (
+        <p className="mx-auto mb-8 max-w-xl rounded-lg border border-warn/30 bg-warn-soft px-4 py-2 text-center text-sm font-medium text-warn">
+          Test data: dummy reviews shown in local development only. They never appear on the live site.
+        </p>
+      )}
       <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
         <p className="inline-flex items-center gap-2 rounded-full bg-accent-soft px-5 py-2.5 text-[13px] font-bold uppercase tracking-[2px] text-accent-strong">
           <span aria-hidden className="text-lg leading-none">

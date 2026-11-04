@@ -1,6 +1,7 @@
 // Review storage (server only). Public reads are cached and refreshed every few minutes.
 
 import { unstable_cache } from "next/cache";
+import { devReviews } from "@/data/dev-reviews";
 import { ensureSchema, getSql, sha256 } from "@/lib/db";
 import type { PublicReview, ReviewInput, ReviewSummary } from "./validate";
 
@@ -12,6 +13,14 @@ const MAX_PER_DAY = 5;
 
 export function reviewsEnabled(): boolean {
   return getSql() !== null;
+}
+
+/**
+ * Local testing aid: `npm run dev` without a database shows dummy reviews (data/dev-reviews.ts)
+ * so the carousel can be seen with names and stars. Never true in a production build.
+ */
+export function usingDevReviews(): boolean {
+  return process.env.NODE_ENV === "development" && getSql() === null;
 }
 
 async function fetchApproved(limit: number): Promise<PublicReview[]> {
@@ -56,12 +65,17 @@ function safe<T>(fn: () => Promise<T>, fallback: T): () => Promise<T> {
 }
 
 export const getApprovedReviews = unstable_cache(
-  (limit: number) => safe(() => fetchApproved(limit), [])(),
+  (limit: number) => (usingDevReviews() ? Promise.resolve(devReviews.slice(0, limit)) : safe(() => fetchApproved(limit), [])()),
   ["approved-reviews"],
   { revalidate: REVIEWS_REVALIDATE_SECONDS, tags: ["reviews"] },
 );
 
-export const getReviewSummary = unstable_cache(safe(fetchSummary, { count: 0, average: 0 }), ["review-summary"], {
+function devSummary(): Promise<ReviewSummary> {
+  const total = devReviews.reduce((s, r) => s + r.rating, 0);
+  return Promise.resolve({ count: devReviews.length, average: total / devReviews.length });
+}
+
+export const getReviewSummary = unstable_cache(() => (usingDevReviews() ? devSummary() : safe(fetchSummary, { count: 0, average: 0 })()), ["review-summary"], {
   revalidate: REVIEWS_REVALIDATE_SECONDS,
   tags: ["reviews"],
 });
