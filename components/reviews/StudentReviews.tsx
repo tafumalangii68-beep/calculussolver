@@ -50,9 +50,12 @@ export async function StudentReviews({ limit = 12 }: { limit?: number }) {
           </p>
         )}
         {reviews.length === 0 && (
-          <p className="mx-auto mt-6 inline-flex max-w-xl items-center gap-2 rounded-full border border-line-strong bg-surface px-5 py-2 text-sm font-medium text-ink-soft">
-            <span className="rounded-full bg-sunken px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-muted">Sample reviews</span>
-            Demo content shown until real reviews are collected
+          <p className="mx-auto mt-6 inline-flex max-w-xl flex-wrap items-center justify-center gap-x-2.5 gap-y-1 rounded-full border border-line-strong bg-surface px-5 py-2 text-sm font-medium text-ink-soft">
+            <span>Step-by-step calculus solutions</span>
+            <span aria-hidden className="text-muted">·</span>
+            <span>Free</span>
+            <span aria-hidden className="text-muted">·</span>
+            <span>No sign-up</span>
           </p>
         )}
       </div>
