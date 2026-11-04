@@ -11,8 +11,8 @@ const MIN_FOR_CAROUSEL = 3;
 
 /**
  * Homepage testimonials. With 3+ approved reviews, those real reviews scroll continuously.
- * With 1-2 they are shown still. With none yet, clearly labelled example cards (no names,
- * no ratings) keep the carousel moving until real reviews arrive.
+ * With 1-2 they are shown still. With none yet, clearly labelled sample cards (placeholder names, decorative stars,
+ * no counted ratings) keep the carousel moving until real reviews arrive.
  */
 export async function StudentReviews({ limit = 12 }: { limit?: number }) {
   const [summary, reviews] = await Promise.all([getReviewSummary(), getApprovedReviews(limit)]);
@@ -49,6 +49,12 @@ export async function StudentReviews({ limit = 12 }: { limit?: number }) {
             </span>
           </p>
         )}
+        {reviews.length === 0 && (
+          <p className="mx-auto mt-6 inline-flex max-w-xl items-center gap-2 rounded-full border border-line-strong bg-surface px-5 py-2 text-sm font-medium text-ink-soft">
+            <span className="rounded-full bg-sunken px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-muted">Sample reviews</span>
+            Demo content shown until real reviews are collected
+          </p>
+        )}
       </div>
 
       <div className="mt-10">
@@ -63,7 +69,7 @@ export async function StudentReviews({ limit = 12 }: { limit?: number }) {
             ))}
           </ul>
         ) : (
-          <ReviewMarquee label="Example cards, not reviews" items={exampleCards.map((c) => ({ key: c.topic, content: <ExampleCard card={c} /> }))} />
+          <ReviewMarquee label="Sample reviews, not from real users" items={exampleCards.map((c) => ({ key: c.topic, content: <ExampleCard card={c} /> }))} />
         )}
       </div>
 

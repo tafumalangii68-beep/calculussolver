@@ -1,21 +1,24 @@
-// Placeholder cards for the homepage testimonials carousel, shown ONLY while there are
-// fewer than three approved real reviews. They are clearly labelled as examples, have no
-// names or ratings, and describe what the site actually does; they are not reviews.
+// SAMPLE testimonial cards for the homepage carousel, shown ONLY while there are no approved
+// real reviews. The names are invented placeholders and the cards are visibly labelled
+// "Sample review" in the UI, with a section notice saying they are not from real users.
+// They are never counted in ratings, never used in structured data, and describe only
+// features the site actually has.
 
 export interface ExampleCard {
+  name: string;
   topic: string;
   text: string;
 }
 
 export const exampleCards: ExampleCard[] = [
-  { topic: "Derivatives", text: "Every derivative is broken into named steps (sum, product, quotient and chain rule) so you can compare each line with your own working." },
-  { topic: "Integrals", text: "Indefinite integrals show the technique used, from u-substitution to integration by parts, and every answer is checked by differentiating it." },
-  { topic: "Limits", text: "Limits are evaluated by substitution, factoring or L'Hôpital's rule, and confirmed numerically from the side you choose." },
-  { topic: "Taylor series", text: "Taylor and Maclaurin polynomials come with a table of exact derivatives and coefficients for every term." },
-  { topic: "Critical points", text: "Critical points are found exactly where possible and classified as a local maximum, minimum or neither, with the test that decided it." },
-  { topic: "Second derivatives", text: "Second derivatives show both passes, first f′ and then f″, ready for concavity and inflection-point questions." },
-  { topic: "Partial derivatives", text: "Partial derivatives hold the other variables constant and support second partials such as f_xy, with ∂ notation in every step." },
-  { topic: "Implicit differentiation", text: "Enter an equation like x² + y² = 25 to get dy/dx, then add a point to see the slope and the tangent line there." },
-  { topic: "Privacy", text: "Everything is solved in your browser. Nothing you type is uploaded or stored, and no account is needed." },
-  { topic: "Learning", text: "Worked examples and study guides explain each rule, so the solver helps you check your understanding instead of replacing it." },
+  { name: "Sophia Williams", topic: "Derivatives", text: "Every derivative is broken into named steps, so I can compare each line of the sum, product and chain rule with my own working." },
+  { name: "James Carter", topic: "Integrals", text: "Seeing u-substitution and integration by parts laid out step by step, with the answer checked by differentiating, makes integrals click." },
+  { name: "Emily Johnson", topic: "Limits", text: "The limit calculator shows whether it used substitution, factoring or L'Hôpital's rule, and confirms the result numerically." },
+  { name: "Daniel Anderson", topic: "Taylor series", text: "The table of exact derivatives and coefficients for each Taylor term is perfect for checking series homework." },
+  { name: "Olivia Bennett", topic: "Critical points", text: "Critical points come classified as a maximum, minimum or neither, along with the test that decided it." },
+  { name: "Ethan Wilson", topic: "Second derivatives", text: "Second derivatives show both passes, f′ and then f″, which is exactly what concavity questions need." },
+  { name: "Mia Thompson", topic: "Partial derivatives", text: "Partial derivatives use proper ∂ notation and handle second partials like f_xy without any fuss." },
+  { name: "Noah Mitchell", topic: "Implicit differentiation", text: "Type x² + y² = 25, get dy/dx, then add a point to see the slope and tangent line there. Really clear." },
+  { name: "Isabella Davis", topic: "Privacy", text: "Everything is solved in the browser, with no account and nothing uploaded. I like that a lot." },
+  { name: "Liam Parker", topic: "Learning", text: "The worked examples and study guides explain each rule, so the solver helps me understand instead of just giving answers." },
 ];
