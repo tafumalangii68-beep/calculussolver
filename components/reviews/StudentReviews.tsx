@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { getApprovedReviews, getReviewSummary, reviewsEnabled } from "@/lib/reviews/store";
+import { exampleCards } from "@/data/example-cards";
+import { getApprovedReviews, getReviewSummary } from "@/lib/reviews/store";
+import { ExampleCard } from "./ExampleCard";
 import { ReviewMarquee } from "./ReviewMarquee";
 import { Stars } from "./Stars";
 import { TestimonialCard } from "./TestimonialCard";
@@ -8,16 +10,17 @@ import { TestimonialCard } from "./TestimonialCard";
 const MIN_FOR_CAROUSEL = 3;
 
 /**
- * Homepage testimonials: real, approved reviews only. Scrolls continuously once there are
- * enough reviews; shows an honest invitation to review when there are none yet.
+ * Homepage testimonials. With 3+ approved reviews, those real reviews scroll continuously.
+ * With 1-2 they are shown still. With none yet, clearly labelled example cards (no names,
+ * no ratings) keep the carousel moving until real reviews arrive.
  */
 export async function StudentReviews({ limit = 12 }: { limit?: number }) {
   const [summary, reviews] = await Promise.all([getReviewSummary(), getApprovedReviews(limit)]);
-  const enabled = reviewsEnabled();
+  const showExamples = reviews.length === 0;
 
   return (
-    <section aria-labelledby="testimonials-heading" className="overflow-hidden rounded-[32px] border border-line bg-testimonial-bg px-4 py-14 sm:px-8 sm:py-16">
-      <div className="mx-auto max-w-4xl text-center">
+    <section aria-labelledby="testimonials-heading" className="overflow-hidden border-y border-line bg-testimonial-bg py-16 sm:py-[85px]">
+      <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
         <p className="inline-flex items-center gap-2 rounded-full bg-accent-soft px-5 py-2.5 text-[13px] font-bold uppercase tracking-[2px] text-accent-strong">
           <span aria-hidden className="text-lg leading-none">
             ✦
@@ -30,6 +33,11 @@ export async function StudentReviews({ limit = 12 }: { limit?: number }) {
         <p className="mx-auto max-w-[780px] text-[15px] leading-[1.7] text-muted sm:text-[17px]">
           Discover how learners use our step-by-step calculus tools to understand and solve problems with confidence.
         </p>
+        {showExamples && (
+          <p className="mt-6 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-5 py-2.5 text-sm text-ink-soft shadow-card">
+            Example cards: real student reviews coming soon
+          </p>
+        )}
         {summary.count > 0 && (
           <p className="mt-6 inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1 rounded-full border border-line bg-surface px-5 py-2.5 shadow-card">
             <Stars rating={summary.average} size="h-5 w-5" />
@@ -46,9 +54,9 @@ export async function StudentReviews({ limit = 12 }: { limit?: number }) {
 
       <div className="mt-10">
         {reviews.length >= MIN_FOR_CAROUSEL ? (
-          <ReviewMarquee reviews={reviews} />
+          <ReviewMarquee label="Student testimonials" items={reviews.map((r) => ({ key: String(r.id), content: <TestimonialCard review={r} /> }))} />
         ) : reviews.length > 0 ? (
-          <ul className="flex flex-wrap justify-center gap-6 py-6">
+          <ul className="mx-auto flex max-w-6xl flex-wrap justify-center gap-6 px-4 py-6 sm:px-6">
             {reviews.map((r) => (
               <li key={r.id} className="flex w-full max-w-[25rem]">
                 <TestimonialCard review={r} />
@@ -56,21 +64,11 @@ export async function StudentReviews({ limit = 12 }: { limit?: number }) {
             ))}
           </ul>
         ) : (
-          <div className="mx-auto max-w-xl rounded-[28px] border border-dashed border-line-strong bg-surface p-8 text-center sm:p-10">
-            <span aria-hidden className="block h-10 select-none font-serif text-[5rem] leading-[0.9] text-accent">
-              &ldquo;
-            </span>
-            <p className="mt-4 font-serif text-xl font-semibold text-ink">Be the first to share your experience</p>
-            <p className="mt-2 text-ink-soft">
-              {enabled
-                ? "Used Calculus Solver for homework, exam prep or self-study? Your review could be the first one here."
-                : "Student reviews are opening soon. Real reviews from students will appear here."}
-            </p>
-          </div>
+          <ReviewMarquee label="Example cards, not reviews" items={exampleCards.map((c) => ({ key: c.topic, content: <ExampleCard card={c} /> }))} />
         )}
       </div>
 
-      <div className="mt-10 flex flex-wrap justify-center gap-3">
+      <div className="mt-10 flex flex-wrap justify-center gap-3 px-4">
         {summary.count > reviews.length && (
           <Link href="/reviews" className="rounded-lg border border-line-strong bg-surface px-5 py-2.5 font-medium text-ink hover:bg-sunken">
             Read all reviews

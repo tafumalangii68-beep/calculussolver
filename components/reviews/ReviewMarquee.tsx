@@ -2,8 +2,6 @@
 
 import { Pause, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import type { PublicReview } from "@/lib/reviews/validate";
-import { TestimonialCard } from "./TestimonialCard";
 
 /** Seconds each card takes to pass, so the speed stays the same whatever the number of reviews. */
 const SECONDS_PER_CARD = 7;
@@ -14,7 +12,7 @@ const SECONDS_PER_CARD = 7;
  * is seamless. Pauses on hover, keyboard focus, touch, or the Pause button; reduced-motion
  * users get a static, swipeable row instead (see .marquee in globals.css).
  */
-export function ReviewMarquee({ reviews }: { reviews: PublicReview[] }) {
+export function ReviewMarquee({ items, label }: { items: { key: string; content: React.ReactNode }[]; label: string }) {
   const [paused, setPaused] = useState(false);
   const [touching, setTouching] = useState(false);
   const resumeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -34,9 +32,9 @@ export function ReviewMarquee({ reviews }: { reviews: PublicReview[] }) {
 
   const group = (copy: number) => (
     <ul className="flex shrink-0 gap-6 pr-6" aria-hidden={copy === 1 ? true : undefined}>
-      {reviews.map((r) => (
-        <li key={`${copy}-${r.id}`} className="flex w-[86vw] max-w-[420px] shrink-0 sm:w-[350px] lg:w-[420px]">
-          <TestimonialCard review={r} />
+      {items.map((item) => (
+        <li key={`${copy}-${item.key}`} className="flex w-[78vw] max-w-[420px] shrink-0 sm:w-[350px] lg:w-[380px] 2xl:w-[420px]">
+          {item.content}
         </li>
       ))}
     </ul>
@@ -46,20 +44,20 @@ export function ReviewMarquee({ reviews }: { reviews: PublicReview[] }) {
     <div>
       <div
         role="region"
-        aria-label="Student testimonials"
-        className="marquee -mx-4 sm:-mx-8"
+        aria-label={label}
+        className="marquee"
         data-paused={paused || touching ? "true" : undefined}
         onTouchStart={touchStart}
         onTouchEnd={touchEnd}
         onTouchCancel={touchEnd}
       >
-        <div className="marquee-track flex py-6" style={{ "--marquee-duration": `${reviews.length * SECONDS_PER_CARD}s` } as React.CSSProperties}>
+        <div className="marquee-track flex py-6" style={{ "--marquee-duration": `${items.length * SECONDS_PER_CARD}s` } as React.CSSProperties}>
           {group(0)}
           {group(1)}
         </div>
       </div>
 
-      <div className="mx-auto mt-9 flex max-w-[950px] items-center justify-center gap-2.5 sm:mt-12 sm:gap-6">
+      <div className="mx-auto mt-9 flex max-w-[950px] items-center justify-center gap-2.5 px-4 sm:mt-12 sm:gap-6">
         <span aria-hidden className="hidden h-px flex-1 bg-line-strong sm:block" />
         <p className="inline-flex items-center gap-3 whitespace-nowrap rounded-full bg-accent-soft px-4 py-3 text-xs font-semibold text-accent-strong sm:px-7 sm:py-3.5 sm:text-base">
           <span aria-hidden className="text-2xl leading-none sm:text-[32px]">

@@ -50,6 +50,7 @@ const ENTRY_MISTAKES = [
 
 export default function HomePage() {
   return (
+    <>
     <div className="mx-auto max-w-6xl px-4 sm:px-6">
       <JsonLd data={[websiteLd(), webApplicationLd("Calculus Solver", "/", description)]} />
 
@@ -257,12 +258,14 @@ export default function HomePage() {
       </div>
 
       <FaqSection faqs={homeFaqs} />
+    </div>
 
-      {/* Student reviews: approved, real reviews only (see components/reviews). */}
-      <div className="mt-20">
-        <StudentReviews limit={12} />
-      </div>
+    {/* Student testimonials: a full-width band so three cards fit with partial cards at both edges. */}
+    <div className="mt-20">
+      <StudentReviews limit={12} />
+    </div>
 
+    <div className="mx-auto max-w-6xl px-4 sm:px-6">
       <section className="mt-16 rounded-card bg-ink px-6 py-8 text-paper sm:px-10">
         <h2 className="font-serif text-2xl font-semibold">Start with a problem you&apos;re stuck on</h2>
         <p className="mt-2 max-w-2xl text-paper/80">
@@ -275,5 +278,6 @@ export default function HomePage() {
         </a>
       </section>
     </div>
+    </>
   );
 }
