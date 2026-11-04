@@ -11,6 +11,17 @@ interface PageMeta {
   noIndex?: boolean;
 }
 
+/**
+ * The site-wide share image (app/opengraph-image.png). A page that sets its own `openGraph`
+ * replaces the inherited one, so every page lists the image explicitly.
+ */
+const SHARE_IMAGE = {
+  url: "/opengraph-image.png",
+  width: 1200,
+  height: 630,
+  alt: "Calculus Solver: step-by-step derivatives, integrals and limits, shown beside a curve with a tangent line and the shaded area under it",
+};
+
 export function buildMetadata({ title, description, path, absoluteTitle, type = "website", noIndex }: PageMeta): Metadata {
   const url = absoluteUrl(path);
   const fullTitle = absoluteTitle ? title : `${title} | ${siteConfig.name}`;
@@ -26,8 +37,9 @@ export function buildMetadata({ title, description, path, absoluteTitle, type = 
       siteName: siteConfig.name,
       locale: siteConfig.locale,
       type,
+      images: [SHARE_IMAGE],
     },
-    twitter: { card: "summary_large_image", title: fullTitle, description },
+    twitter: { card: "summary_large_image", title: fullTitle, description, images: [SHARE_IMAGE] },
   };
 }
 
