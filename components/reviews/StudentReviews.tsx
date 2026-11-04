@@ -73,16 +73,13 @@ export async function StudentReviews({ limit = 12 }: { limit?: number }) {
         )}
       </div>
 
-      <div className="mt-10 flex flex-wrap justify-center gap-3 px-4">
-        {summary.count > reviews.length && (
+      {summary.count > reviews.length && (
+        <div className="mt-10 flex justify-center px-4">
           <Link href="/reviews" className="rounded-lg border border-line-strong bg-surface px-5 py-2.5 font-medium text-ink hover:bg-sunken">
             Read all reviews
           </Link>
-        )}
-        <Link href="/reviews#write" className="rounded-lg bg-accent px-6 py-2.5 font-semibold text-white transition-colors hover:bg-accent-hover">
-          Share Your Feedback
-        </Link>
-      </div>
+        </div>
+      )}
     </section>
   );
 }
