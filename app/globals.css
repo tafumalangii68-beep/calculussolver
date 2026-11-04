@@ -35,6 +35,9 @@
   --color-calc-partial: #4a5878;
   --color-calc-chain: #a12a3c;
   --color-calc-implicit: #2e6b3f;
+  /* Review stars (dark enough for 3:1 contrast on white). */
+  --color-star: #b47d00;
+  --color-star-empty: #d9d3c8;
   /* Guides and blog posts. */
   --color-guide-derivative: #4d6b2a;
   --color-guide-integration: #5146a0;
@@ -213,6 +216,8 @@
   --color-calc-partial: #b0bdd8;
   --color-calc-chain: #f3a0ab;
   --color-calc-implicit: #9dd6aa;
+  --color-star: #f2c14e;
+  --color-star-empty: #4b4741;
   --color-guide-derivative: #b8d48f;
   --color-guide-integration: #b3abef;
   --color-blog-derivative: #f0a3c7;

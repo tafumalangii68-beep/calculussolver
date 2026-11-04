@@ -16,13 +16,17 @@ export const siteConfig = {
    */
   contactEmail: null as string | null,
   /** Date the legal pages were last reviewed (YYYY-MM-DD). */
-  legalUpdated: "2026-11-02",
+  legalUpdated: "2026-11-04",
   /** Date content pages were last reviewed (YYYY-MM-DD). */
   contentUpdated: "2026-10-30",
   /**
    * Optional services. Nothing is loaded unless you configure it here AND the visitor consents.
    * The site currently ships with no analytics or marketing scripts.
    */
+  stats: {
+    /** The "Problems solved" card stays hidden until the real count reaches this number. */
+    showSolveCountFrom: 1000,
+  },
   services: {
     analytics: null as null | { name: string; privacyUrl: string },
     marketing: null as null | { name: string; privacyUrl: string },
@@ -69,6 +73,7 @@ export const mainNav = [
 export const legalNav = [
   { href: "/about", label: "About Us" },
   { href: "/contact", label: "Contact Us" },
+  { href: "/reviews", label: "Reviews" },
   { href: "/privacy-policy", label: "Privacy Policy" },
   { href: "/terms-and-conditions", label: "Terms and Conditions" },
   { href: "/cookie-policy", label: "Cookie Policy" },

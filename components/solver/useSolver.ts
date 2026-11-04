@@ -5,6 +5,18 @@ import type { SolveRequest, SolveResult } from "@/types/solver";
 
 const TIMEOUT_MS = 12000;
 
+/** Adds 1 to the public "problems solved" counter. Sends no data about the problem itself. */
+function countSolve() {
+  try {
+    if (!navigator.onLine) return;
+    if (!navigator.sendBeacon?.("/api/stats/solve")) {
+      void fetch("/api/stats/solve", { method: "POST", keepalive: true }).catch(() => {});
+    }
+  } catch {
+    // Counting is best-effort and must never affect solving.
+  }
+}
+
 type State = { status: "idle" } | { status: "solving" } | { status: "done"; result: SolveResult; request: SolveRequest };
 type Pending = { id: number; timer: ReturnType<typeof setTimeout>; finish: (result: SolveResult) => void };
 
@@ -50,6 +62,7 @@ export function useSolver() {
         clearTimeout(pending.current.timer);
         pending.current = null;
         setState({ status: "done", result, request });
+        if (result.ok) countSolve();
       };
       const timer = setTimeout(() => {
         workerRef.current?.terminate();

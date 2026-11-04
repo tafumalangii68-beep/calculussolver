@@ -17,7 +17,7 @@ export default function PrivacyPolicyPage() {
       path="/privacy-policy"
       description={description}
       updated={siteConfig.legalUpdated}
-      lead={<p>The short version: your math stays on your device, we use no tracking, and there is nothing to sign up for.</p>}
+      lead={<p>The short version: your math stays on your device, we use no tracking, and the only personal information we receive is what you choose to put in a review.</p>}
     >
       <h2>Who this policy covers</h2>
       <p>
@@ -28,9 +28,13 @@ export default function PrivacyPolicyPage() {
 
       <h2>Information we collect</h2>
       <p>
-        <strong>We do not collect personal information through the website.</strong> There are no accounts, no sign-up or
-        login, no contact forms that submit to our servers, no analytics, and no advertising.
+        There are no accounts, no sign-up or login, no analytics and no advertising. The website receives information in only
+        two situations, both described below:
       </p>
+      <ul>
+        <li>when you choose to submit a review; and</li>
+        <li>an anonymous count each time a problem is solved, which contains no personal information and nothing you typed.</li>
+      </ul>
 
       <h2>Expressions you enter in the solver</h2>
       <p>
@@ -46,6 +50,31 @@ export default function PrivacyPolicyPage() {
       <p>
         The solver&apos;s code is downloaded from this website when a calculator page loads. After that, solving works even if
         you disconnect from the internet, which shows that it does not depend on a remote service.
+      </p>
+
+      <h2>Reviews</h2>
+      <p>If you submit a review on the <Link href="/reviews">Reviews</Link> page, we store:</p>
+      <ul>
+        <li>the name you enter, your star rating and your review text, which are shown publicly once the review is approved;</li>
+        <li>your email address, if you choose to give one. It is <strong>never shown publicly</strong> and is used only to contact you about your review;</li>
+        <li>the date and time of submission;</li>
+        <li>
+          a one-way, daily-changing hash of your IP address, used only to limit repeated submissions and spam. Your actual IP
+          address is not stored, and the hash cannot be turned back into it.
+        </li>
+      </ul>
+      <p>
+        Every review is checked by a person before it is published. We may decline to publish a review, for example if it is
+        spam, abusive or contains personal information about someone else. Reviews are stored in a database hosted by Neon
+        (neon.tech), our database provider, which processes the data on our behalf.
+      </p>
+
+      <h2>Count of problems solved</h2>
+      <p>
+        When the solver returns an answer, your browser sends an empty request to this website that adds 1 to a public
+        &ldquo;problems solved&rdquo; total. The request contains no expression, answer, cookie or identifier. To stop one
+        visitor from inflating the total, a daily-changing hash of the IP address (as above) is kept for up to two days and
+        then deleted.
       </p>
 
       <h2>Browser storage and cookies</h2>
@@ -95,9 +124,10 @@ export default function PrivacyPolicyPage() {
 
       <h2>Data retention</h2>
       <p>
-        Solver input is not retained at all. The consent record stays in your browser until you withdraw consent (footer:
-        &ldquo;Cookie Settings&rdquo;) or clear your browser&apos;s site data. Emails are kept only as long as needed to
-        handle your message.
+        Solver input is not retained at all. Reviews are kept while they are published or awaiting a decision; you can ask
+        for your review to be deleted at any time. The hashes used to limit solve counting are deleted after about two days.
+        The consent record stays in your browser until you withdraw consent (footer: &ldquo;Cookie Settings&rdquo;) or clear
+        your browser&apos;s site data. Emails are kept only as long as needed to handle your message.
       </p>
 
       <h2>Your rights and choices</h2>
@@ -106,23 +136,23 @@ export default function PrivacyPolicyPage() {
         <li>You can delete the stored preference by clearing site data in your browser settings.</li>
         <li>
           Depending on where you live (for example under the GDPR or US state privacy laws), you may have rights to access,
-          correct or delete personal information about you. Because the website does not collect personal information, there is
-          normally nothing to access. If you have emailed us, you can ask us to delete that correspondence.
+          correct or delete personal information about you. If you submitted a review or emailed us, you can ask us to show,
+          correct or delete that information by contacting us.
         </li>
         <li>We do not sell or share personal information, and we do not use it for targeted advertising.</li>
       </ul>
 
       <h2>Children</h2>
       <p>
-        The website is designed for students, including high school students. It does not knowingly collect personal
-        information from anyone, including children under 13. A child can use every calculator without providing any
-        information about themselves.
+        The website is designed for students, including high school students. Every calculator can be used without providing
+        any information. Reviews are intended for users aged 13 and over; if you are under 13, please do not submit a review.
+        If we learn that a review came from a child under 13, we will delete it.
       </p>
 
       <h2>Security</h2>
       <p>
-        Because your problems never leave your device, there is no stored collection of user data to protect or leak. The
-        website should be served over HTTPS so that pages cannot be altered in transit.
+        Your problems never leave your device, so there is no stored collection of them to protect or leak. Reviews are sent
+        over HTTPS and stored with our database provider, with access limited to the site owner.
       </p>
 
       <h2>Changes to this policy</h2>

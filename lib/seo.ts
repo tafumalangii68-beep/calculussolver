@@ -104,6 +104,33 @@ export function articleLd(headline: string, path: string, description: string, p
   };
 }
 
+/**
+ * Review markup for the reviews page. Built only from approved reviews that are visible on
+ * the page, so the rating and count always match what visitors can read.
+ */
+export function reviewsLd(
+  summary: { count: number; average: number },
+  reviews: { name: string; rating: number; message: string; createdAt: string }[],
+): JsonLdObject {
+  return {
+    ...webApplicationLd(siteConfig.name, "/", siteConfig.description),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: Number(summary.average.toFixed(1)),
+      reviewCount: summary.count,
+      bestRating: 5,
+      worstRating: 1,
+    },
+    review: reviews.map((r) => ({
+      "@type": "Review",
+      author: { "@type": "Person", name: r.name },
+      datePublished: r.createdAt.slice(0, 10),
+      reviewBody: r.message,
+      reviewRating: { "@type": "Rating", ratingValue: r.rating, bestRating: 5, worstRating: 1 },
+    })),
+  };
+}
+
 export function websiteLd(): JsonLdObject {
   return {
     "@context": "https://schema.org",

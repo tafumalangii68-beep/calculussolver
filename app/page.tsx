@@ -5,11 +5,17 @@ import { JsonLd } from "@/components/content/JsonLd";
 import { LinkCards } from "@/components/content/LinkCards";
 import { Tex } from "@/components/content/Tex";
 import { WorkedExample } from "@/components/content/WorkedExample";
+import { ReviewsSection } from "@/components/reviews/ReviewsSection";
+import { StatsCard } from "@/components/reviews/StatsCard";
 import { Solver } from "@/components/solver/Solver";
+import { reviewsEnabled } from "@/lib/reviews/store";
 import { posts } from "@/data/blog";
 import { homeExamples, homeFaqs, homeSolverExamples, syntaxGuide } from "@/data/home";
 import { buildMetadata, webApplicationLd, websiteLd } from "@/lib/seo";
 import { calculatorNav, guideNav } from "@/lib/site-config";
+
+// Approved reviews and the solve counter refresh every 5 minutes.
+export const revalidate = 300;
 
 const description =
   "Free calculus solver with step-by-step solutions for derivatives, integrals, limits, Taylor series and critical points. Private: everything runs in your browser.";
@@ -68,6 +74,8 @@ export default function HomePage() {
       </section>
 
       <div className="mt-20 grid grid-cols-1 gap-20">
+        <StatsCard />
+
         <section aria-labelledby="what" className="prose-body">
           <h2 id="what">What this calculus solver does</h2>
           <p>
@@ -248,6 +256,12 @@ export default function HomePage() {
           </div>
         </section>
       </div>
+
+      {reviewsEnabled() && (
+        <div className="mt-20">
+          <ReviewsSection limit={6} />
+        </div>
+      )}
 
       <FaqSection faqs={homeFaqs} />
 

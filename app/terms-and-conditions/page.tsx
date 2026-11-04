@@ -57,36 +57,44 @@ export default function TermsPage() {
         Algebrite (MIT) and Lucide icons (ISC). Those licences, not these terms, govern that software.
       </p>
 
-      <h2>7. Availability</h2>
+      <h2>7. Reviews you submit</h2>
+      <p>
+        If you submit a review, it must reflect your own genuine experience. Do not include other people&apos;s personal
+        information, links, advertising or abusive content, and do not post reviews on someone else&apos;s behalf or in return
+        for payment. By submitting a review, you allow us to publish it on the website with the name you gave. We may decline
+        to publish, or later remove, any review, and you can ask us to remove yours at any time.
+      </p>
+
+      <h2>8. Availability</h2>
       <p>
         The website is provided free of charge and may change, be unavailable, or be discontinued at any time without notice.
         Features may be added or removed.
       </p>
 
-      <h2>8. Links to other websites</h2>
+      <h2>9. Links to other websites</h2>
       <p>The website may link to external resources. We are not responsible for their content or privacy practices.</p>
 
-      <h2>9. Disclaimer of warranties</h2>
+      <h2>10. Disclaimer of warranties</h2>
       <p>
         To the extent permitted by law, the website is provided &ldquo;as is&rdquo; and &ldquo;as available&rdquo;, without
         warranties of any kind, express or implied, including warranties of accuracy, fitness for a particular purpose and
         non-infringement.
       </p>
 
-      <h2>10. Limitation of liability</h2>
+      <h2>11. Limitation of liability</h2>
       <p>
         To the extent permitted by law, the website owner is not liable for any indirect, incidental or consequential loss,
         or for any loss arising from reliance on results produced by the website, including lost marks, grades or data. Some
         jurisdictions do not allow certain limitations, so parts of this section may not apply to you.
       </p>
 
-      <h2>11. Changes to these terms</h2>
+      <h2>12. Changes to these terms</h2>
       <p>
         We may update these terms. The date at the top shows when they last changed. Continuing to use the website after a
         change means you accept the updated terms.
       </p>
 
-      <h2>12. Contact</h2>
+      <h2>13. Contact</h2>
       <p>
         Questions about these terms can be sent to <ContactEmail />.
       </p>

@@ -12,6 +12,7 @@
     "check": "npm run typecheck && npm run lint && npm test && npm run build"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.0.2",
     "algebrite": "^1.4.0",
     "katex": "^0.16.22",
     "lucide-react": "^0.511.0",
@@ -20,6 +21,7 @@
     "react-dom": "19.3.0"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.3.7",
     "@tailwindcss/turbopack": "^4",
     "@types/katex": "^0.16.8",
     "@types/node": "^20",

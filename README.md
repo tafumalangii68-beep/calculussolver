@@ -3,7 +3,8 @@
 A free, browser-based calculus solver with step-by-step solutions, built with Next.js (App Router), TypeScript and Tailwind CSS.
 
 - **Operations:** derivatives (orders 1–10), indefinite and definite integrals (including improper ones), limits (two-sided, one-sided and at ±∞), Taylor/Maclaurin polynomials (order up to 10), critical points with classification, partial derivatives (up to second order, including mixed partials) and implicit differentiation (dy/dx, with slope and tangent line at a point).
-- **Private by design:** all math runs in the visitor's browser, in a Web Worker. There are no API keys, environment variables, database, backend, accounts, analytics or third-party requests.
+- **Private by design:** all math runs in the visitor's browser, in a Web Worker. There are no accounts, analytics or third-party requests.
+- **Reviews and a solve counter (optional):** a small Neon Postgres database stores visitor reviews (shown only after approval) and an anonymous count of problems solved. Without a database the site works exactly as before; these features simply stay hidden.
 - **Honest output:** every answer is checked independently before it is shown, and the solver says when it cannot solve a problem.
 - **Static:** every page is prerendered as static HTML.
 - **Light and dark themes:** follows the device setting by default; the header button switches and remembers the choice (`lib/theme.ts`). Colours are tokens in `app/globals.css`, with dark values under `:root[data-theme="dark"]`.
@@ -33,6 +34,24 @@ npm run dev          # http://localhost:3000
 | `npm run typecheck` | TypeScript, no emit                                |
 | `npm run lint`      | ESLint                                             |
 | `npm run check`     | All of the above, in order                         |
+
+## Reviews and the solve counter
+
+**Setup (once):** in Vercel, open the project → **Storage** → **Create Database** → **Neon** → connect it to this project. Vercel adds `DATABASE_URL` automatically. Then **redeploy** (environment variables apply to new deployments). Tables are created automatically on first use; `db/schema.sql` documents them.
+
+**Moderating reviews:** open the Neon console → SQL Editor:
+
+```sql
+SELECT id, name, rating, message, created_at FROM reviews WHERE status = 'pending' ORDER BY created_at;
+UPDATE reviews SET status = 'approved' WHERE id = 123;
+UPDATE reviews SET status = 'rejected' WHERE id = 124;
+```
+
+Approved reviews appear on the homepage and `/reviews` within 5 minutes. `/reviews` is `noindex` and out of the sitemap until at least one review is approved; review structured data is added only from approved reviews.
+
+**Spam protection:** honeypot field, minimum fill time, same-origin check, per-visitor rate limits (2/hour, 5/day, by a daily-rotating IP hash), duplicate text and repeat-email rejection, and no links allowed.
+
+**Solve counter:** each successful solve sends an empty request to `/api/stats/solve` (max 300 counted per visitor per day). The homepage card stays hidden until the count reaches `siteConfig.stats.showSolveCountFrom` (default 1000).
 
 ## Deployment
 
@@ -139,7 +158,7 @@ Search volumes were **not** researched: no keyword data source was available, so
 
 | Check | Result |
 | ----- | ------ |
-| `npm test` | **169 / 169 passed**: 100 known-answer math tests (derivatives, integrals, improper integrals, limits incl. ±∞ and one-sided, Taylor, critical points, invalid input), 63 published worked examples (calculator pages, guides, blog, homepage) reproduced by the solver, 6 consent-storage tests |
+| `npm test` | **188 / 188 passed** (incl. 19 review/counter tests running the real SQL on PGlite): 100 known-answer math tests (derivatives, integrals, improper integrals, limits incl. ±∞ and one-sided, Taylor, critical points, invalid input), 63 published worked examples (calculator pages, guides, blog, homepage) reproduced by the solver, 6 consent-storage tests |
 | `npm run typecheck` | Passed |
 | `npm run lint` | Passed (0 problems) |
 | `npm run build` | Passed; 23 routes, all static |
