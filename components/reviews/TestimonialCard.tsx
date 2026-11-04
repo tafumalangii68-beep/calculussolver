@@ -13,24 +13,22 @@ export function initials(name: string): string {
 /** Large testimonial card used in the homepage carousel. */
 export function TestimonialCard({ review }: { review: PublicReview }) {
   return (
-    <figure className="flex h-full flex-col rounded-[28px] border border-line bg-surface p-7 shadow-[0_1px_2px_rgb(31_30_28/0.04),0_12px_32px_rgb(31_30_28/0.06)] sm:p-9">
-      <span aria-hidden className="block h-10 select-none font-serif text-[5.5rem] leading-[0.9] text-accent sm:h-12 sm:text-[6.5rem]">
+    <figure className="flex h-full min-h-[350px] flex-col rounded-[25px] border border-line bg-surface p-6 shadow-[0_5px_18px_rgb(38_55_70/0.09)] transition-shadow duration-300 hover:shadow-[0_10px_25px_rgb(38_55_70/0.13)] sm:min-h-[390px] sm:px-[30px] sm:py-7">
+      <span aria-hidden className="block h-[65px] select-none font-serif text-[92px] font-bold leading-none text-accent">
         &ldquo;
       </span>
-      <blockquote className="mt-5 flex-1">
-        <p className="line-clamp-[9] whitespace-pre-line break-words text-[1.05rem] leading-relaxed text-ink-soft sm:text-lg">{review.message}</p>
+      <blockquote className="mb-7 mt-3 flex-1">
+        <p className="line-clamp-[9] whitespace-pre-line break-words text-[17px] leading-[1.65] text-ink-soft sm:text-[20px]">{review.message}</p>
       </blockquote>
-      <figcaption className="mt-7 flex flex-wrap items-center justify-between gap-x-4 gap-y-3 border-t border-line pt-6">
-        <div className="flex min-w-0 items-center gap-3 sm:gap-4">
-          <span aria-hidden className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-accent font-semibold text-white sm:h-14 sm:w-14 sm:text-lg">
-            {initials(review.name)}
-          </span>
-          <div className="min-w-0">
-            <p className="break-words text-base font-bold text-ink sm:text-lg">{review.name}</p>
-            <p className="text-sm text-accent-strong">{review.category ?? "Calculus Solver user"}</p>
-          </div>
+      <figcaption className="flex flex-wrap items-center gap-x-3.5 gap-y-3 border-t border-line pt-6">
+        <span aria-hidden className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-accent text-[17px] font-bold text-white sm:h-[58px] sm:w-[58px]">
+          {initials(review.name)}
+        </span>
+        <div className="min-w-0 flex-1">
+          <p className="break-words text-[17px] font-bold text-ink">{review.name}</p>
+          <p className="mt-1 text-sm text-accent-strong">{review.category ?? "Calculus Solver user"}</p>
         </div>
-        <Stars rating={review.rating} size="h-5 w-5" />
+        <Stars rating={review.rating} size="h-[18px] w-[18px] sm:h-5 sm:w-5" />
       </figcaption>
     </figure>
   );

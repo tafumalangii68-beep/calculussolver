@@ -35,7 +35,7 @@ export function ReviewMarquee({ reviews }: { reviews: PublicReview[] }) {
   const group = (copy: number) => (
     <ul className="flex shrink-0 gap-6 pr-6" aria-hidden={copy === 1 ? true : undefined}>
       {reviews.map((r) => (
-        <li key={`${copy}-${r.id}`} className="flex w-[82vw] max-w-[25rem] shrink-0 sm:w-[23rem] lg:w-[24.5rem]">
+        <li key={`${copy}-${r.id}`} className="flex w-[86vw] max-w-[420px] shrink-0 sm:w-[350px] lg:w-[420px]">
           <TestimonialCard review={r} />
         </li>
       ))}
@@ -59,10 +59,10 @@ export function ReviewMarquee({ reviews }: { reviews: PublicReview[] }) {
         </div>
       </div>
 
-      <div className="mt-6 flex items-center justify-center gap-2 sm:gap-4">
-        <span aria-hidden className="hidden h-px w-24 bg-line-strong sm:block" />
-        <p className="inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-accent-soft px-4 py-1.5 text-sm font-medium text-accent-strong">
-          <span aria-hidden className="text-base leading-none">
+      <div className="mx-auto mt-9 flex max-w-[950px] items-center justify-center gap-2.5 sm:mt-12 sm:gap-6">
+        <span aria-hidden className="hidden h-px flex-1 bg-line-strong sm:block" />
+        <p className="inline-flex items-center gap-3 whitespace-nowrap rounded-full bg-accent-soft px-4 py-3 text-xs font-semibold text-accent-strong sm:px-7 sm:py-3.5 sm:text-base">
+          <span aria-hidden className="text-2xl leading-none sm:text-[32px]">
             ∞
           </span>
           <span className="motion-reduce:hidden">Continuously moving reviews</span>
@@ -77,7 +77,7 @@ export function ReviewMarquee({ reviews }: { reviews: PublicReview[] }) {
           {paused ? <Play aria-hidden className="h-3.5 w-3.5" /> : <Pause aria-hidden className="h-3.5 w-3.5" />}
           {paused ? "Play" : "Pause"}
         </button>
-        <span aria-hidden className="hidden h-px w-24 bg-line-strong sm:block" />
+        <span aria-hidden className="hidden h-px flex-1 bg-line-strong sm:block" />
       </div>
     </div>
   );

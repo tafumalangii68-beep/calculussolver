@@ -17,12 +17,19 @@ export async function StudentReviews({ limit = 12 }: { limit?: number }) {
 
   return (
     <section aria-labelledby="testimonials-heading" className="overflow-hidden rounded-[32px] border border-line bg-testimonial-bg px-4 py-14 sm:px-8 sm:py-16">
-      <div className="mx-auto max-w-2xl text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.28em] text-accent-strong">Student testimonials</p>
-        <h2 id="testimonials-heading" className="mt-3 font-serif text-3xl font-semibold leading-tight text-ink sm:text-4xl">
-          What People Say About Calculus Solver
+      <div className="mx-auto max-w-4xl text-center">
+        <p className="inline-flex items-center gap-2 rounded-full bg-accent-soft px-5 py-2.5 text-[13px] font-bold uppercase tracking-[2px] text-accent-strong">
+          <span aria-hidden className="text-lg leading-none">
+            ✦
+          </span>
+          Student testimonials
+        </p>
+        <h2 id="testimonials-heading" className="mb-3.5 mt-6 font-serif text-[clamp(30px,4vw,49px)] font-semibold leading-[1.2] text-ink">
+          What People Say About <span className="text-accent-strong">Calculus Solver</span>
         </h2>
-        <p className="mt-4 text-ink-soft">Discover how students use our step-by-step calculus tools to make learning mathematics easier.</p>
+        <p className="mx-auto max-w-[780px] text-[15px] leading-[1.7] text-muted sm:text-[17px]">
+          Discover how learners use our step-by-step calculus tools to understand and solve problems with confidence.
+        </p>
         {summary.count > 0 && (
           <p className="mt-6 inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1 rounded-full border border-line bg-surface px-5 py-2.5 shadow-card">
             <Stars rating={summary.average} size="h-5 w-5" />
