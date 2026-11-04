@@ -29,7 +29,7 @@ export async function StudentReviews({ limit = 12 }: { limit?: number }) {
           <span aria-hidden className="text-lg leading-none">
             ✦
           </span>
-          Built for Calculus Learners
+          Trusted by users worldwide
         </p>
         <h2 id="testimonials-heading" className="mb-3.5 mt-6 font-serif text-[clamp(30px,4vw,49px)] font-semibold leading-[1.2] text-ink">
           What people are saying

@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertTriangle, Check, CheckCircle2, Copy, Info, Sigma } from "lucide-react";
+import { AlertTriangle, Check, CheckCircle2, Copy, Info, Sigma, Star } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import type { Operation, ResultTable, SolveResult, StepSection } from "@/types/solver";
@@ -178,6 +178,34 @@ export function ResultPanel({ result }: { result: SolveResult }) {
           {related.label}
         </Link>
       </p>
+
+      <RateSolution />
     </div>
+  );
+}
+
+/** Invites a real rating after a solve: each star opens the review form with that rating preselected. */
+function RateSolution() {
+  return (
+    <aside aria-labelledby="rate-solution-heading" className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-lg border border-line bg-surface px-4 py-3">
+      <p id="rate-solution-heading" className="text-sm font-semibold text-ink">
+        Rate this solution
+      </p>
+      {/* Hovering or focusing star n fills stars 1..n: the whole row fills, then later siblings are reset. */}
+      <ul className="group/rate flex">
+        {[1, 2, 3, 4, 5].map((n) => (
+          <li key={n} className="[&:focus-within~li_svg]:fill-transparent [&:focus-within~li_svg]:text-line-strong [&:hover~li_svg]:fill-transparent [&:hover~li_svg]:text-line-strong">
+            <Link
+              href={`/reviews?rating=${n}#write`}
+              aria-label={`Rate ${n} star${n > 1 ? "s" : ""}`}
+              className="block rounded-md p-1 transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            >
+              <Star aria-hidden strokeWidth={1.5} className="h-6 w-6 fill-transparent text-line-strong transition-colors group-focus-within/rate:fill-star group-focus-within/rate:text-star-stroke group-hover/rate:fill-star group-hover/rate:text-star-stroke" />
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <p className="text-sm text-muted">Your review helps other learners.</p>
+    </aside>
   );
 }

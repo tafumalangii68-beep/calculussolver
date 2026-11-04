@@ -2,7 +2,7 @@
 
 import { CheckCircle2, Loader2 } from "lucide-react";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { REVIEW_CATEGORIES, REVIEW_LIMITS, validateReview, type ReviewField } from "@/lib/reviews/validate";
 import { StarInput } from "./StarInput";
 
@@ -21,6 +21,13 @@ export function ReviewForm() {
   const [errors, setErrors] = useState<Partial<Record<ReviewField, string>>>({});
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const startedAt = useRef(0);
+
+  // "Rate this solution" links arrive as /reviews?rating=N#write: preselect that rating.
+  useEffect(() => {
+    const preset = Number(new URLSearchParams(window.location.search).get("rating"));
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time read of the URL after hydration
+    if (Number.isInteger(preset) && preset >= 1 && preset <= 5) setRating(preset);
+  }, []);
 
   const markStarted = () => {
     if (!startedAt.current) startedAt.current = Date.now();
