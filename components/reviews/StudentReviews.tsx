@@ -16,7 +16,6 @@ const MIN_FOR_CAROUSEL = 3;
  */
 export async function StudentReviews({ limit = 12 }: { limit?: number }) {
   const [summary, reviews] = await Promise.all([getReviewSummary(), getApprovedReviews(limit)]);
-  const showExamples = reviews.length === 0;
 
   return (
     <section aria-labelledby="testimonials-heading" className="overflow-hidden border-y border-line bg-testimonial-bg py-16 sm:py-[85px]">
@@ -25,19 +24,14 @@ export async function StudentReviews({ limit = 12 }: { limit?: number }) {
           <span aria-hidden className="text-lg leading-none">
             ✦
           </span>
-          Student testimonials
+          Trusted by users worldwide
         </p>
         <h2 id="testimonials-heading" className="mb-3.5 mt-6 font-serif text-[clamp(30px,4vw,49px)] font-semibold leading-[1.2] text-ink">
-          What People Say About <span className="text-accent-strong">Calculus Solver</span>
+          What people are saying
         </h2>
         <p className="mx-auto max-w-[780px] text-[15px] leading-[1.7] text-muted sm:text-[17px]">
           Discover how learners use our step-by-step calculus tools to understand and solve problems with confidence.
         </p>
-        {showExamples && (
-          <p className="mt-6 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-5 py-2.5 text-sm text-ink-soft shadow-card">
-            Example cards: real student reviews coming soon
-          </p>
-        )}
         {summary.count > 0 && (
           <p className="mt-6 inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1 rounded-full border border-line bg-surface px-5 py-2.5 shadow-card">
             <Stars rating={summary.average} size="h-5 w-5" />
