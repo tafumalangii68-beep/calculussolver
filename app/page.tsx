@@ -8,7 +8,6 @@ import { WorkedExample } from "@/components/content/WorkedExample";
 import { ReviewsSection } from "@/components/reviews/ReviewsSection";
 import { StatsCard } from "@/components/reviews/StatsCard";
 import { Solver } from "@/components/solver/Solver";
-import { reviewsEnabled } from "@/lib/reviews/store";
 import { posts } from "@/data/blog";
 import { homeExamples, homeFaqs, homeSolverExamples, syntaxGuide } from "@/data/home";
 import { buildMetadata, webApplicationLd, websiteLd } from "@/lib/seo";
@@ -257,13 +256,12 @@ export default function HomePage() {
         </section>
       </div>
 
-      {reviewsEnabled() && (
-        <div className="mt-20">
-          <ReviewsSection limit={6} />
-        </div>
-      )}
-
       <FaqSection faqs={homeFaqs} />
+
+      {/* Student reviews: approved, real reviews only (see components/reviews). */}
+      <div className="mt-20">
+        <ReviewsSection limit={8} subtitle="See how students use Calculus Solver to make learning calculus easier." />
+      </div>
 
       <section className="mt-16 rounded-card bg-ink px-6 py-8 text-paper sm:px-10">
         <h2 className="font-serif text-2xl font-semibold">Start with a problem you&apos;re stuck on</h2>

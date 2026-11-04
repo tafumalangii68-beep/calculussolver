@@ -2,7 +2,7 @@
 // (run against PGlite, an in-process Postgres, in place of Neon).
 
 import { PGlite } from "@electric-sql/pglite";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Starting the in-process Postgres takes a few seconds.
 vi.setConfig({ testTimeout: 30_000, hookTimeout: 30_000 });
@@ -36,6 +36,11 @@ const dbModule = (await import("@/lib/db")) as unknown as { resetSchema: () => v
 const store = await import("@/lib/reviews/store");
 const stats = await import("@/lib/stats");
 const { POST: postReview } = await import("@/app/api/reviews/route");
+
+// The first PGlite start compiles its WebAssembly; do that once, outside any test's time limit.
+beforeAll(async () => {
+  await new PGlite().waitReady;
+}, 180_000);
 
 beforeEach(async () => {
   pg = new PGlite();

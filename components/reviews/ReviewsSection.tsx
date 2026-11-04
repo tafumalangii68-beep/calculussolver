@@ -9,7 +9,15 @@ import { Stars } from "./Stars";
  * "What Students Say": approved reviews only, with a rating summary computed from them.
  * Nothing is shown that doesn't come from real, approved submissions.
  */
-export async function ReviewsSection({ limit = 6, withForm = false }: { limit?: number; withForm?: boolean }) {
+export async function ReviewsSection({
+  limit = 6,
+  withForm = false,
+  subtitle = "Your feedback helps us make learning calculus easier.",
+}: {
+  limit?: number;
+  withForm?: boolean;
+  subtitle?: string;
+}) {
   const [summary, reviews] = await Promise.all([getReviewSummary(), getApprovedReviews(limit)]);
   const enabled = reviewsEnabled();
 
@@ -21,7 +29,7 @@ export async function ReviewsSection({ limit = 6, withForm = false }: { limit?: 
           <h2 id="reviews-heading" className="mt-3 font-serif text-3xl font-semibold text-ink sm:text-4xl">
             What Students Say
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-ink-soft">Your feedback helps us make learning calculus easier.</p>
+          <p className="mx-auto mt-3 max-w-xl text-ink-soft">{subtitle}</p>
           {summary.count > 0 && (
             <p className="mt-6 inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1 rounded-full border border-line bg-surface px-5 py-2.5 shadow-card">
               <Stars rating={summary.average} size="h-5 w-5" />
@@ -37,9 +45,9 @@ export async function ReviewsSection({ limit = 6, withForm = false }: { limit?: 
         </div>
 
         {reviews.length > 0 ? (
-          <ul className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-10 flex flex-wrap justify-center gap-6">
             {reviews.map((r) => (
-              <li key={r.id}>
+              <li key={r.id} className="w-full md:w-[calc(50%-0.75rem)] lg:w-[calc((100%-3rem)/3)]">
                 <ReviewCard review={r} />
               </li>
             ))}
@@ -52,15 +60,15 @@ export async function ReviewsSection({ limit = 6, withForm = false }: { limit?: 
           </div>
         )}
 
-        {!withForm && enabled && (
+        {!withForm && (
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             {summary.count > reviews.length && (
               <Link href="/reviews" className="rounded-lg border border-line-strong bg-surface px-5 py-2.5 font-medium text-ink hover:bg-sunken">
                 Read all reviews
               </Link>
             )}
-            <Link href="/reviews#write" className="rounded-lg bg-accent px-5 py-2.5 font-semibold text-white hover:bg-accent-hover">
-              Write a review
+            <Link href="/reviews#write" className="rounded-lg bg-accent px-5 py-2.5 font-semibold text-white transition-colors hover:bg-accent-hover">
+              Share Your Feedback
             </Link>
           </div>
         )}
