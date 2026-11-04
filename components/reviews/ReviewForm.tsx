@@ -9,7 +9,7 @@ import { StarInput } from "./StarInput";
 type Status = { kind: "idle" } | { kind: "sending" } | { kind: "success" } | { kind: "error"; message: string };
 
 const field =
-  "mt-1 w-full rounded-lg border bg-surface px-3 py-2 text-ink placeholder:text-muted/70 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20";
+  "mt-1 w-full rounded-xl border bg-surface px-3.5 py-2.5 text-ink placeholder:text-muted/70 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20";
 
 export function ReviewForm() {
   const [name, setName] = useState("");
@@ -204,7 +204,7 @@ export function ReviewForm() {
       </div>
 
       {status.kind === "error" && (
-        <p role="alert" className="rounded-lg border border-danger/30 bg-danger-soft px-4 py-3 text-sm text-danger">
+        <p role="alert" className="rounded-xl border border-danger/30 bg-danger-soft px-4 py-3 text-sm text-danger">
           {status.message}
         </p>
       )}
@@ -213,7 +213,7 @@ export function ReviewForm() {
         <button
           type="submit"
           disabled={status.kind === "sending"}
-          className="inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-2.5 font-semibold text-white transition-colors hover:bg-accent-hover disabled:opacity-70"
+          className="inline-flex items-center gap-2 rounded-xl bg-brand-gradient px-6 py-3 font-semibold text-white shadow-glow transition-all hover:-translate-y-0.5 hover:bg-brand-gradient-hover disabled:translate-y-0 disabled:opacity-70"
         >
           {status.kind === "sending" && <Loader2 aria-hidden className="h-4 w-4 animate-spin" />}
           {status.kind === "sending" ? "Sending…" : "Submit Review"}

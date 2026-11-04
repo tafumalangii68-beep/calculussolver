@@ -23,10 +23,10 @@ export async function ReviewsSection({
 
   return (
     <div className="space-y-10">
-      <section aria-labelledby="reviews-heading" className="rounded-card border border-line bg-gradient-to-b from-surface to-accent-soft/50 px-4 py-12 sm:px-8">
+      <section aria-labelledby="reviews-heading" className="rounded-3xl border border-line bg-gradient-to-b from-surface to-accent-soft/50 px-4 py-12 shadow-[0_24px_60px_-24px_rgb(21_25_54/0.25)] sm:px-8">
         <div className="text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-accent-strong">Student reviews</p>
-          <h2 id="reviews-heading" className="mt-3 font-display text-3xl font-semibold text-ink sm:text-4xl">
+          <p className="inline-flex items-center gap-2 rounded-full bg-accent-soft px-4 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-accent-strong"><span aria-hidden>✦</span> Student reviews</p>
+          <h2 id="reviews-heading" className="mt-4 font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
             What Students Say
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-ink-soft">{subtitle}</p>
@@ -53,7 +53,7 @@ export async function ReviewsSection({
             ))}
           </ul>
         ) : (
-          <div className="mx-auto mt-10 max-w-md rounded-card border border-dashed border-line-strong bg-surface p-8 text-center">
+          <div className="mx-auto mt-10 max-w-md rounded-2xl border border-dashed border-line-strong bg-surface p-8 text-center">
             <MessageSquarePlus aria-hidden className="mx-auto h-8 w-8 text-accent" />
             <p className="mt-3 font-semibold text-ink">No reviews yet</p>
             <p className="mt-1 text-sm text-muted">{enabled ? "Used the solver? Be the first to share how it helped." : "Reviews will open soon."}</p>
@@ -63,11 +63,11 @@ export async function ReviewsSection({
         {!withForm && (
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             {summary.count > reviews.length && (
-              <Link href="/reviews" className="rounded-lg border border-line-strong bg-surface px-5 py-2.5 font-medium text-ink hover:bg-sunken">
+              <Link href="/reviews" className="rounded-xl border border-line-strong bg-surface px-5 py-2.5 font-medium text-ink hover:bg-accent-soft">
                 Read all reviews
               </Link>
             )}
-            <Link href="/reviews#write" className="rounded-lg bg-accent px-5 py-2.5 font-semibold text-white transition-colors hover:bg-accent-hover">
+            <Link href="/reviews#write" className="rounded-xl bg-brand-gradient px-5 py-2.5 font-semibold text-white shadow-glow transition-all hover:-translate-y-0.5 hover:bg-brand-gradient-hover">
               Share Your Feedback
             </Link>
           </div>
@@ -75,8 +75,8 @@ export async function ReviewsSection({
       </section>
 
       {withForm && (
-        <section id="write" aria-labelledby="write-heading" className="scroll-mt-24 rounded-card border border-line bg-surface p-6 shadow-card sm:p-8">
-          <h2 id="write-heading" className="font-display text-2xl font-semibold text-ink sm:text-3xl">
+        <section id="write" aria-labelledby="write-heading" className="scroll-mt-24 rounded-3xl border border-line bg-surface p-6 shadow-card sm:p-10">
+          <h2 id="write-heading" className="font-display text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
             Share Your Experience
           </h2>
           <p className="mt-2 max-w-2xl text-ink-soft">
@@ -87,7 +87,7 @@ export async function ReviewsSection({
             {enabled ? (
               <ReviewForm />
             ) : (
-              <p className="rounded-lg border border-warn/30 bg-warn-soft px-4 py-3 text-warn">Review submissions are not open yet. Please check back soon.</p>
+              <p className="rounded-xl border border-warn/30 bg-warn-soft px-4 py-3 text-warn">Review submissions are not open yet. Please check back soon.</p>
             )}
           </div>
         </section>

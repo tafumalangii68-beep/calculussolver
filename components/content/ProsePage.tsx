@@ -1,6 +1,20 @@
+import { Building2, Calendar, Cookie, FileText, Mail, ScrollText, Settings2, ShieldCheck, TriangleAlert } from "lucide-react";
+import { Children, isValidElement } from "react";
 import { webPageLd } from "@/lib/seo";
 import { JsonLd } from "./JsonLd";
-import { PageIntro } from "./PageIntro";
+import { PageHero } from "./PageHero";
+import { ProseToc } from "./ProseToc";
+
+/** Eyebrow label and icon for each text page. */
+const PAGE_KIND: Record<string, { eyebrow: string; icon: React.ReactNode }> = {
+  "/about": { eyebrow: "About", icon: <Building2 /> },
+  "/contact": { eyebrow: "Get in touch", icon: <Mail /> },
+  "/how-it-works": { eyebrow: "Methodology", icon: <Settings2 /> },
+  "/privacy-policy": { eyebrow: "Legal · Privacy", icon: <ShieldCheck /> },
+  "/terms-and-conditions": { eyebrow: "Legal · Terms", icon: <ScrollText /> },
+  "/cookie-policy": { eyebrow: "Legal · Cookies", icon: <Cookie /> },
+  "/disclaimer": { eyebrow: "Legal · Disclaimer", icon: <TriangleAlert /> },
+};
 
 /** Layout for text pages such as the legal pages, About and How It Works. */
 export function ProsePage({
@@ -18,19 +32,45 @@ export function ProsePage({
   lead?: React.ReactNode;
   children: React.ReactNode;
 }) {
+  const kind = PAGE_KIND[path] ?? { eyebrow: "Calculus Solver", icon: <FileText /> };
+  // Pages with three or more sections get a sidebar table of contents; shorter ones use a centred column.
+  const headings = Children.toArray(children).filter((c) => isValidElement(c) && c.type === "h2").length;
+  const withToc = headings >= 3;
   return (
-    <div className="mx-auto max-w-6xl px-4 pt-8 sm:px-6 sm:pt-10">
+    <>
       <JsonLd data={webPageLd(title, path, description)} />
-      <PageIntro crumbs={[{ name: title, path }]} title={title}>
+      <PageHero
+        crumbs={[{ name: title, path }]}
+        eyebrow={kind.eyebrow}
+        icon={kind.icon}
+        title={title}
+        meta={
+          updated && (
+            <span className="inline-flex items-center gap-1.5">
+              <Calendar aria-hidden className="h-4 w-4" />
+              Last updated: <time dateTime={updated}>{formatDate(updated)}</time>
+            </span>
+          )
+        }
+      >
         {lead}
-        {updated && (
-          <p className="mt-3 text-sm text-muted">
-            Last updated: <time dateTime={updated}>{formatDate(updated)}</time>
-          </p>
+      </PageHero>
+      <div
+        className={`relative z-10 mx-auto -mt-12 grid items-start gap-10 px-4 sm:px-6 ${withToc ? "max-w-7xl lg:grid-cols-[minmax(0,1fr)_17rem]" : "max-w-4xl"}`}
+      >
+        <div
+          id="page-content"
+          className="prose-body min-w-0 max-w-none rounded-3xl border border-line bg-surface p-6 shadow-[0_24px_60px_-24px_rgb(21_25_54/0.25)] sm:p-10 lg:p-12 [&>h2:first-child]:mt-0 [&>figure:first-child]:mt-0"
+        >
+          {children}
+        </div>
+        {withToc && (
+          <aside aria-label="Page navigation" className="hidden lg:sticky lg:top-24 lg:block">
+            <ProseToc targetId="page-content" />
+          </aside>
         )}
-      </PageIntro>
-      <div className="prose-body mt-10">{children}</div>
-    </div>
+      </div>
+    </>
   );
 }
 

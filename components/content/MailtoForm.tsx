@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 const field =
-  "mt-1 w-full rounded-lg border border-line-strong bg-surface px-3 py-2 text-ink focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20";
+  "mt-1 w-full rounded-xl border border-line-strong bg-surface px-3.5 py-2.5 text-ink focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20";
 
 /** Prepares an email in the visitor's own mail app. Nothing is sent by the website. */
 export function MailtoForm({ email }: { email: string }) {
@@ -15,7 +15,7 @@ export function MailtoForm({ email }: { email: string }) {
 
   return (
     <form
-      className="mt-6 max-w-xl rounded-card border border-line bg-surface p-5 not-prose"
+      className="mt-6 max-w-xl rounded-2xl border border-line bg-paper p-5 shadow-card sm:p-6"
       onSubmit={(e) => {
         e.preventDefault();
         window.location.href = href;
@@ -34,7 +34,7 @@ export function MailtoForm({ email }: { email: string }) {
         </label>
         <textarea id="contact-message" rows={6} value={message} onChange={(e) => setMessage(e.target.value)} className={field} />
       </div>
-      <button type="submit" className="mt-4 rounded-lg bg-accent px-5 py-2.5 font-semibold text-white hover:bg-accent-hover">
+      <button type="submit" className="mt-4 rounded-xl bg-brand-gradient px-6 py-3 font-semibold text-white shadow-glow transition-all hover:-translate-y-0.5 hover:bg-brand-gradient-hover">
         Open in my email app
       </button>
       <p className="mt-3 text-sm text-muted" aria-live="polite">

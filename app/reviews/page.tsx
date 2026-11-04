@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/content/JsonLd";
-import { PageIntro } from "@/components/content/PageIntro";
+import { MessageSquareQuote } from "lucide-react";
+import { PageHero } from "@/components/content/PageHero";
 import { ReviewsSection } from "@/components/reviews/ReviewsSection";
 import { getApprovedReviews, getReviewSummary } from "@/lib/reviews/store";
 import { buildMetadata, reviewsLd } from "@/lib/seo";
@@ -19,17 +20,17 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ReviewsPage() {
   const [summary, reviews] = await Promise.all([getReviewSummary(), getApprovedReviews(60)]);
   return (
-    <div className="mx-auto max-w-6xl px-4 pt-8 sm:px-6 sm:pt-10">
+    <>
       {summary.count > 0 && <JsonLd data={reviewsLd(summary, reviews.slice(0, 10))} />}
-      <PageIntro crumbs={[{ name: "Reviews", path: "/reviews" }]} title="Calculus Solver Reviews">
+      <PageHero crumbs={[{ name: "Reviews", path: "/reviews" }]} eyebrow="Reviews" icon={<MessageSquareQuote />} title="Calculus Solver Reviews">
         <p>
           Every review here was written by a visitor and approved by a person before publishing. Ratings and counts are calculated
           from those reviews only.
         </p>
-      </PageIntro>
-      <div className="mt-10">
+      </PageHero>
+      <div className="relative z-10 mx-auto -mt-12 max-w-6xl px-4 sm:px-6">
         <ReviewsSection limit={60} withForm />
       </div>
-    </div>
+    </>
   );
 }
