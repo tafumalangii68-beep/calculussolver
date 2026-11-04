@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Source_Serif_4 } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "katex/dist/katex.min.css";
 import "./globals.css";
 import { CookieConsent } from "@/components/cookies/CookieConsent";
@@ -9,8 +9,9 @@ import { ScrollableRegions } from "@/components/layout/ScrollableRegions";
 import { siteConfig } from "@/lib/site-config";
 import { themeInitScript } from "@/lib/theme";
 
-// Body text uses the system UI font (no download); only headings use a web font.
-const serif = Source_Serif_4({ subsets: ["latin"], variable: "--font-serif-display", display: "swap", weight: ["600"] });
+// Self-hosted by next/font at build time: no requests to Google from visitors' browsers.
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakarta", display: "swap", weight: ["600", "700", "800"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -23,8 +24,9 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#faf9f7" },
-    { media: "(prefers-color-scheme: dark)", color: "#161514" },
+    // Matches the navy header in both themes.
+    { media: "(prefers-color-scheme: light)", color: "#10143b" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b0e2a" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -33,7 +35,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     // suppressHydrationWarning: the inline script sets data-theme before React hydrates.
-    <html lang="en" className={serif.variable} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${jakarta.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>

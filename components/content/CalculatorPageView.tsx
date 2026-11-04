@@ -16,7 +16,7 @@ import { WorkedExample } from "./WorkedExample";
 
 function SectionHeading({ id, children }: { id: string; children: React.ReactNode }) {
   return (
-    <h2 id={id} className="font-serif text-2xl font-semibold text-ink sm:text-3xl">
+    <h2 id={id} className="font-display text-2xl font-semibold text-ink sm:text-3xl">
       {children}
     </h2>
   );
@@ -148,7 +148,7 @@ export function CalculatorPageView({ page }: { page: CalculatorPage }) {
       <FaqSection faqs={page.faqs} />
 
       <section className="mt-16 rounded-card bg-ink px-6 py-8 text-paper sm:px-10">
-        <h2 className="font-serif text-2xl font-semibold">Next step</h2>
+        <h2 className="font-display text-2xl font-semibold">Next step</h2>
         <p className="mt-2 max-w-2xl text-paper/80">
           Pick one of the worked examples, solve it on paper, then enter it in the calculator and compare your steps with each
           rule shown. Spotting where your work differs is the fastest way to improve.

@@ -56,7 +56,7 @@ export default function HomePage() {
 
       <section className="pt-8 sm:pt-12">
         <div className="max-w-3xl">
-          <h1 className="font-serif text-4xl font-semibold leading-tight tracking-tight text-ink sm:text-[2.75rem]">
+          <h1 className="font-display text-4xl font-semibold leading-tight tracking-tight text-ink sm:text-[2.75rem]">
             Calculus Solver <span className="text-muted">with step-by-step solutions</span>
           </h1>
           <p className="mt-3 text-lg text-ink-soft">
@@ -120,7 +120,7 @@ export default function HomePage() {
         </section>
 
         <section aria-labelledby="syntax">
-          <h2 id="syntax" className="font-serif text-2xl font-semibold text-ink sm:text-3xl">
+          <h2 id="syntax" className="font-display text-2xl font-semibold text-ink sm:text-3xl">
             How to type math expressions
           </h2>
           <p className="mt-3 max-w-[72ch] text-ink-soft">
@@ -153,7 +153,7 @@ export default function HomePage() {
         </section>
 
         <section aria-labelledby="supported">
-          <h2 id="supported" className="font-serif text-2xl font-semibold text-ink sm:text-3xl">
+          <h2 id="supported" className="font-display text-2xl font-semibold text-ink sm:text-3xl">
             Supported problem types
           </h2>
           <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -189,7 +189,7 @@ export default function HomePage() {
         </section>
 
         <section aria-labelledby="examples">
-          <h2 id="examples" className="font-serif text-2xl font-semibold text-ink sm:text-3xl">
+          <h2 id="examples" className="font-display text-2xl font-semibold text-ink sm:text-3xl">
             Worked examples
           </h2>
           <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -200,7 +200,7 @@ export default function HomePage() {
         </section>
 
         <section aria-labelledby="entry-mistakes">
-          <h2 id="entry-mistakes" className="font-serif text-2xl font-semibold text-ink sm:text-3xl">
+          <h2 id="entry-mistakes" className="font-display text-2xl font-semibold text-ink sm:text-3xl">
             Common mistakes when entering expressions
           </h2>
           <ul className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -239,7 +239,7 @@ export default function HomePage() {
         </section>
 
         <section aria-labelledby="explore">
-          <h2 id="explore" className="font-serif text-2xl font-semibold text-ink sm:text-3xl">
+          <h2 id="explore" className="font-display text-2xl font-semibold text-ink sm:text-3xl">
             Dedicated calculators, guides and tutorials
           </h2>
           <p className="mt-3 max-w-[72ch] text-ink-soft">
@@ -267,7 +267,7 @@ export default function HomePage() {
 
     <div className="mx-auto max-w-6xl px-4 sm:px-6">
       <section className="mt-16 rounded-card bg-ink px-6 py-8 text-paper sm:px-10">
-        <h2 className="font-serif text-2xl font-semibold">Start with a problem you&apos;re stuck on</h2>
+        <h2 className="font-display text-2xl font-semibold">Start with a problem you&apos;re stuck on</h2>
         <p className="mt-2 max-w-2xl text-paper/80">
           Solve it yourself as far as you can, then let the solver show the remaining steps. Comparing the two is where the
           learning happens. When you&apos;re ready to go deeper, the <Link href="/guides" className="underline underline-offset-2">study guides</Link> explain

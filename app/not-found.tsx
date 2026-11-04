@@ -13,7 +13,7 @@ export default function NotFound() {
   return (
     <div className="mx-auto max-w-6xl px-4 pt-12 sm:px-6">
       <p className="font-mono text-sm text-muted">404</p>
-      <h1 className="mt-2 font-serif text-4xl font-semibold text-ink">This page doesn&apos;t exist</h1>
+      <h1 className="mt-2 font-display text-4xl font-semibold text-ink">This page doesn&apos;t exist</h1>
       <p className="mt-3 max-w-2xl text-lg text-ink-soft">
         The link may be broken, or the page may have moved. The solver and the calculators below are a good place to continue.
       </p>

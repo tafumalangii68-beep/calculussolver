@@ -21,19 +21,19 @@ export default function GuidesPage() {
         </p>
       </PageIntro>
       <section aria-labelledby="all-guides" className="mt-10">
-        <h2 id="all-guides" className="font-serif text-2xl font-semibold text-ink">Guides</h2>
+        <h2 id="all-guides" className="font-display text-2xl font-semibold text-ink">Guides</h2>
         <div className="mt-4">
           <LinkCards cards={guides.map((g) => ({ href: `/guides/${g.slug}`, title: g.title, description: g.description, titleClass: g.titleClass }))} />
         </div>
       </section>
       <section aria-labelledby="from-blog" className="mt-14">
-        <h2 id="from-blog" className="font-serif text-2xl font-semibold text-ink">From the blog</h2>
+        <h2 id="from-blog" className="font-display text-2xl font-semibold text-ink">From the blog</h2>
         <div className="mt-4">
           <LinkCards cards={posts.map((p) => ({ href: `/blog/${p.slug}`, title: p.title, description: p.description, titleClass: p.titleClass }))} />
         </div>
       </section>
       <section aria-labelledby="tools" className="mt-14">
-        <h2 id="tools" className="font-serif text-2xl font-semibold text-ink">Calculators to practise with</h2>
+        <h2 id="tools" className="font-display text-2xl font-semibold text-ink">Calculators to practise with</h2>
         <div className="mt-4">
           <LinkCards cards={calculatorNav.map((c) => ({ href: `/${c.slug}`, title: c.label, description: c.blurb, titleClass: c.titleClass }))} />
         </div>

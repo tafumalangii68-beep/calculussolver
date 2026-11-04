@@ -34,7 +34,7 @@ export default function BlogPage() {
                   <time dateTime={post.published}>{formatDate(post.published)}</time>
                 </p>
               )}
-              <h2 className={`mt-1 font-serif text-xl font-semibold ${post.titleClass ?? "text-ink"}`}>
+              <h2 className={`mt-1 font-display text-xl font-semibold ${post.titleClass ?? "text-ink"}`}>
                 <Link href={`/blog/${post.slug}`} className="hover:underline underline-offset-4">
                   {post.title}
                 </Link>

@@ -41,7 +41,7 @@ function Banner({ onSettings }: { onSettings: () => void }) {
   return (
     <section
       aria-label="Cookie and storage notice"
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface/95 px-4 py-4 shadow-[0_-4px_20px_rgb(31_30_28/0.06)] backdrop-blur sm:px-6"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface/95 px-4 py-4 shadow-[0_-4px_20px_rgb(21_25_54/0.08)] backdrop-blur sm:px-6"
     >
       <div className="mx-auto flex max-w-6xl flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <p className="max-w-3xl text-sm text-ink-soft">
@@ -113,7 +113,7 @@ function SettingsDialog({ current, onClose }: { current: ConsentRecord | null; o
       className="m-auto w-[min(36rem,calc(100vw-2rem))] rounded-card border border-line bg-surface p-0 text-ink shadow-card backdrop:bg-black/50"
     >
       <div className="max-h-[85vh] overflow-y-auto p-6">
-        <h2 id="cookie-settings-title" className="font-serif text-2xl font-semibold">
+        <h2 id="cookie-settings-title" className="font-display text-2xl font-semibold">
           Cookie settings
         </h2>
         <p className="mt-2 text-sm text-muted">

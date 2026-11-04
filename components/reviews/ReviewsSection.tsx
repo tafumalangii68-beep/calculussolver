@@ -26,7 +26,7 @@ export async function ReviewsSection({
       <section aria-labelledby="reviews-heading" className="rounded-card border border-line bg-gradient-to-b from-surface to-accent-soft/50 px-4 py-12 sm:px-8">
         <div className="text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-accent-strong">Student reviews</p>
-          <h2 id="reviews-heading" className="mt-3 font-serif text-3xl font-semibold text-ink sm:text-4xl">
+          <h2 id="reviews-heading" className="mt-3 font-display text-3xl font-semibold text-ink sm:text-4xl">
             What Students Say
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-ink-soft">{subtitle}</p>
@@ -76,7 +76,7 @@ export async function ReviewsSection({
 
       {withForm && (
         <section id="write" aria-labelledby="write-heading" className="scroll-mt-24 rounded-card border border-line bg-surface p-6 shadow-card sm:p-8">
-          <h2 id="write-heading" className="font-serif text-2xl font-semibold text-ink sm:text-3xl">
+          <h2 id="write-heading" className="font-display text-2xl font-semibold text-ink sm:text-3xl">
             Share Your Experience
           </h2>
           <p className="mt-2 max-w-2xl text-ink-soft">

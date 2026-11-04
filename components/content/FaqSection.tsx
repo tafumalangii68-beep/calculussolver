@@ -6,7 +6,7 @@ import { JsonLd } from "./JsonLd";
 export function FaqSection({ faqs, title = "Frequently asked questions", id = "faq" }: { faqs: Faq[]; title?: string; id?: string }) {
   return (
     <section aria-labelledby={`${id}-title`} className="mt-16">
-      <h2 id={`${id}-title`} className="font-serif text-2xl font-semibold text-ink sm:text-3xl">
+      <h2 id={`${id}-title`} className="font-display text-2xl font-semibold text-ink sm:text-3xl">
         {title}
       </h2>
       <div className="mt-6 divide-y divide-line rounded-card border border-line bg-surface">

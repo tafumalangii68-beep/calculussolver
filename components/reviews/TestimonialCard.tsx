@@ -13,8 +13,8 @@ export function initials(name: string): string {
 /** Large testimonial card used in the homepage carousel. */
 export function TestimonialCard({ review }: { review: PublicReview }) {
   return (
-    <figure className="flex h-full min-h-[350px] flex-col rounded-[25px] border border-line bg-surface p-6 shadow-[0_5px_18px_rgb(38_55_70/0.09)] transition-shadow duration-300 hover:shadow-[0_10px_25px_rgb(38_55_70/0.13)] sm:min-h-[390px] sm:px-[30px] sm:py-7">
-      <span aria-hidden className="block h-[65px] select-none font-serif text-[92px] font-bold leading-none text-accent">
+    <figure className="flex h-full min-h-[350px] flex-col rounded-[25px] border border-line bg-surface p-6 shadow-[0_5px_18px_rgb(21_25_54/0.07)] transition-shadow duration-300 hover:shadow-[0_10px_25px_rgb(76_34_201/0.14)] sm:min-h-[390px] sm:px-[30px] sm:py-7">
+      <span aria-hidden className="block h-[65px] select-none font-display text-[92px] font-bold leading-none text-accent">
         &ldquo;
       </span>
       <blockquote className="mb-7 mt-3 flex-1">

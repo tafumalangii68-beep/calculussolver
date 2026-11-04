@@ -18,7 +18,7 @@ export async function StatsCard() {
             <h2 id="stats-heading" className="text-sm font-semibold uppercase tracking-wider text-muted">
               Problems solved
             </h2>
-            <p className="flex items-center gap-2 font-serif text-4xl font-semibold text-accent-strong sm:text-5xl">
+            <p className="flex items-center gap-2 font-display text-4xl font-semibold text-accent-strong sm:text-5xl">
               {count.toLocaleString("en-US")}
               <TrendingUp aria-hidden className="h-6 w-6 text-ok" />
             </p>

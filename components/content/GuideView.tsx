@@ -116,7 +116,7 @@ export function GuideView({ guide, collection = GUIDES }: { guide: Guide; collec
       </article>
 
       <section aria-labelledby="examples" className="mt-16">
-        <h2 id="examples" className="font-serif text-2xl font-semibold text-ink sm:text-3xl">
+        <h2 id="examples" className="font-display text-2xl font-semibold text-ink sm:text-3xl">
           Worked examples
         </h2>
         <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -129,7 +129,7 @@ export function GuideView({ guide, collection = GUIDES }: { guide: Guide; collec
       <FaqSection faqs={guide.faqs} title="Questions about this topic" />
 
       <section className="mt-16 rounded-card bg-ink px-6 py-8 text-paper sm:px-10">
-        <h2 className="font-serif text-2xl font-semibold">Practice what you learned</h2>
+        <h2 className="font-display text-2xl font-semibold">Practice what you learned</h2>
         <p className="mt-2 max-w-2xl text-paper/80">
           Try the worked examples above in the calculator and compare each step with your own. You can also use the main{" "}
           <Link href="/" className="underline underline-offset-2">Calculus Solver</Link> for every operation in one place.

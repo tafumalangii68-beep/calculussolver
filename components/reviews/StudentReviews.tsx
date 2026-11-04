@@ -31,7 +31,7 @@ export async function StudentReviews({ limit = 12 }: { limit?: number }) {
           </span>
           Trusted by users worldwide
         </p>
-        <h2 id="testimonials-heading" className="mb-3.5 mt-6 font-serif text-[clamp(30px,4vw,49px)] font-semibold leading-[1.2] text-ink">
+        <h2 id="testimonials-heading" className="mb-3.5 mt-6 font-display text-[clamp(30px,4vw,49px)] font-semibold leading-[1.2] text-ink">
           What people are saying
         </h2>
         <p className="mx-auto max-w-[780px] text-[15px] leading-[1.7] text-muted sm:text-[17px]">

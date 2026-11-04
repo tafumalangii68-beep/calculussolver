@@ -18,7 +18,7 @@ export default function FaqPage() {
       </PageIntro>
       {faqGroups.map((group) => (
         <section key={group.title} aria-label={group.title} className="mt-12">
-          <h2 className="font-serif text-2xl font-semibold text-ink">{group.title}</h2>
+          <h2 className="font-display text-2xl font-semibold text-ink">{group.title}</h2>
           <div className="mt-4 divide-y divide-line rounded-card border border-line bg-surface">
             {group.faqs.map((f) => (
               <details key={f.q} className="group px-5 py-4 [&_summary::-webkit-details-marker]:hidden">

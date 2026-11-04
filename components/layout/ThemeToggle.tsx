@@ -3,6 +3,7 @@
 import { Moon, Sun } from "lucide-react";
 import { useSyncExternalStore } from "react";
 import { currentTheme, setTheme, subscribeTheme } from "@/lib/theme";
+import { headerIconButton } from "./header-styles";
 
 export function ThemeToggle() {
   // null on the server: the icons below switch with CSS, so the markup never mismatches.
@@ -16,7 +17,7 @@ export function ThemeToggle() {
       aria-label="Dark mode"
       aria-pressed={theme === null ? undefined : dark}
       title={dark ? "Switch to light mode" : "Switch to dark mode"}
-      className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-line text-ink hover:bg-sunken"
+      className={headerIconButton}
     >
       <Moon aria-hidden className="h-5 w-5 dark:hidden" />
       <Sun aria-hidden className="hidden h-5 w-5 dark:block" />
