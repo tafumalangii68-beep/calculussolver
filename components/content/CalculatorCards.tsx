@@ -3,7 +3,7 @@ import Link from "next/link";
 import { calculatorNav, type CalculatorSlug } from "@/lib/site-config";
 
 /** Per-calculator look: soft card background, accent text colour and a small math icon. */
-const STYLE: Record<CalculatorSlug, { card: string; text: string; icon: React.ReactNode }> = {
+export const calculatorStyle: Record<CalculatorSlug, { card: string; text: string; icon: React.ReactNode }> = {
   "derivative-calculator": {
     card: "bg-calc-derivative-soft",
     text: "text-calc-derivative",
@@ -48,7 +48,7 @@ export function CalculatorCards({ slugs = CARD_ORDER, className = "" }: { slugs?
     <ul className={`grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 ${className}`}>
       {slugs.map((slug) => {
         const nav = calculatorNav.find((c) => c.slug === slug)!;
-        const s = STYLE[slug];
+        const s = calculatorStyle[slug];
         return (
           <li key={slug} className="flex">
             <Link

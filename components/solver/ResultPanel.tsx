@@ -31,7 +31,7 @@ function CopyButton({ text, label }: { text: string; label: string }) {
           setCopied(false);
         }
       }}
-      className="inline-flex items-center gap-1.5 rounded-lg border border-line px-3 py-1.5 text-sm text-ink-soft hover:bg-sunken"
+      className="inline-flex items-center gap-1.5 rounded-lg border border-line px-3 py-1.5 text-sm text-ink-soft transition-colors hover:border-accent/50 hover:bg-accent-soft hover:text-accent-strong"
     >
       {copied ? <Check aria-hidden className="h-4 w-4 text-ok" /> : <Copy aria-hidden className="h-4 w-4" />}
       {copied ? "Copied" : label}
@@ -42,14 +42,17 @@ function CopyButton({ text, label }: { text: string; label: string }) {
 function Steps({ section }: { section: StepSection }) {
   return (
     <section className="mt-6">
-      <h3 className="text-sm font-semibold uppercase tracking-wider text-muted">{section.title}</h3>
-      <ol className="mt-3 space-y-3">
+      <h3 className="text-xs font-bold uppercase tracking-[0.14em] text-accent-strong">{section.title}</h3>
+      <ol className="mt-3 space-y-2.5">
         {section.steps.map((step, i) => (
           <li
             key={i}
-            className="rounded-lg border border-line bg-surface px-4 py-3"
+            className="relative rounded-xl border border-line bg-surface py-3 pl-12 pr-4 shadow-sm"
             style={{ marginLeft: `${Math.min(step.depth, 3) * 0.9}rem` }}
           >
+            <span aria-hidden className="absolute left-3 top-3 grid h-6 w-6 place-items-center rounded-full bg-accent-soft text-xs font-bold text-accent-strong">
+              {i + 1}
+            </span>
             <p className="text-sm font-semibold text-ink">{step.rule}</p>
             {step.latex && <MathView latex={step.latex} display className="math-left mt-1 text-ink" />}
             {step.note && <p className="mt-1 text-sm text-muted">{step.note}</p>}
@@ -67,9 +70,9 @@ function Table({ table }: { table: ResultTable }) {
   const text = new Set(table.textColumns ?? []);
   return (
     <div className="mt-6">
-      <div className="overflow-x-auto rounded-lg border border-line">
+      <div className="overflow-x-auto rounded-xl border border-line bg-surface">
         <table className="w-full min-w-[32rem] border-collapse text-sm">
-          <caption className="border-b border-line bg-sunken px-4 py-2 text-left font-medium text-ink">{table.caption}</caption>
+          <caption className="border-b border-line bg-accent-soft/60 px-4 py-2.5 text-left font-display font-bold text-ink">{table.caption}</caption>
           <thead>
             <tr className="border-b border-line">
               {table.headers.map((h, i) => (
@@ -99,7 +102,7 @@ function Table({ table }: { table: ResultTable }) {
 export function ResultPanel({ result }: { result: SolveResult }) {
   if (!result.ok) {
     return (
-      <div role="alert" className="rounded-card border border-danger/30 bg-danger-soft p-5">
+      <div role="alert" className="rounded-2xl border border-danger/30 bg-danger-soft p-5">
         <p className="flex items-start gap-2 font-semibold text-danger">
           <AlertTriangle aria-hidden className="mt-0.5 h-5 w-5 shrink-0" />
           {result.error}
@@ -112,11 +115,12 @@ export function ResultPanel({ result }: { result: SolveResult }) {
   const related = RELATED[result.operation];
   const check = result.check;
   return (
-    <div className="rounded-card border border-line bg-paper p-5 sm:p-6">
+    <div className="rounded-2xl border border-line bg-paper p-4 sm:p-6">
       <h2 className="sr-only">Result</h2>
       <MathView latex={result.problemLatex} display className="math-left text-ink-soft" label="Problem" />
-      <div className="mt-3 rounded-lg border border-accent/30 bg-surface px-4 py-4">
-        <p className="text-xs font-semibold uppercase tracking-wider text-accent-strong">Answer</p>
+      <div className="relative mt-3 overflow-hidden rounded-xl border border-accent/30 bg-surface px-4 py-4 pl-5 shadow-card">
+        <span aria-hidden className="absolute inset-y-0 left-0 w-1.5 bg-brand-gradient" />
+        <p className="text-xs font-bold uppercase tracking-[0.14em] text-accent-strong">Answer</p>
         <MathView latex={result.answerLatex} display className="math-left mt-1 text-lg text-ink" />
         {result.approx && <p className="mt-1 text-sm text-muted">≈ {result.approx}</p>}
         <p className="mt-2 break-words font-mono text-xs text-muted">
@@ -166,7 +170,7 @@ export function ResultPanel({ result }: { result: SolveResult }) {
 
       {result.sections.length > 0 && (
         <details className="mt-6 group" open>
-          <summary className="cursor-pointer font-semibold text-ink">Step-by-step solution</summary>
+          <summary className="cursor-pointer font-display text-lg font-bold text-ink">Step-by-step solution</summary>
           {result.sections.map((section, i) => (
             <Steps key={i} section={section} />
           ))}
@@ -187,7 +191,7 @@ export function ResultPanel({ result }: { result: SolveResult }) {
 /** Invites a real rating after a solve: each star opens the review form with that rating preselected. */
 function RateSolution() {
   return (
-    <aside aria-labelledby="rate-solution-heading" className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-lg border border-line bg-surface px-4 py-3">
+    <aside aria-labelledby="rate-solution-heading" className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl border border-line bg-surface px-4 py-3">
       <p id="rate-solution-heading" className="text-sm font-semibold text-ink">
         Rate this solution
       </p>

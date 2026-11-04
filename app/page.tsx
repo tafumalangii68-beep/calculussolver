@@ -133,7 +133,7 @@ export default function HomePage() {
         <div aria-hidden className="pointer-events-none absolute -left-40 top-20 -z-10 h-96 w-96 rounded-full bg-[#4c22c9]/30 blur-3xl" />
 
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1.15fr_1fr]">
-          <div className="animate-fade-up">
+          <div>
             <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium text-white/90 backdrop-blur">
               <GraduationCap aria-hidden className="h-4 w-4 text-[#c9a8ff]" />
               Free Online Calculus Calculator

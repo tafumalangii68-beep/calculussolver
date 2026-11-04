@@ -9,23 +9,24 @@ export interface Crumb {
 }
 
 /** Visible breadcrumb trail plus matching BreadcrumbList structured data. Home is added automatically. */
-export function Breadcrumbs({ items }: { items: Crumb[] }) {
+export function Breadcrumbs({ items, tone = "light" }: { items: Crumb[]; tone?: "light" | "dark" }) {
   const all = [{ name: "Home", path: "/" }, ...items];
+  const dark = tone === "dark";
   return (
     <>
-      <nav aria-label="Breadcrumb" className="text-sm text-muted">
+      <nav aria-label="Breadcrumb" className={`text-sm ${dark ? "text-white/65" : "text-muted"}`}>
         <ol className="flex flex-wrap items-center gap-1">
           {all.map((item, i) => {
             const last = i === all.length - 1;
             return (
               <li key={item.path} className="flex items-center gap-1">
                 {last ? (
-                  <span aria-current="page" className="text-ink-soft">
+                  <span aria-current="page" className={dark ? "text-white" : "text-ink-soft"}>
                     {item.name}
                   </span>
                 ) : (
                   <>
-                    <Link href={item.path} className="hover:text-ink hover:underline underline-offset-2">
+                    <Link href={item.path} className={`underline-offset-2 hover:underline ${dark ? "hover:text-white" : "hover:text-ink"}`}>
                       {item.name}
                     </Link>
                     <ChevronRight aria-hidden className="h-3.5 w-3.5" />
