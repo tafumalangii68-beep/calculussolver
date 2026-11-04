@@ -5,7 +5,7 @@ import { JsonLd } from "@/components/content/JsonLd";
 import { LinkCards } from "@/components/content/LinkCards";
 import { Tex } from "@/components/content/Tex";
 import { WorkedExample } from "@/components/content/WorkedExample";
-import { ReviewsSection } from "@/components/reviews/ReviewsSection";
+import { StudentReviews } from "@/components/reviews/StudentReviews";
 import { StatsCard } from "@/components/reviews/StatsCard";
 import { Solver } from "@/components/solver/Solver";
 import { posts } from "@/data/blog";
@@ -260,7 +260,7 @@ export default function HomePage() {
 
       {/* Student reviews: approved, real reviews only (see components/reviews). */}
       <div className="mt-20">
-        <ReviewsSection limit={8} subtitle="See how students use Calculus Solver to make learning calculus easier." />
+        <StudentReviews limit={12} />
       </div>
 
       <section className="mt-16 rounded-card bg-ink px-6 py-8 text-paper sm:px-10">

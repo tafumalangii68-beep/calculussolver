@@ -3,7 +3,7 @@
 import { CheckCircle2, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
-import { REVIEW_LIMITS, validateReview, type ReviewField } from "@/lib/reviews/validate";
+import { REVIEW_CATEGORIES, REVIEW_LIMITS, validateReview, type ReviewField } from "@/lib/reviews/validate";
 import { StarInput } from "./StarInput";
 
 type Status = { kind: "idle" } | { kind: "sending" } | { kind: "success" } | { kind: "error"; message: string };
@@ -16,6 +16,7 @@ export function ReviewForm() {
   const [email, setEmail] = useState("");
   const [rating, setRating] = useState(0);
   const [message, setMessage] = useState("");
+  const [category, setCategory] = useState("");
   const [website, setWebsite] = useState(""); // honeypot: hidden from people, filled in by bots
   const [errors, setErrors] = useState<Partial<Record<ReviewField, string>>>({});
   const [status, setStatus] = useState<Status>({ kind: "idle" });
@@ -28,7 +29,7 @@ export function ReviewForm() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (status.kind === "sending") return;
-    const check = validateReview({ name, email, rating, message });
+    const check = validateReview({ name, email, rating, message, category });
     if (!check.ok) {
       setErrors(check.errors);
       setStatus({ kind: "error", message: "Please fix the highlighted fields." });
@@ -40,7 +41,7 @@ export function ReviewForm() {
       const res = await fetch("/api/reviews", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, rating, message, website, startedAt: startedAt.current || Date.now() }),
+        body: JSON.stringify({ name, email, rating, message, category, website, startedAt: startedAt.current || Date.now() }),
       });
       const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string; fields?: Partial<Record<ReviewField, string>> };
       if (res.ok && data.ok) {
@@ -49,6 +50,7 @@ export function ReviewForm() {
         setEmail("");
         setRating(0);
         setMessage("");
+        setCategory("");
         return;
       }
       if (data.fields) setErrors(data.fields);
@@ -130,7 +132,37 @@ export function ReviewForm() {
         </div>
       </div>
 
-      <StarInput name="review-rating" value={rating} onChange={setRating} error={errors.rating} />
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:items-start">
+        <StarInput name="review-rating" value={rating} onChange={setRating} error={errors.rating} />
+        <div>
+          <label htmlFor="review-category" className="block text-sm font-medium text-ink">
+            I am a… <span className="font-normal text-muted">(optional)</span>
+          </label>
+          <select
+            id="review-category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            aria-invalid={Boolean(errors.category)}
+            aria-describedby={errors.category ? "review-category-error" : "review-category-help"}
+            className={`${field} ${border("category")}`}
+          >
+            <option value="">Prefer not to say</option>
+            {REVIEW_CATEGORIES.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+          <p id="review-category-help" className="mt-1 text-xs text-muted">
+            Shown under your name.
+          </p>
+          {errors.category && (
+            <p id="review-category-error" className="mt-1 text-sm text-danger">
+              {errors.category}
+            </p>
+          )}
+        </div>
+      </div>
 
       <div>
         <label htmlFor="review-message" className="block text-sm font-medium text-ink">

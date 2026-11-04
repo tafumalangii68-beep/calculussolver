@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS reviews (
   content_hash TEXT NOT NULL UNIQUE,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+ALTER TABLE reviews ADD COLUMN IF NOT EXISTS category TEXT;  -- optional "I am a…" choice, shown publicly
 CREATE INDEX IF NOT EXISTS reviews_status_created ON reviews (status, created_at DESC);
 CREATE INDEX IF NOT EXISTS reviews_ip_created ON reviews (ip_hash, created_at);
 

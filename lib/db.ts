@@ -33,6 +33,8 @@ export function ensureSchema(): Promise<void> {
       content_hash TEXT NOT NULL UNIQUE,
       created_at TIMESTAMPTZ NOT NULL DEFAULT now()
     )`);
+    // Added after launch; safe to run repeatedly.
+    await sql.query(`ALTER TABLE reviews ADD COLUMN IF NOT EXISTS category TEXT`);
     await sql.query(`CREATE INDEX IF NOT EXISTS reviews_status_created ON reviews (status, created_at DESC)`);
     await sql.query(`CREATE INDEX IF NOT EXISTS reviews_ip_created ON reviews (ip_hash, created_at)`);
     await sql.query(`CREATE TABLE IF NOT EXISTS site_counters (name TEXT PRIMARY KEY, value BIGINT NOT NULL DEFAULT 0)`);

@@ -19,14 +19,15 @@ async function fetchApproved(limit: number): Promise<PublicReview[]> {
   if (!sql) return [];
   await ensureSchema();
   const rows = (await sql.query(
-    `SELECT id, name, rating, message, created_at FROM reviews WHERE status = 'approved' ORDER BY created_at DESC LIMIT $1`,
+    `SELECT id, name, rating, message, category, created_at FROM reviews WHERE status = 'approved' ORDER BY created_at DESC LIMIT $1`,
     [limit],
-  )) as { id: string | number; name: string; rating: number; message: string; created_at: string | Date }[];
+  )) as { id: string | number; name: string; rating: number; message: string; category: string | null; created_at: string | Date }[];
   return rows.map((r) => ({
     id: Number(r.id),
     name: r.name,
     rating: Number(r.rating),
     message: r.message,
+    category: r.category,
     createdAt: new Date(r.created_at).toISOString(),
   }));
 }
@@ -93,11 +94,11 @@ export async function submitReview(input: ReviewInput, visitor: string): Promise
   // The same text can only be submitted once, whoever sends it.
   const contentHash = sha256(input.message.toLowerCase());
   const inserted = (await sql.query(
-    `INSERT INTO reviews (name, email, rating, message, ip_hash, content_hash)
-     VALUES ($1, $2, $3, $4, $5, $6)
+    `INSERT INTO reviews (name, email, rating, message, category, ip_hash, content_hash)
+     VALUES ($1, $2, $3, $4, $5, $6, $7)
      ON CONFLICT (content_hash) DO NOTHING
      RETURNING id`,
-    [input.name, input.email || null, input.rating, input.message, visitor, contentHash],
+    [input.name, input.email || null, input.rating, input.message, input.category || null, visitor, contentHash],
   )) as unknown[];
   return inserted.length ? "saved" : "duplicate";
 }

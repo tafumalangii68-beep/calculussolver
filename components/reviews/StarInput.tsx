@@ -31,7 +31,7 @@ export function StarInput({ value, onChange, error, name }: { value: number; onC
                 className="sr-only"
                 aria-label={`${n} star${n > 1 ? "s" : ""} – ${LABELS[n - 1]}`}
               />
-              <Star aria-hidden className={`h-8 w-8 transition-colors ${n <= shown ? "fill-star text-star" : "fill-transparent text-line-strong"}`} strokeWidth={1.5} />
+              <Star aria-hidden className={`h-8 w-8 transition-colors ${n <= shown ? "fill-star text-star-stroke" : "fill-transparent text-line-strong"}`} strokeWidth={1.5} />
             </label>
           ))}
         </div>

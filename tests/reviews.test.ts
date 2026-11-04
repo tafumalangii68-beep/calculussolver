@@ -47,7 +47,7 @@ beforeEach(async () => {
   dbModule.resetSchema();
 });
 
-const good = { name: "Maya K.", email: "", rating: 5, message: "The chain rule steps finally made sense to me." };
+const good = { name: "Maya K.", email: "", rating: 5, message: "The chain rule steps finally made sense to me.", category: "" };
 
 function request(body: unknown, headers: Record<string, string> = {}, ip = "203.0.113.7") {
   return new Request("https://calculussolver.pro/api/reviews", {
@@ -74,6 +74,7 @@ describe("review validation", () => {
     [{ message: "Too short" }, "message"],
     [{ message: "x".repeat(1001) }, "message"],
     [{ message: "Great tool, see https://example.com for more" }, "message"],
+    [{ category: "Astronaut" }, "category"],
   ])("rejects %j", (patch, field) => {
     const r = validateReview({ ...good, ...patch });
     expect(r.ok).toBe(false);
@@ -101,6 +102,12 @@ describe("POST /api/reviews", () => {
     expect(reviews.map((r) => r.name).sort()).toEqual(["Leo", "Maya K."]);
     expect(reviews.every((r) => !("email" in r))).toBe(true);
     expect(await store.getReviewSummary()).toEqual({ count: 2, average: 4 });
+  });
+
+  it("stores an optional category and returns it publicly", async () => {
+    await postReview(request(human({ category: "AP Calculus student" })));
+    await pg.query("UPDATE reviews SET status = 'approved'");
+    expect((await store.getApprovedReviews(5))[0].category).toBe("AP Calculus student");
   });
 
   it("never stores the raw IP address", async () => {

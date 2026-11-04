@@ -26,6 +26,7 @@ export function ReviewCard({ review }: { review: PublicReview }) {
           <div className="min-w-0">
             <p className="break-words font-semibold text-ink">{review.name}</p>
             <p className="text-sm text-muted">
+              {review.category && <span className="text-accent-strong">{review.category} · </span>}
               <time dateTime={date}>{formatDate(date)}</time>
             </p>
           </div>

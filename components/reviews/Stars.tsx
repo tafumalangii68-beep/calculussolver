@@ -12,7 +12,7 @@ export function Stars({ rating, size = "h-4 w-4", className }: { rating: number;
             <Star className={`absolute inset-0 ${size} fill-star-empty text-star-empty`} strokeWidth={1.5} />
             {fill !== "empty" && (
               <span className="absolute inset-0 overflow-hidden" style={{ width: fill === "half" ? "50%" : "100%" }}>
-                <Star className={`${size} fill-star text-star`} strokeWidth={1.5} />
+                <Star className={`${size} fill-star text-star-stroke`} strokeWidth={1.5} />
               </span>
             )}
           </span>
