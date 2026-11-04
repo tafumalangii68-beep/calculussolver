@@ -91,6 +91,63 @@
   background-clip: text;
   color: transparent;
 }
+/* Gradient highlight for headings on light surfaces (switches to the light gradient in dark mode, below). */
+@utility text-heading-gradient {
+  background-image: var(--heading-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/*
+ * Soft card backgrounds, one per calculator (lavender, mint, peach, light blue, pink, green).
+ * Dark values are set with the other dark tokens further down.
+ */
+@theme {
+  --color-calc-derivative-soft: #f1eaff;
+  --color-calc-integral-soft: #e4f6ee;
+  --color-calc-limit-soft: #fff0e1;
+  --color-calc-taylor-soft: #e7f0ff;
+  --color-calc-critical-soft: #e6f6e9;
+  --color-calc-second-soft: #f4ecff;
+  --color-calc-partial-soft: #ffe8f1;
+  --color-calc-chain-soft: #e8eeff;
+  --color-calc-implicit-soft: #f6eaff;
+}
+:root {
+  --heading-gradient: linear-gradient(90deg, #4c22c9 0%, #7438f5 50%, #923eff 100%);
+}
+
+/* Hero decorations: slow floating, disabled for reduced motion by the base rule below. */
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@utility animate-float {
+  animation: float-y 6s ease-in-out infinite;
+}
+@utility animate-float-slow {
+  animation: float-y 8s ease-in-out infinite;
+  animation-delay: -3s;
+}
+@utility animate-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
 
 @layer base {
   html {
@@ -267,6 +324,16 @@
   --color-guide-derivative: #c4a8ff;
   --color-guide-integration: #6fdcb8;
   --color-blog-derivative: #ff9cc8;
+  --color-calc-derivative-soft: #1f1a4d;
+  --color-calc-integral-soft: #0f2c2a;
+  --color-calc-limit-soft: #2e2218;
+  --color-calc-taylor-soft: #13234a;
+  --color-calc-critical-soft: #122b22;
+  --color-calc-second-soft: #25193f;
+  --color-calc-partial-soft: #34172f;
+  --color-calc-chain-soft: #161f4b;
+  --color-calc-implicit-soft: #2a1846;
+  --heading-gradient: linear-gradient(90deg, #c4a8ff 0%, #a77bff 50%, #d5bfff 100%);
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.25);
 }
 

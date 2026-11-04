@@ -1,6 +1,6 @@
 "use client";
 
-import { Keyboard, Loader2, RotateCcw, ShieldCheck } from "lucide-react";
+import { ChevronDown, Keyboard, Loader2, Play, RotateCcw, ShieldCheck } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { MathError } from "@/lib/math/errors";
 import { parse, parseEquation } from "@/lib/math/parser";
@@ -21,6 +21,21 @@ export const OPERATION_LABELS: Record<Operation, string> = {
   "critical-points": "Critical points",
   "partial-derivative": "Partial derivative",
   implicit: "Implicit differentiation",
+};
+
+/** Shorter names where a tab has little room. */
+const TAB_LABELS: Partial<Record<Operation, string>> = { "indefinite-integral": "Integral" };
+
+/** Small math symbol shown beside each operation name. */
+const OPERATION_SYMBOLS: Record<Operation, string> = {
+  derivative: "d/dx",
+  "indefinite-integral": "∫",
+  "definite-integral": "∫ₐᵇ",
+  limit: "lim",
+  taylor: "Σ",
+  "critical-points": "f′=0",
+  "partial-derivative": "∂",
+  implicit: "dy/dx",
 };
 
 const VARIABLES = ["x", "t", "y", "z", "u", "θ"];
@@ -93,7 +108,7 @@ function fromExample(ex: SolverExample, current: Fields): Fields {
 }
 
 const inputClass =
-  "w-full rounded-lg border border-line-strong bg-surface px-3 py-2 text-ink placeholder:text-muted/70 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20";
+  "w-full rounded-xl border border-line-strong bg-surface px-3.5 py-2.5 text-ink transition-colors placeholder:text-muted/70 hover:border-accent/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15";
 const labelClass = "block text-sm font-medium text-ink";
 
 function loadRenderer() {
@@ -107,9 +122,13 @@ export interface SolverProps {
   title: string;
   /** Starting derivative order (the second derivative calculator uses 2). */
   initialOrder?: number;
+  /** Visible panel heading (e.g. "Calculus Calculator"). Without it, `title` labels the region invisibly. */
+  heading?: string;
+  /** Operations shown as tabs; the rest go into a "More tools" menu. Default: all as tabs. */
+  primaryOperations?: Operation[];
 }
 
-export function Solver({ operations, examples, title, initialOrder = 1 }: SolverProps) {
+export function Solver({ operations, examples, title, initialOrder = 1, heading, primaryOperations }: SolverProps) {
   const uid = useId();
   const startFields: Fields = { ...DEFAULTS, order: initialOrder };
   const [operation, setOperation] = useState<Operation>(operations[0]);
@@ -118,6 +137,8 @@ export function Solver({ operations, examples, title, initialOrder = 1 }: Solver
   const inputRef = useRef<HTMLInputElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
   const { state, solve, reset, warm } = useSolver();
+  const tabs = primaryOperations ? operations.filter((o) => primaryOperations.includes(o)) : operations;
+  const moreOps = operations.filter((o) => !tabs.includes(o));
 
   // Load the math engine (in a worker, off the main thread) once the browser is idle, and the
   // math renderer on first interaction or a few seconds after load, so neither delays first paint.
@@ -185,63 +206,71 @@ export function Solver({ operations, examples, title, initialOrder = 1 }: Solver
 
   return (
     <section
-      aria-label={title}
+      aria-label={heading ? undefined : title}
+      aria-labelledby={heading ? id("heading") : undefined}
       onPointerEnter={loadRenderer}
       onFocusCapture={loadRenderer}
-      className="rounded-card border border-line bg-surface p-4 shadow-card sm:p-6"
+      className="rounded-[1.5rem] border border-line bg-surface p-4 shadow-[0_24px_60px_-20px_rgb(21_25_54/0.22)] sm:p-7"
     >
-      <form onSubmit={onSubmit} noValidate>
-        {operations.length > 1 && (
-          <fieldset className="min-w-0">
-            <legend className="sr-only">Operation</legend>
-            <div className="-mx-1 flex gap-1 overflow-x-auto px-1 pb-1">
-              {operations.map((op) => (
-                <label
-                  key={op}
-                  className={`relative shrink-0 cursor-pointer rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent ${
-                    op === operation ? "border-accent bg-accent text-white" : "border-line text-ink-soft hover:bg-sunken"
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name={id("operation")}
-                    value={op}
-                    checked={op === operation}
-                    onChange={() => setOperation(op)}
-                    className="sr-only"
-                  />
-                  {OPERATION_LABELS[op]}
-                </label>
-              ))}
-            </div>
-          </fieldset>
-        )}
+      {heading && (
+        <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <span aria-hidden className="grid h-10 w-10 place-items-center rounded-xl bg-brand-gradient font-display text-lg font-bold italic text-white shadow-glow">
+              ∫
+            </span>
+            <h2 id={id("heading")} className="font-display text-xl font-bold tracking-tight text-ink sm:text-2xl">
+              {heading}
+            </h2>
+          </div>
+          <p className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1.5 text-xs font-semibold text-accent-strong">
+            <ShieldCheck aria-hidden className="h-3.5 w-3.5" /> Runs in your browser
+          </p>
+        </div>
+      )}
 
-        <div className={`mt-4 grid grid-cols-1 gap-3 ${isImplicit ? "" : "sm:grid-cols-[minmax(0,1fr)_auto]"}`}>
-          <div>
+      <form onSubmit={onSubmit} noValidate>
+        {operations.length > 1 && <OperationPicker tabs={tabs} more={moreOps} operation={operation} onChange={setOperation} name={id("operation")} />}
+
+        <div className={`mt-4 grid grid-cols-2 gap-3 ${isImplicit ? "sm:grid-cols-[minmax(0,1fr)_auto]" : "sm:grid-cols-[minmax(0,1fr)_6.5rem_auto]"}`}>
+          <div className="col-span-2 min-w-0 sm:col-span-1">
             <label htmlFor={id("expr")} className={labelClass}>
               {isImplicit ? "Equation in x and y" : isPartial ? "Function of several variables" : `Function f(${v})`}
             </label>
-            <input
-              ref={inputRef}
-              id={id("expr")}
-              type="text"
-              inputMode="text"
-              autoComplete="off"
-              autoCapitalize="off"
-              spellCheck={false}
-              placeholder={isImplicit ? "e.g. x^2 + y^2 = 25" : isPartial ? "e.g. x^2 y + sin(x y)" : "e.g. x^2 sin(x)"}
-              value={fields.expression}
-              onChange={(e) => set("expression", e.target.value)}
-              aria-describedby={id("preview")}
-              className={`${inputClass} mt-1 font-mono text-base`}
-            />
+            <div className="relative mt-1">
+              <input
+                ref={inputRef}
+                id={id("expr")}
+                type="text"
+                inputMode="text"
+                autoComplete="off"
+                autoCapitalize="off"
+                spellCheck={false}
+                placeholder={isImplicit ? "e.g. x^2 + y^2 = 25" : isPartial ? "e.g. x^2 y + sin(x y)" : "e.g. x^2 sin(x)"}
+                value={fields.expression}
+                onChange={(e) => set("expression", e.target.value)}
+                aria-describedby={id("preview")}
+                className={`${inputClass} h-12 pr-12 font-mono text-base`}
+              />
+              <button
+                type="button"
+                onClick={() => setKeypad((k) => !k)}
+                aria-expanded={keypad}
+                aria-controls={id("keypad")}
+                aria-label={keypad ? "Hide keypad" : "Show keypad"}
+                title={keypad ? "Hide keypad" : "Show keypad"}
+                className={`absolute right-1.5 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-lg transition-colors ${
+                  keypad ? "bg-accent-soft text-accent-strong" : "text-muted hover:bg-sunken hover:text-ink"
+                }`}
+              >
+                <Keyboard aria-hidden className="h-5 w-5" />
+              </button>
+            </div>
           </div>
-          <div hidden={isImplicit}>
+          <div hidden={isImplicit} className="min-w-0">
             <label htmlFor={id("var")} className={labelClass}>
               {isPartial ? "With respect to" : "Variable"}
             </label>
-            <select id={id("var")} value={v} onChange={(e) => set("variable", e.target.value)} className={`${inputClass} mt-1 sm:w-24`}>
+            <select id={id("var")} value={v} onChange={(e) => set("variable", e.target.value)} className={`${inputClass} mt-1 h-12`}>
               {VARIABLES.map((name) => (
                 <option key={name} value={name}>
                   {name}
@@ -249,45 +278,35 @@ export function Solver({ operations, examples, title, initialOrder = 1 }: Solver
               ))}
             </select>
           </div>
+          <div className={`flex items-end ${isImplicit ? "col-span-2 sm:col-span-1" : ""}`}>
+            <button
+              type="submit"
+              disabled={state.status === "solving"}
+              className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-brand-gradient px-8 font-semibold text-white shadow-glow transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-gradient-hover disabled:translate-y-0 disabled:opacity-70 sm:w-auto"
+            >
+              {state.status === "solving" ? <Loader2 aria-hidden className="h-4 w-4 animate-spin" /> : <Play aria-hidden className="h-4 w-4 fill-current" />}
+              {state.status === "solving" ? "Solving…" : "Solve"}
+            </button>
+          </div>
         </div>
 
-        <div id={id("preview")} aria-live="polite" className="mt-3 flex min-h-14 items-center rounded-lg border border-dashed border-line bg-paper px-3 py-2">
+        <div id={id("keypad")} hidden={!keypad} className="mt-3">
+          <Keypad onInsert={insert} />
+        </div>
+
+        <div id={id("preview")} aria-live="polite" className="mt-3 flex min-h-14 items-center rounded-xl border border-dashed border-line-strong bg-paper px-3.5 py-2">
           {!preview && <span className="text-sm text-muted">Your expression will be shown here as it will be read.</span>}
           {preview?.ok && (
             <span className="flex min-w-0 flex-1 items-center gap-2">
-              <span className="shrink-0 text-xs font-medium uppercase tracking-wider text-muted">Reads as</span>
+              <span className="shrink-0 rounded-md bg-accent-soft px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider text-accent-strong">Reads as</span>
               <MathView latex={preview.latex} display className="math-left min-w-0 flex-1" />
             </span>
           )}
           {preview && !preview.ok && <span className="text-sm text-danger">{preview.message}</span>}
         </div>
 
-        <div className="mt-3">
-          <button
-            type="button"
-            onClick={() => setKeypad((k) => !k)}
-            aria-expanded={keypad}
-            aria-controls={id("keypad")}
-            className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-ink"
-          >
-            <Keyboard aria-hidden className="h-4 w-4" /> {keypad ? "Hide keypad" : "Show keypad"}
-          </button>
-          <div id={id("keypad")} hidden={!keypad} className="mt-2">
-            <Keypad onInsert={insert} />
-          </div>
-        </div>
-
-        <OperationOptions operation={operation} fields={fields} set={set} id={id} />
-
-        <div className="mt-5 flex flex-wrap items-center gap-2">
-          <button
-            type="submit"
-            disabled={state.status === "solving"}
-            className="inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-2.5 font-semibold text-white hover:bg-accent-hover disabled:opacity-70"
-          >
-            {state.status === "solving" && <Loader2 aria-hidden className="h-4 w-4 animate-spin" />}
-            {state.status === "solving" ? "Solving…" : "Solve"}
-          </button>
+        <div className="flex flex-wrap items-end justify-between gap-x-4">
+          <OperationOptions operation={operation} fields={fields} set={set} id={id} />
           <button
             type="button"
             onClick={() => {
@@ -295,14 +314,14 @@ export function Solver({ operations, examples, title, initialOrder = 1 }: Solver
               reset();
               inputRef.current?.focus();
             }}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-line-strong px-4 py-2.5 text-sm font-medium text-ink-soft hover:bg-sunken"
+            className="mt-4 inline-flex items-center gap-1.5 rounded-xl border border-line-strong px-4 py-2.5 text-sm font-medium text-ink-soft transition-colors hover:border-accent/50 hover:bg-accent-soft hover:text-accent-strong"
           >
             <RotateCcw aria-hidden className="h-4 w-4" /> Reset
           </button>
         </div>
 
         <p className="mt-4 flex items-start gap-2 text-sm text-muted">
-          <ShieldCheck aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+          <ShieldCheck aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-teal" />
           Solved entirely in your browser. Nothing you type is sent to a server or stored, and no account is needed.
         </p>
       </form>
@@ -316,7 +335,7 @@ export function Solver({ operations, examples, title, initialOrder = 1 }: Solver
                 <button
                   type="button"
                   onClick={() => loadExample(ex)}
-                  className="rounded-full border border-line bg-paper px-3 py-1.5 font-mono text-xs text-ink-soft hover:border-accent hover:text-ink"
+                  className="rounded-full border border-line bg-paper px-3 py-1.5 font-mono text-xs text-ink-soft transition-colors hover:border-accent hover:bg-accent-soft hover:text-accent-strong"
                 >
                   {ex.label}
                 </button>
@@ -334,6 +353,113 @@ export function Solver({ operations, examples, title, initialOrder = 1 }: Solver
         )}
       </div>
     </section>
+  );
+}
+
+/**
+ * Operation tabs: a radio group, so arrow keys and screen readers work natively.
+ * Operations beyond the tabs sit in a "More tools" menu that belongs to the same group.
+ */
+function OperationPicker({
+  tabs,
+  more,
+  operation,
+  onChange,
+  name,
+}: {
+  tabs: Operation[];
+  more: Operation[];
+  operation: Operation;
+  onChange: (op: Operation) => void;
+  name: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const moreActive = more.includes(operation);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  const tabClass = (active: boolean) =>
+    `relative flex min-w-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent has-[:focus-visible]:ring-offset-2 ${
+      active ? "bg-brand-gradient text-white shadow-glow" : "bg-sunken text-ink-soft hover:bg-accent-soft hover:text-accent-strong"
+    }`;
+  const symbol = (op: Operation, active: boolean) => (
+    <span aria-hidden className={`font-display text-[13px] italic ${active ? "text-white/90" : "text-accent-strong"}`}>
+      {OPERATION_SYMBOLS[op]}
+    </span>
+  );
+
+  return (
+    <fieldset className="min-w-0">
+      <legend className="sr-only">Operation</legend>
+      <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
+        {tabs.map((op) => (
+          <label key={op} className={`${tabClass(op === operation)} sm:flex-1`}>
+            <input type="radio" name={name} value={op} checked={op === operation} onChange={() => onChange(op)} className="sr-only" />
+            {symbol(op, op === operation)}
+            {TAB_LABELS[op] ?? OPERATION_LABELS[op]}
+          </label>
+        ))}
+        {more.length > 0 && (
+          <div ref={menuRef} className="relative col-span-2 sm:flex-1">
+            <button
+              type="button"
+              aria-expanded={open}
+              aria-controls={`${name}-more`}
+              onClick={() => setOpen((o) => !o)}
+              className={`${tabClass(moreActive)} w-full`}
+            >
+              {moreActive ? OPERATION_LABELS[operation] : "More tools"}
+              <ChevronDown aria-hidden className={`h-4 w-4 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
+            </button>
+            <div
+              id={`${name}-more`}
+              hidden={!open}
+              className="absolute right-0 top-full z-20 mt-2 w-full min-w-64 rounded-2xl border border-line bg-surface p-1.5 shadow-2xl shadow-navy-950/15 sm:w-64"
+            >
+              {more.map((op) => (
+                <label
+                  key={op}
+                  className={`relative flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent ${
+                    op === operation ? "bg-accent-soft text-accent-strong" : "text-ink-soft hover:bg-sunken"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name={name}
+                    value={op}
+                    checked={op === operation}
+                    onChange={() => {
+                      onChange(op);
+                      setOpen(false);
+                    }}
+                    className="sr-only"
+                  />
+                  <span aria-hidden className="grid h-8 w-11 shrink-0 place-items-center rounded-lg bg-accent-soft font-display text-xs italic text-accent-strong">
+                    {OPERATION_SYMBOLS[op]}
+                  </span>
+                  {OPERATION_LABELS[op]}
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </fieldset>
   );
 }
 
@@ -430,8 +556,8 @@ function OperationOptions({
               ).map(([value, label]) => (
                 <label
                   key={value}
-                  className={`relative cursor-pointer rounded-lg border px-3 py-2 text-sm has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent ${
-                    fields.side === value ? "border-accent bg-accent-soft text-accent-strong" : "border-line text-ink-soft hover:bg-sunken"
+                  className={`relative cursor-pointer rounded-xl border px-3 py-2.5 text-sm transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent ${
+                    fields.side === value ? "border-accent bg-accent-soft font-medium text-accent-strong" : "border-line text-ink-soft hover:bg-sunken"
                   }`}
                 >
                   <input type="radio" name={id("side")} value={value} checked={fields.side === value} onChange={() => set("side", value)} className="sr-only" />

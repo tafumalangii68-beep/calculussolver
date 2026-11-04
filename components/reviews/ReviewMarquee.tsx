@@ -57,9 +57,9 @@ export function ReviewMarquee({ items, label }: { items: { key: string; content:
         </div>
       </div>
 
-      <div className="mx-auto mt-9 flex max-w-[950px] items-center justify-center gap-2.5 px-4 sm:mt-12 sm:gap-6">
+      <div className="mx-auto mt-9 flex max-w-[950px] flex-wrap items-center justify-center gap-2.5 px-4 sm:mt-12 sm:flex-nowrap sm:gap-6">
         <span aria-hidden className="hidden h-px flex-1 bg-line-strong sm:block" />
-        <p className="inline-flex items-center gap-3 whitespace-nowrap rounded-full bg-accent-soft px-4 py-3 text-xs font-semibold text-accent-strong sm:px-7 sm:py-3.5 sm:text-base">
+        <p className="inline-flex items-center gap-3 rounded-full bg-accent-soft px-4 py-3 text-xs sm:whitespace-nowrap font-semibold text-accent-strong sm:px-7 sm:py-3.5 sm:text-base">
           <span aria-hidden className="text-2xl leading-none sm:text-[32px]">
             ∞
           </span>
