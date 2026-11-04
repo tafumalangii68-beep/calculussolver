@@ -73,7 +73,6 @@ export const mainNav = [
 export const legalNav = [
   { href: "/about", label: "About Us" },
   { href: "/contact", label: "Contact Us" },
-  { href: "/reviews", label: "Reviews" },
   { href: "/privacy-policy", label: "Privacy Policy" },
   { href: "/terms-and-conditions", label: "Terms and Conditions" },
   { href: "/cookie-policy", label: "Cookie Policy" },
