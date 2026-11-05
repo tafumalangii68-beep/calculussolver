@@ -121,6 +121,7 @@ export const derivativeCalculators: CalculatorPage[] = [
       { q: "Is the second derivative the same as the derivative squared?", a: "No. The second derivative differentiates twice. For f(x) = x³, f″(x) = 6x, while (f′(x))² = 9x⁴." },
     ],
     related: ["derivative-calculator", "critical-points-calculator", "taylor-series-calculator"],
+    guide: { href: "/guides/derivative-rules", label: "The derivative rules, applied twice for f″(x)" },
     articles: ["how-to-find-the-derivative-of-a-function"],
   },
 

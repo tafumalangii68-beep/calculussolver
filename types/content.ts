@@ -50,4 +50,6 @@ export interface Illustration {
   alt: string;
   width: number;
   height: number;
+  /** Short visible caption under the figure. */
+  caption?: string;
 }

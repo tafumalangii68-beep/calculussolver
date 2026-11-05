@@ -20,7 +20,7 @@ export interface ArticleMeta {
 export const articleMeta: Record<string, ArticleMeta> = {
   "derivative-rules": {
     category: "Derivatives",
-    related: ["derivative-calculator", "chain-rule-calculator", "second-derivative-calculator", "implicit-differentiation-calculator"],
+    related: ["derivative-calculator", "chain-rule-calculator", "second-derivative-calculator", "implicit-differentiation-calculator", "partial-derivative-calculator", "critical-points-calculator"],
     callouts: [
       { after: "power-rule", kind: "tip", text: "Rewrite roots and reciprocals as powers first: √x = x^(1/2) and 1/x³ = x^(−3). Then the power rule applies directly." },
       { after: "product-quotient", kind: "note", text: "In the quotient rule the order matters: the numerator is f′g − fg′, derivative of the top first. Swapping the two terms flips the sign of the answer." },

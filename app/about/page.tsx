@@ -58,7 +58,7 @@ export default function AboutPage() {
 
       <h2>How the content is checked</h2>
       <p>
-        All formulas and worked examples on this site are standard results from first-year calculus. Every worked example
+        All formulas and <Link href="/guides">worked examples</Link> on this site are standard results from first-year calculus. Every worked example
         published here is also checked automatically: before each release, an automated test feeds each example to the solver
         and confirms that it reproduces the stated answer. The same test suite checks the solver against a larger set of
         problems with known answers, including derivatives, integrals, limits, Taylor polynomials and critical points.

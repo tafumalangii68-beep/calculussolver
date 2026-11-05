@@ -33,7 +33,7 @@ export const guides: Guide[] = [
   {
     slug: "derivative-rules",
     titleClass: "text-guide-derivative",
-    image: { src: "/images/guide-derivative-rules.webp", alt: "Connected gears and circles, representing derivative rules that combine and chain together", width: 1600, height: 800 },
+    image: { src: "/images/guide-derivative-rules.webp", alt: "Connected gears and circles, representing derivative rules that combine and chain together", width: 1600, height: 800, caption: "Derivative rules work together: most functions need several of them, applied from the outside in." },
     title: "Derivative Rules: A Complete Guide with Examples",
     metaTitle: "Derivative Rules Explained – Power, Product, Quotient, Chain",
     description:
@@ -159,7 +159,7 @@ export const guides: Guide[] = [
   {
     slug: "integration-techniques",
     titleClass: "text-guide-integration",
-    image: { src: "/images/guide-integration.webp", alt: "One path branching into several routes, each ending at a different shape, representing the choice of integration technique", width: 1600, height: 800 },
+    image: { src: "/images/guide-integration.webp", alt: "One path branching into several routes, each ending at a different shape, representing the choice of integration technique", width: 1600, height: 800, caption: "Each integral calls for a technique. The key skill is choosing the right route before you start." },
     title: "Integration Techniques: How to Choose the Right Method",
     metaTitle: "Integration Techniques – Substitution, Parts, Partial Fractions",
     description:

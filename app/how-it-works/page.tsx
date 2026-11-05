@@ -61,6 +61,10 @@ export default function HowItWorksPage() {
         several sample points.
       </p>
 
+      <p>
+        <strong>Try it:</strong> <Link href="/derivative-calculator">Derivative Calculator</Link>, <Link href="/second-derivative-calculator">Second Derivative Calculator</Link> and <Link href="/chain-rule-calculator">Chain Rule Calculator</Link>. The rules are explained in the <Link href="/guides/derivative-rules">derivative rules guide</Link>.
+      </p>
+
       <h2>4. Integrals</h2>
       <p>Indefinite integrals are attempted with these strategies, in this order:</p>
       <ol>
@@ -81,6 +85,10 @@ export default function HowItWorksPage() {
       <p>
         <strong>Check:</strong> every antiderivative, whatever its source, is differentiated and compared numerically with the
         integrand at up to 18 sample points. Any disagreement means the answer is discarded.
+      </p>
+
+      <p>
+        <strong>Try it:</strong> <Link href="/integral-calculator">Integral Calculator</Link>. For when to use each method, see the <Link href="/guides/integration-techniques">integration techniques guide</Link>.
       </p>
 
       <h2>5. Definite and improper integrals</h2>
@@ -111,11 +119,19 @@ export default function HowItWorksPage() {
         proofs.
       </p>
 
+      <p>
+        <strong>Try it:</strong> <Link href="/limit-calculator">Limit Calculator</Link>
+      </p>
+
       <h2>7. Taylor polynomials</h2>
       <Tex display>{t`T_{n}(x) = \sum_{k=0}^{n} \frac{f^{(k)}(a)}{k!}(x-a)^{k}`}</Tex>
       <p>
         Derivatives are computed symbolically and evaluated at the center by exact substitution. If any of them is undefined
         there, the solver says that no Taylor polynomial exists at that center.
+      </p>
+
+      <p>
+        <strong>Try it:</strong> <Link href="/taylor-series-calculator">Taylor Series Calculator</Link>
       </p>
 
       <h2>8. Critical points</h2>
@@ -126,12 +142,20 @@ export default function HowItWorksPage() {
         when f″ is zero or undefined, with the first derivative test.
       </p>
 
+      <p>
+        <strong>Try it:</strong> <Link href="/critical-points-calculator">Critical Points Calculator</Link>
+      </p>
+
       <h2>9. Partial derivatives</h2>
       <p>
         Partial derivatives use the same differentiator, with ∂ notation, and treat every letter other than the chosen variable
         as a constant. For second partials such as f<sub>xy</sub>, the result of the first stage is differentiated again with
         respect to the second variable. <strong>Check:</strong> the other variables are fixed at test values and each stage is
         compared with a finite-difference estimate.
+      </p>
+
+      <p>
+        <strong>Try it:</strong> <Link href="/partial-derivative-calculator">Partial Derivative Calculator</Link>
       </p>
 
       <h2>10. Implicit differentiation</h2>
@@ -142,6 +166,10 @@ export default function HowItWorksPage() {
         checked against the equation before the slope and tangent line are computed. <strong>Check:</strong> points on the
         curve are found numerically, the curve is followed a tiny step either side of each one with Newton&apos;s method, and
         the measured slope must match the formula.
+      </p>
+
+      <p>
+        <strong>Try it:</strong> <Link href="/implicit-differentiation-calculator">Implicit Differentiation Calculator</Link>
       </p>
 
       <h2>Accuracy and limitations</h2>

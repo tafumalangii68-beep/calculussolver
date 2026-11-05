@@ -33,7 +33,15 @@ export default function FaqPage() {
         <SectionHeader id="faq-related" eyebrow="Try it" title="Popular" highlight="calculators">
           <p>
             Put the answers into practice. All <Link href="/" className="font-semibold text-accent-strong underline underline-offset-2">nine calculators</Link> show
-            their steps.
+            their steps. To learn the rules themselves, read the{" "}
+            <Link href="/guides/derivative-rules" className="font-semibold text-accent-strong underline underline-offset-2">
+              derivative rules
+            </Link>{" "}
+            and{" "}
+            <Link href="/guides/integration-techniques" className="font-semibold text-accent-strong underline underline-offset-2">
+              integration techniques
+            </Link>{" "}
+            guides.
           </p>
         </SectionHeader>
         <div className="mt-10">

@@ -1,3 +1,4 @@
+import { ContentFigure } from "./ContentFigure";
 import { ArrowLeft, ArrowRight, BookOpen, Calculator, ChevronDown, Newspaper } from "lucide-react";
 import Link from "next/link";
 import { articleMeta } from "@/data/article-meta";
@@ -103,7 +104,7 @@ export function GuideView({ guide, collection = GUIDES }: { guide: Guide; collec
 
   return (
     <>
-      <JsonLd data={articleLd(guide.title, path, guide.description, date)} />
+      <JsonLd data={articleLd(guide.title, path, guide.description, date, guide.image)} />
 
       {/* Hero */}
       <div className="relative isolate overflow-hidden bg-navy-gradient pb-24 pt-8 text-white sm:pt-10">
@@ -156,6 +157,7 @@ export function GuideView({ guide, collection = GUIDES }: { guide: Guide; collec
           </details>
 
           <article className="prose-body max-w-none rounded-3xl border border-line bg-surface p-6 shadow-[0_24px_60px_-24px_rgb(21_25_54/0.25)] sm:p-10 lg:p-12">
+            {guide.image && <ContentFigure image={guide.image} className="mb-10" />}
             {guide.sections.map((section, si) => (
               <section key={section.id} aria-labelledby={section.id} className="scroll-mt-24">
                 <h2 id={section.id} className={`flex items-start gap-3 ${si === 0 ? "mt-0" : ""}`}>
@@ -255,6 +257,14 @@ export function GuideView({ guide, collection = GUIDES }: { guide: Guide; collec
                 </li>
               ))}
             </ul>
+            <p className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold">
+              <Link href="/guides" className="inline-flex min-h-7 items-center gap-1.5 text-accent-strong hover:underline">
+                All study guides <ArrowRight aria-hidden className="h-4 w-4" />
+              </Link>
+              <Link href="/blog" className="inline-flex min-h-7 items-center gap-1.5 text-accent-strong hover:underline">
+                All blog posts <ArrowRight aria-hidden className="h-4 w-4" />
+              </Link>
+            </p>
           </section>
         )}
 

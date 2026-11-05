@@ -72,7 +72,14 @@ export function faqLd(faqs: { q: string; a: string }[]): JsonLdObject {
   };
 }
 
-export function webApplicationLd(name: string, path: string, description: string): JsonLdObject {
+/** An illustration as a schema.org ImageObject (absolute URL with its pixel size). */
+function imageObject(image?: { src: string; width: number; height: number; caption?: string }) {
+  return image ? { image: { "@type": "ImageObject", url: absoluteUrl(image.src), width: image.width, height: image.height, ...(image.caption ? { caption: image.caption } : {}) } } : {};
+}
+
+type LdImage = { src: string; width: number; height: number; caption?: string };
+
+export function webApplicationLd(name: string, path: string, description: string, image?: LdImage): JsonLdObject {
   return {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -85,6 +92,7 @@ export function webApplicationLd(name: string, path: string, description: string
     isAccessibleForFree: true,
     inLanguage: siteConfig.language,
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    ...imageObject(image),
   };
 }
 
@@ -100,7 +108,7 @@ export function webPageLd(name: string, path: string, description: string): Json
   };
 }
 
-export function articleLd(headline: string, path: string, description: string, published: string = siteConfig.contentUpdated): JsonLdObject {
+export function articleLd(headline: string, path: string, description: string, published: string = siteConfig.contentUpdated, image?: LdImage): JsonLdObject {
   return {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -113,6 +121,7 @@ export function articleLd(headline: string, path: string, description: string, p
     inLanguage: siteConfig.language,
     author: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },
     publisher: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },
+    ...imageObject(image),
   };
 }
 

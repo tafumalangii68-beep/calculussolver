@@ -10,7 +10,7 @@ export const posts: Guide[] = [
   {
     slug: "how-to-find-the-derivative-of-a-function",
     titleClass: "text-blog-derivative",
-    image: { src: "/images/blog-derivative.webp", alt: "Secant lines through a curve getting closer to a single point until they become the tangent line, which is how the derivative is defined", width: 1536, height: 1024 },
+    image: { src: "/images/blog-derivative.webp", alt: "Secant lines through a curve getting closer to a single point until they become the tangent line, which is how the derivative is defined", width: 1536, height: 1024, caption: "As the second point slides toward the first, the secant lines approach the tangent line, whose slope is the derivative." },
     published: "2026-11-02",
     title: "How to Find the Derivative of a Function (Step-by-Step Guide with Examples)",
     metaTitle: "How to Find the Derivative of a Function: Step-by-Step Guide",

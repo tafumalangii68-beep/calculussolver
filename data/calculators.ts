@@ -42,7 +42,7 @@ export interface CalculatorPage {
 const coreCalculators: Record<string, CalculatorPage> = {
   "derivative-calculator": {
     slug: "derivative-calculator",
-    image: { src: "/images/derivative.webp", alt: "A curve with tangent lines at three points: rising, flat at the peak, and falling", width: 1600, height: 800 },
+    image: { src: "/images/derivative.webp", alt: "A curve with tangent lines at three points: rising, flat at the peak, and falling", width: 1600, height: 800, caption: "The derivative is the slope of the tangent line: positive where the curve rises, zero at the peak and negative where it falls." },
     metaTitle: "Derivative Calculator with Steps (1st to 10th Order)",
     metaDescription:
       "Free derivative calculator that shows every step: power, product, quotient and chain rules, plus second and higher-order derivatives. Runs in your browser.",
@@ -163,7 +163,7 @@ const coreCalculators: Record<string, CalculatorPage> = {
 
   "integral-calculator": {
     slug: "integral-calculator",
-    image: { src: "/images/integral.webp", alt: "Thin rectangles filling the area under a curve, approximating its integral", width: 1600, height: 800 },
+    image: { src: "/images/integral.webp", alt: "Thin rectangles filling the area under a curve, approximating its integral", width: 1600, height: 800, caption: "A definite integral is the limit of the total area of thin rectangles under the curve as they get narrower." },
     metaTitle: "Integral Calculator with Steps – Definite and Indefinite",
     metaDescription:
       "Solve indefinite and definite integrals step by step: u-substitution, integration by parts, partial fractions and improper integrals, with every antiderivative verified.",
@@ -290,7 +290,7 @@ const coreCalculators: Record<string, CalculatorPage> = {
 
   "limit-calculator": {
     slug: "limit-calculator",
-    image: { src: "/images/limit.webp", alt: "A curve with a gap at one point, with arrows approaching the gap from the left and from the right", width: 1536, height: 1024 },
+    image: { src: "/images/limit.webp", alt: "A curve with a gap at one point, with arrows approaching the gap from the left and from the right", width: 1536, height: 1024, caption: "A limit is the value the function approaches from both sides, even where the function itself has a gap." },
     metaTitle: "Limit Calculator with Steps – One-Sided and at Infinity",
     metaDescription:
       "Evaluate limits step by step with direct substitution, factoring, L'Hôpital's rule and degree comparison. Supports one-sided limits and limits at infinity.",
@@ -403,7 +403,7 @@ const coreCalculators: Record<string, CalculatorPage> = {
 
   "taylor-series-calculator": {
     slug: "taylor-series-calculator",
-    image: { src: "/images/taylor-series.webp", alt: "Several approximating curves hugging an original curve closely near one central point", width: 1600, height: 800 },
+    image: { src: "/images/taylor-series.webp", alt: "Several approximating curves hugging an original curve closely near one central point", width: 1600, height: 800, caption: "Taylor polynomials match the function closely near the center, and higher orders stay close for longer." },
     metaTitle: "Taylor Series Calculator – Taylor and Maclaurin Polynomials",
     metaDescription:
       "Compute Taylor and Maclaurin polynomials up to order 10 about any center, with a table of exact derivatives and coefficients for every term.",
@@ -502,7 +502,7 @@ const coreCalculators: Record<string, CalculatorPage> = {
 
   "critical-points-calculator": {
     slug: "critical-points-calculator",
-    image: { src: "/images/critical-points.webp", alt: "A curve with a flat tangent at the top of a hill and at the bottom of a valley, marking a local maximum and minimum", width: 1600, height: 800 },
+    image: { src: "/images/critical-points.webp", alt: "A curve with a flat tangent at the top of a hill and at the bottom of a valley, marking a local maximum and minimum", width: 1600, height: 800, caption: "At a local maximum or minimum of a smooth curve the tangent line is flat, so f′(x) = 0 there." },
     metaTitle: "Critical Points Calculator – Find Local Maxima and Minima",
     metaDescription:
       "Find critical points where f′(x) = 0 or is undefined, then classify each as a local maximum, minimum or neither with the second or first derivative test.",

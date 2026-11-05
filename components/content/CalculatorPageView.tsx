@@ -1,3 +1,4 @@
+import { ContentFigure } from "./ContentFigure";
 import { AlertTriangle, ArrowRight, BookOpen, CheckCircle2, Cpu, Info, ListOrdered, Sigma } from "lucide-react";
 import Link from "next/link";
 import { Solver } from "@/components/solver/Solver";
@@ -169,6 +170,7 @@ export function CalculatorPageView({ page }: { page: CalculatorPage }) {
               </div>
             </div>
           )}
+          {page.image && <ContentFigure image={page.image} className="mt-6" />}
         </section>
       ),
     },
@@ -278,7 +280,7 @@ export function CalculatorPageView({ page }: { page: CalculatorPage }) {
 
   return (
     <>
-      <JsonLd data={webApplicationLd(page.h1, path, page.metaDescription)} />
+      <JsonLd data={webApplicationLd(page.h1, path, page.metaDescription, page.image)} />
 
       {/* Hero */}
       <div className="relative isolate overflow-hidden bg-navy-gradient pb-36 pt-8 text-white sm:pt-10">
