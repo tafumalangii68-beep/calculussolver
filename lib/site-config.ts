@@ -14,7 +14,7 @@ export const siteConfig = {
    * REQUIRED BEFORE LAUNCH: the owner's real contact address.
    * While this is null, the Contact page and legal pages say that no address has been published yet.
    */
-  contactEmail: null as string | null,
+  contactEmail: "tafuyash6237@gmail.com" as string | null,
   /** Date the legal pages were last reviewed (YYYY-MM-DD). */
   legalUpdated: "2026-11-04",
   /** Date content pages were last reviewed (YYYY-MM-DD). */
