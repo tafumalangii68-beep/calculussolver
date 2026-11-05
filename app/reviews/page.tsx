@@ -3,22 +3,22 @@ import { JsonLd } from "@/components/content/JsonLd";
 import { MessageSquareQuote } from "lucide-react";
 import { PageHero } from "@/components/content/PageHero";
 import { ReviewsSection } from "@/components/reviews/ReviewsSection";
-import { getApprovedReviews, getReviewSummary } from "@/lib/reviews/store";
+import { getLiveReviewSnapshot } from "@/lib/reviews/store";
 import { buildMetadata, reviewsLd } from "@/lib/seo";
 
-// Approved reviews appear within this many seconds, or at once via /api/reviews/revalidate.
-export const revalidate = 60;
+// Rendered per request from the database (getLiveReviewSnapshot), so approvals, rejections and
+// deletions show on the next page load. There is no page cache to go stale.
 
 const description = "Read reviews of Calculus Solver from students who use it, and share your own experience with the step-by-step solver.";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { count } = await getReviewSummary();
+  const { count } = (await getLiveReviewSnapshot()).summary;
   // An empty reviews page has nothing for search engines, so it is not indexed until reviews exist.
   return buildMetadata({ title: "Reviews", description, path: "/reviews", noIndex: count === 0 });
 }
 
 export default async function ReviewsPage() {
-  const [summary, reviews] = await Promise.all([getReviewSummary(), getApprovedReviews(60)]);
+  const { summary, reviews } = await getLiveReviewSnapshot();
   return (
     <>
       {summary.count > 0 && <JsonLd data={reviewsLd(summary, reviews.slice(0, 10))} />}

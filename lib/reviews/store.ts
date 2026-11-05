@@ -3,10 +3,14 @@
 // Public reads come from ONE cached snapshot: the newest approved reviews plus the count and
 // average of all approved reviews, read in a single query. Every page (homepage, Reviews page,
 // sitemap) uses that same snapshot, so the list, the count and the average always agree.
-// The snapshot is tagged REVIEWS_CACHE_TAG and refreshed at least every REVIEWS_REVALIDATE_SECONDS;
-// GET /api/reviews/revalidate refreshes it at once after moderating in the Neon SQL editor.
+// The Reviews page reads it fresh on every request (getLiveReviewSnapshot), so it is never stale.
+// The homepage and sitemap use a cached copy (getReviewSnapshot), tagged REVIEWS_CACHE_TAG and
+// refreshed at least every REVIEWS_REVALIDATE_SECONDS; GET /api/reviews/revalidate refreshes it at
+// once after moderating in the Neon SQL editor.
 
 import { unstable_cache } from "next/cache";
+import { connection } from "next/server";
+import { cache } from "react";
 import { devReviews } from "@/data/dev-reviews";
 import { ensureSchema, getSql, sha256 } from "@/lib/db";
 import type { PublicReview, ReviewInput, ReviewSummary } from "./validate";
@@ -95,6 +99,23 @@ export const getReviewSnapshot = unstable_cache(
   ["review-snapshot"],
   { revalidate: REVIEWS_REVALIDATE_SECONDS, tags: [REVIEWS_CACHE_TAG] },
 );
+
+/**
+ * Uncached snapshot for the Reviews page: rendered per request, straight from the database, so an
+ * approval, rejection or deletion shows on the very next page load, with no stale window.
+ * `connection()` makes the caller render at request time; React's `cache()` shares one read
+ * between the page's metadata and its body within a single request.
+ */
+export const getLiveReviewSnapshot = cache(async (): Promise<ReviewSnapshot> => {
+  await connection();
+  if (usingDevReviews()) return devSnapshot();
+  try {
+    return await fetchSnapshot();
+  } catch (err) {
+    console.error("reviews: database read failed", err);
+    return EMPTY;
+  }
+});
 
 /** Newest approved reviews, from the shared snapshot. */
 export async function getApprovedReviews(limit: number): Promise<PublicReview[]> {

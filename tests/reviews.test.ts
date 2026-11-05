@@ -10,6 +10,8 @@ import { validateReview } from "@/lib/reviews/validate";
 
 // next/cache needs the Next.js runtime; in tests the cached readers just call through.
 vi.mock("next/cache", () => ({ unstable_cache: (fn: unknown) => fn }));
+// connection() needs an incoming request; in tests there is none to wait for.
+vi.mock("next/server", () => ({ connection: async () => {} }));
 
 // Route the app's database client to a fresh PGlite instance for each test.
 let pg: PGlite;
@@ -124,6 +126,25 @@ describe("POST /api/reviews", () => {
     expect(snap).toEqual({ reviews: [], summary: { count: 0, average: 0 } });
     expect(await store.getApprovedReviews(12)).toEqual([]);
     expect(await store.getReviewSummary()).toEqual({ count: 0, average: 0 });
+  });
+
+  it("Reviews page data: a deletion is gone on the very next read, never served from a cache", async () => {
+    await postReview(request(human()));
+    await postReview(request(human({ name: "Leo", rating: 3, message: "Useful, but I wanted graphs as well." }), {}, "198.51.100.4"));
+    await postReview(request(human({ name: "Pending", rating: 1, message: "Not approved, so never public." }), {}, "198.51.100.9"));
+    await pg.query("UPDATE reviews SET status = 'approved' WHERE name IN ('Maya K.', 'Leo')");
+
+    const before = await store.getLiveReviewSnapshot();
+    expect(before.reviews.map((r) => r.name).sort()).toEqual(["Leo", "Maya K."]);
+    expect(before.summary).toEqual({ count: 2, average: 4 });
+
+    await pg.query("DELETE FROM reviews WHERE name = 'Maya K.'");
+    const after = await store.getLiveReviewSnapshot();
+    expect(after.reviews.map((r) => r.name)).toEqual(["Leo"]);
+    expect(after.summary).toEqual({ count: 1, average: 3 });
+
+    await pg.query("DELETE FROM reviews WHERE name = 'Leo'");
+    expect(await store.getLiveReviewSnapshot()).toEqual({ reviews: [], summary: { count: 0, average: 0 } });
   });
 
   it("counts every approved review even when the list is capped", async () => {

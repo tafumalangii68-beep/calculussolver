@@ -1,6 +1,6 @@
 import { MessageSquarePlus } from "lucide-react";
 import Link from "next/link";
-import { getApprovedReviews, getReviewSummary, reviewsEnabled } from "@/lib/reviews/store";
+import { getLiveReviewSnapshot, reviewsEnabled } from "@/lib/reviews/store";
 import { ReviewCard } from "./ReviewCard";
 import { ReviewForm } from "./ReviewForm";
 import { Stars } from "./Stars";
@@ -18,7 +18,10 @@ export async function ReviewsSection({
   withForm?: boolean;
   subtitle?: string;
 }) {
-  const [summary, reviews] = await Promise.all([getReviewSummary(), getApprovedReviews(limit)]);
+  // Same per-request snapshot as the page around it: list, count and average from one read.
+  const snapshot = await getLiveReviewSnapshot();
+  const { summary } = snapshot;
+  const reviews = snapshot.reviews.slice(0, limit);
   const enabled = reviewsEnabled();
 
   return (
