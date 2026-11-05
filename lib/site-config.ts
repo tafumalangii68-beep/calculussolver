@@ -4,7 +4,7 @@
 export const siteConfig = {
   name: "Calculus Solver",
   /** Canonical origin, without a trailing slash. Used for canonical URLs, the sitemap and structured data. */
-  url: "https://calculussolver.pro",
+  url: "https://www.calculussolver.pro",
   tagline: "Step-by-step derivatives, integrals and limits",
   description:
     "Free calculus solver with step-by-step solutions for derivatives, integrals, limits, Taylor series and critical points. Runs entirely in your browser.",
