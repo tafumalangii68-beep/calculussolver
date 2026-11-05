@@ -9,9 +9,26 @@ import { neon, type NeonQueryFunction } from "@neondatabase/serverless";
 let client: NeonQueryFunction<false, false> | null | undefined;
 let schemaReady: Promise<void> | null = null;
 
+/**
+ * Finds the Postgres connection string. Vercel's Neon integration normally names it DATABASE_URL
+ * (with POSTGRES_URL as a copy), but when a custom prefix is chosen during setup the names gain
+ * that prefix, e.g. STORAGE_DATABASE_URL. Standard names win; the direct "unpooled" variants are
+ * never used, because the pooled URL is the right one for serverless functions.
+ */
+export function findDatabaseUrl(env: Record<string, string | undefined>): string | undefined {
+  if (env.DATABASE_URL) return env.DATABASE_URL;
+  if (env.POSTGRES_URL) return env.POSTGRES_URL;
+  const keys = Object.keys(env).sort();
+  const pick = (suffix: string) => keys.find((k) => k.endsWith(`_${suffix}`) && env[k]);
+  // Last resort: a prefix that replaced the name entirely (e.g. STORAGE_URL). Match on the value.
+  const anyPostgres = keys.find((k) => k.endsWith("_URL") && !/UNPOOLED|NON_POOLING|NO_SSL|PRISMA/.test(k) && /^postgres(ql)?:\/\//.test(env[k] ?? ""));
+  const key = pick("DATABASE_URL") ?? pick("POSTGRES_URL") ?? anyPostgres;
+  return key ? env[key] : undefined;
+}
+
 export function getSql(): NeonQueryFunction<false, false> | null {
   if (client === undefined) {
-    const url = process.env.DATABASE_URL ?? process.env.POSTGRES_URL;
+    const url = findDatabaseUrl(process.env);
     client = url ? neon(url) : null;
   }
   return client;
@@ -59,7 +76,7 @@ export function visitorHash(request: Request): string {
   const forwarded = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
   const ip = forwarded || request.headers.get("x-real-ip") || "unknown";
   const day = new Date().toISOString().slice(0, 10);
-  const secret = process.env.REVIEWS_SALT ?? process.env.DATABASE_URL ?? "calculus-solver";
+  const secret = process.env.REVIEWS_SALT ?? findDatabaseUrl(process.env) ?? "calculus-solver";
   return createHash("sha256").update(`${secret}|${day}|${ip}`).digest("hex");
 }
 

@@ -5,7 +5,7 @@ import { PGlite } from "@electric-sql/pglite";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Starting the in-process Postgres takes a few seconds.
-vi.setConfig({ testTimeout: 30_000, hookTimeout: 30_000 });
+vi.setConfig({ testTimeout: 60_000, hookTimeout: 60_000 });
 import { validateReview } from "@/lib/reviews/validate";
 
 // next/cache needs the Next.js runtime; in tests the cached readers just call through.
