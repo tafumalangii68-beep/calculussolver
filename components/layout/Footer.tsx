@@ -4,7 +4,7 @@ import { CookieSettingsButton } from "@/components/cookies/CookieConsent";
 import { calculatorNav, guideNav, legalNav, siteConfig } from "@/lib/site-config";
 import { Logo } from "./Logo";
 
-const linkClass = "text-sm text-white/70 transition-colors hover:text-white";
+const linkClass = "inline-flex min-h-7 items-center text-sm text-white/70 transition-colors hover:text-white";
 const headingClass = "font-display text-sm font-bold uppercase tracking-[0.12em] text-white";
 
 const HIGHLIGHTS = ["Step-by-step solutions", "Every answer verified", "Private: runs in your browser"];
@@ -38,7 +38,7 @@ export function Footer() {
         </div>
         <nav aria-label="Calculators">
           <h2 className={headingClass}>Calculators</h2>
-          <ul className="mt-4 space-y-2.5">
+          <ul className="mt-4 space-y-1">
             <li>
               <Link href="/" className={linkClass}>
                 Calculus Solver
@@ -55,7 +55,7 @@ export function Footer() {
         </nav>
         <nav aria-label="Learn">
           <h2 className={headingClass}>Learn</h2>
-          <ul className="mt-4 space-y-2.5">
+          <ul className="mt-4 space-y-1">
             {LEARN.map((l) => (
               <li key={l.href}>
                 <Link href={l.href} className={linkClass}>
@@ -67,7 +67,7 @@ export function Footer() {
         </nav>
         <nav aria-label="Legal and site information">
           <h2 className={headingClass}>Site</h2>
-          <ul className="mt-4 space-y-2.5">
+          <ul className="mt-4 space-y-1">
             {legalNav.map((l) => (
               <li key={l.href}>
                 <Link href={l.href} className={linkClass}>

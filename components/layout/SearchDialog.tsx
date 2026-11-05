@@ -4,7 +4,7 @@ import { ArrowRight, Search, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
-import { searchItems, type SearchItem } from "@/lib/search";
+import { searchItems, type SearchItem } from "@/lib/search-match";
 import { headerIconButton } from "./header-styles";
 
 /**

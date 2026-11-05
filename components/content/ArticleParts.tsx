@@ -72,10 +72,10 @@ export function AuthorBox() {
           every worked example in them is checked automatically against the solver before it is published.
         </p>
         <p className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm">
-          <Link href="/about" className="font-semibold text-accent-strong underline-offset-4 hover:underline">
+          <Link href="/about" className="inline-flex min-h-7 items-center font-semibold text-accent-strong underline-offset-4 hover:underline">
             About Calculus Solver
           </Link>
-          <Link href="/how-it-works" className="font-semibold text-accent-strong underline-offset-4 hover:underline">
+          <Link href="/how-it-works" className="inline-flex min-h-7 items-center font-semibold text-accent-strong underline-offset-4 hover:underline">
             How answers are verified
           </Link>
         </p>

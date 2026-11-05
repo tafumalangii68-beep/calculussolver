@@ -26,7 +26,7 @@ export function Breadcrumbs({ items, tone = "light" }: { items: Crumb[]; tone?: 
                   </span>
                 ) : (
                   <>
-                    <Link href={item.path} className={`underline-offset-2 hover:underline ${dark ? "hover:text-white" : "hover:text-ink"}`}>
+                    <Link href={item.path} className={`inline-flex min-h-6 items-center underline-offset-2 hover:underline ${dark ? "hover:text-white" : "hover:text-ink"}`}>
                       {item.name}
                     </Link>
                     <ChevronRight aria-hidden className="h-3.5 w-3.5" />

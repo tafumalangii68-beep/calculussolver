@@ -398,6 +398,7 @@ const coreCalculators: Record<string, CalculatorPage> = {
       { q: "Is L'Hôpital's rule always the best method?", a: "No. It only applies to 0/0 and ∞/∞ forms, and factoring or simplifying is often faster and clearer. The calculator tries substitution and factoring first." },
     ],
     related: ["derivative-calculator", "integral-calculator", "taylor-series-calculator"],
+    articles: ["how-to-find-the-derivative-of-a-function"],
   },
 
   "taylor-series-calculator": {

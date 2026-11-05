@@ -1,14 +1,15 @@
 "use client";
 
 import { Moon, Sun } from "lucide-react";
-import { useSyncExternalStore } from "react";
-import { currentTheme, setTheme, subscribeTheme } from "@/lib/theme";
+import { useEffect, useSyncExternalStore } from "react";
+import { currentTheme, setTheme, subscribeTheme, syncThemeAcrossTabs } from "@/lib/theme";
 import { headerIconButton } from "./header-styles";
 
 export function ThemeToggle() {
   // null on the server: the icons below switch with CSS, so the markup never mismatches.
   const theme = useSyncExternalStore(subscribeTheme, currentTheme, () => null);
   const dark = theme === "dark";
+  useEffect(syncThemeAcrossTabs, []);
 
   return (
     <button

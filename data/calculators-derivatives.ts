@@ -241,6 +241,7 @@ export const derivativeCalculators: CalculatorPage[] = [
       { q: "Is fxy always equal to fyx?", a: "For functions with continuous second partial derivatives, yes; this is Clairaut's theorem. Every function in a typical course meets that condition where it is defined." },
     ],
     related: ["derivative-calculator", "implicit-differentiation-calculator", "chain-rule-calculator"],
+    guide: { href: "/guides/derivative-rules", label: "The derivative rules every partial derivative uses" },
   },
 
   {
@@ -470,5 +471,6 @@ export const derivativeCalculators: CalculatorPage[] = [
       { q: "Is the formula −F_x/F_y the same as differentiating both sides?", a: "Yes. Both methods give the same dy/dx. The worked examples on this page show the both-sides method; the calculator's steps use the formula, which shows each partial derivative clearly." },
     ],
     related: ["derivative-calculator", "partial-derivative-calculator", "chain-rule-calculator"],
+    guide: { href: "/guides/derivative-rules", label: "Derivative rules, including the chain rule behind implicit differentiation" },
   },
 ];

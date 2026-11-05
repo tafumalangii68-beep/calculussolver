@@ -109,6 +109,8 @@ function fromExample(ex: SolverExample, current: Fields): Fields {
 
 const inputClass =
   "w-full rounded-xl border border-line-strong bg-surface px-3.5 py-2.5 text-ink transition-colors placeholder:text-muted/70 hover:border-accent/50 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15";
+/** Math fields: no autocorrect, capitalisation or spellcheck, which would change what was typed (iOS and Android). */
+const mathInput = { autoComplete: "off", autoCapitalize: "off", autoCorrect: "off", spellCheck: false } as const;
 const labelClass = "block text-sm font-medium text-ink";
 
 function loadRenderer() {
@@ -244,6 +246,7 @@ export function Solver({ operations, examples, title, initialOrder = 1, heading,
                 inputMode="text"
                 autoComplete="off"
                 autoCapitalize="off"
+                autoCorrect="off"
                 spellCheck={false}
                 placeholder={isImplicit ? "e.g. x^2 + y^2 = 25" : isPartial ? "e.g. x^2 y + sin(x y)" : "e.g. x^2 sin(x)"}
                 value={fields.expression}
@@ -498,7 +501,7 @@ function OperationOptions({
           <label htmlFor={id("ipoint")} className={labelClass}>
             At the point <span className="font-normal text-muted">(optional)</span>
           </label>
-          <input id={id("ipoint")} value={fields.implicitPoint} onChange={(e) => set("implicitPoint", e.target.value)} className={small} placeholder="e.g. 3, 4" />
+          <input id={id("ipoint")} value={fields.implicitPoint} onChange={(e) => set("implicitPoint", e.target.value)} className={small} {...mathInput} placeholder="e.g. 3, 4" />
           <p className="mt-1 text-xs text-muted">Finds dy/dx. Add a point on the curve to get the slope and tangent line there.</p>
         </div>
       );
@@ -524,13 +527,13 @@ function OperationOptions({
             <label htmlFor={id("lower")} className={labelClass}>
               Lower bound
             </label>
-            <input id={id("lower")} value={fields.lower} onChange={(e) => set("lower", e.target.value)} className={small} placeholder="0, -inf, pi/2" />
+            <input id={id("lower")} value={fields.lower} onChange={(e) => set("lower", e.target.value)} className={small} {...mathInput} placeholder="0, -inf, pi/2" />
           </div>
           <div>
             <label htmlFor={id("upper")} className={labelClass}>
               Upper bound
             </label>
-            <input id={id("upper")} value={fields.upper} onChange={(e) => set("upper", e.target.value)} className={small} placeholder="1, inf, e" />
+            <input id={id("upper")} value={fields.upper} onChange={(e) => set("upper", e.target.value)} className={small} {...mathInput} placeholder="1, inf, e" />
           </div>
           <p className="col-span-2 text-xs text-muted">Use inf or -inf for improper integrals.</p>
         </div>
@@ -542,7 +545,7 @@ function OperationOptions({
             <label htmlFor={id("point")} className={labelClass}>
               {fields.variable} approaches
             </label>
-            <input id={id("point")} value={fields.point} onChange={(e) => set("point", e.target.value)} className={small} placeholder="0, 2, pi, inf" />
+            <input id={id("point")} value={fields.point} onChange={(e) => set("point", e.target.value)} className={small} {...mathInput} placeholder="0, 2, pi, inf" />
           </div>
           <fieldset>
             <legend className={labelClass}>Direction</legend>
@@ -576,7 +579,7 @@ function OperationOptions({
             <label htmlFor={id("center")} className={labelClass}>
               Center a
             </label>
-            <input id={id("center")} value={fields.center} onChange={(e) => set("center", e.target.value)} className={small} placeholder="0" />
+            <input id={id("center")} value={fields.center} onChange={(e) => set("center", e.target.value)} className={small} {...mathInput} placeholder="0" />
           </div>
           <div>
             <label htmlFor={id("torder")} className={labelClass}>
@@ -600,13 +603,13 @@ function OperationOptions({
             <label htmlFor={id("min")} className={labelClass}>
               Search from
             </label>
-            <input id={id("min")} value={fields.rangeMin} onChange={(e) => set("rangeMin", e.target.value)} className={small} />
+            <input id={id("min")} value={fields.rangeMin} onChange={(e) => set("rangeMin", e.target.value)} className={small} {...mathInput} />
           </div>
           <div>
             <label htmlFor={id("max")} className={labelClass}>
               Search to
             </label>
-            <input id={id("max")} value={fields.rangeMax} onChange={(e) => set("rangeMax", e.target.value)} className={small} />
+            <input id={id("max")} value={fields.rangeMax} onChange={(e) => set("rangeMax", e.target.value)} className={small} {...mathInput} />
           </div>
         </div>
       );
