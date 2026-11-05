@@ -34,8 +34,8 @@ import { homeExamples, homeFaqs, homeSolverExamples, syntaxGuide } from "@/data/
 import { buildMetadata, webApplicationLd, websiteLd } from "@/lib/seo";
 import { calculatorNav } from "@/lib/site-config";
 
-// Approved reviews and the solve counter refresh every 5 minutes.
-export const revalidate = 300;
+// Approved reviews refresh within a minute (or at once via /api/reviews/revalidate); the solve counter within 5.
+export const revalidate = 60;
 
 const description =
   "Free calculus solver with step-by-step solutions for derivatives, integrals, limits, Taylor series and critical points. Private: everything runs in your browser.";

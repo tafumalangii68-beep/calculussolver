@@ -6,8 +6,8 @@ import { ReviewsSection } from "@/components/reviews/ReviewsSection";
 import { getApprovedReviews, getReviewSummary } from "@/lib/reviews/store";
 import { buildMetadata, reviewsLd } from "@/lib/seo";
 
-// Approved reviews appear within this many seconds.
-export const revalidate = 300;
+// Approved reviews appear within this many seconds, or at once via /api/reviews/revalidate.
+export const revalidate = 60;
 
 const description = "Read reviews of Calculus Solver from students who use it, and share your own experience with the step-by-step solver.";
 

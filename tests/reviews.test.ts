@@ -104,6 +104,45 @@ describe("POST /api/reviews", () => {
     expect(await store.getReviewSummary()).toEqual({ count: 2, average: 4 });
   });
 
+  it("drops deleted and rejected reviews, keeping list, count and average in step", async () => {
+    await postReview(request(human()));
+    await postReview(request(human({ name: "Leo", rating: 3, message: "Useful, but I wanted graphs as well." }), {}, "198.51.100.4"));
+    await pg.query("UPDATE reviews SET status = 'approved'");
+    let snap = await store.getReviewSnapshot();
+    expect(snap.reviews).toHaveLength(2);
+    expect(snap.summary).toEqual({ count: 2, average: 4 });
+
+    // Deleted in the SQL editor: gone from the list AND the summary.
+    await pg.query("DELETE FROM reviews WHERE name = 'Maya K.'");
+    snap = await store.getReviewSnapshot();
+    expect(snap.reviews.map((r) => r.name)).toEqual(["Leo"]);
+    expect(snap.summary).toEqual({ count: 1, average: 3 });
+
+    // Rejected: back to the empty state, with no leftover count or average.
+    await pg.query("UPDATE reviews SET status = 'rejected' WHERE name = 'Leo'");
+    snap = await store.getReviewSnapshot();
+    expect(snap).toEqual({ reviews: [], summary: { count: 0, average: 0 } });
+    expect(await store.getApprovedReviews(12)).toEqual([]);
+    expect(await store.getReviewSummary()).toEqual({ count: 0, average: 0 });
+  });
+
+  it("counts every approved review even when the list is capped", async () => {
+    await store.getReviewSnapshot(); // creates the tables
+    for (let i = 0; i < 65; i++) {
+      await pg.query(
+        `INSERT INTO reviews (name, rating, message, status, ip_hash, content_hash, created_at)
+         VALUES ($1, $2, 'Approved review number ' || $3, 'approved', 'h', $4, now() - ($3 || ' minutes')::interval)`,
+        [`Reviewer ${i}`, i % 2 ? 4 : 5, String(i), `hash-${i}`],
+      );
+    }
+    const snap = await store.getReviewSnapshot();
+    expect(snap.reviews).toHaveLength(60);
+    expect(snap.reviews[0].name).toBe("Reviewer 0"); // newest first
+    expect(snap.summary.count).toBe(65);
+    expect(snap.summary.average).toBeCloseTo((33 * 5 + 32 * 4) / 65, 10);
+    expect(await store.getApprovedReviews(12)).toHaveLength(12);
+  });
+
   it("stores an optional category and returns it publicly", async () => {
     await postReview(request(human({ category: "AP Calculus student" })));
     await pg.query("UPDATE reviews SET status = 'approved'");

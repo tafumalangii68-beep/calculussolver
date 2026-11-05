@@ -29,4 +29,6 @@ CREATE TABLE IF NOT EXISTS solve_limits (
 --   SELECT id, name, rating, message, created_at FROM reviews WHERE status = 'pending' ORDER BY created_at;
 --   UPDATE reviews SET status = 'approved' WHERE id = 123;
 --   UPDATE reviews SET status = 'rejected' WHERE id = 124;
--- Approved reviews appear on the site within 5 minutes.
+-- Approved, rejected or deleted reviews update on the site within about a minute.
+-- To update at once, open https://www.calculussolver.pro/api/reviews/revalidate?secret=YOUR_SECRET
+-- (YOUR_SECRET = the REVALIDATE_SECRET environment variable in Vercel).

@@ -1,11 +1,21 @@
-// Review storage (server only). Public reads are cached and refreshed every few minutes.
+// Review storage (server only).
+//
+// Public reads come from ONE cached snapshot: the newest approved reviews plus the count and
+// average of all approved reviews, read in a single query. Every page (homepage, Reviews page,
+// sitemap) uses that same snapshot, so the list, the count and the average always agree.
+// The snapshot is tagged REVIEWS_CACHE_TAG and refreshed at least every REVIEWS_REVALIDATE_SECONDS;
+// GET /api/reviews/revalidate refreshes it at once after moderating in the Neon SQL editor.
 
 import { unstable_cache } from "next/cache";
 import { devReviews } from "@/data/dev-reviews";
 import { ensureSchema, getSql, sha256 } from "@/lib/db";
 import type { PublicReview, ReviewInput, ReviewSummary } from "./validate";
 
-export const REVIEWS_REVALIDATE_SECONDS = 300;
+/** Upper bound on how stale public review data can be without an on-demand refresh. */
+export const REVIEWS_REVALIDATE_SECONDS = 60;
+export const REVIEWS_CACHE_TAG = "reviews";
+/** The most reviews any page shows (the Reviews page lists up to 60). */
+const SNAPSHOT_LIMIT = 60;
 
 /** Limits per visitor (by daily-rotating IP hash). */
 const MAX_PER_HOUR = 2;
@@ -23,62 +33,78 @@ export function usingDevReviews(): boolean {
   return process.env.NODE_ENV === "development" && getSql() === null;
 }
 
-async function fetchApproved(limit: number): Promise<PublicReview[]> {
+export interface ReviewSnapshot {
+  /** Newest approved reviews first, at most SNAPSHOT_LIMIT. */
+  reviews: PublicReview[];
+  /** Count and average of ALL approved reviews, from the same query as `reviews`. */
+  summary: ReviewSummary;
+}
+
+const EMPTY: ReviewSnapshot = { reviews: [], summary: { count: 0, average: 0 } };
+
+/**
+ * One query, one snapshot: the window functions count and average every approved review before
+ * LIMIT applies, so the summary always matches the list it was read with.
+ */
+export async function fetchSnapshot(): Promise<ReviewSnapshot> {
   const sql = getSql();
-  if (!sql) return [];
+  if (!sql) return EMPTY;
   await ensureSchema();
   const rows = (await sql.query(
-    `SELECT id, name, rating, message, category, created_at FROM reviews WHERE status = 'approved' ORDER BY created_at DESC LIMIT $1`,
-    [limit],
-  )) as { id: string | number; name: string; rating: number; message: string; category: string | null; created_at: string | Date }[];
-  return rows.map((r) => ({
-    id: Number(r.id),
-    name: r.name,
-    rating: Number(r.rating),
-    message: r.message,
-    category: r.category,
-    createdAt: new Date(r.created_at).toISOString(),
-  }));
-}
-
-async function fetchSummary(): Promise<ReviewSummary> {
-  const sql = getSql();
-  if (!sql) return { count: 0, average: 0 };
-  await ensureSchema();
-  const rows = (await sql.query(`SELECT COUNT(*)::int AS count, COALESCE(AVG(rating), 0)::float AS average FROM reviews WHERE status = 'approved'`)) as {
-    count: number;
-    average: number;
-  }[];
-  return { count: Number(rows[0]?.count ?? 0), average: Number(rows[0]?.average ?? 0) };
-}
-
-/** Never throws: if the database is unreachable, the page renders the empty state instead of an error. */
-function safe<T>(fn: () => Promise<T>, fallback: T): () => Promise<T> {
-  return async () => {
-    try {
-      return await fn();
-    } catch (err) {
-      console.error("reviews: database read failed", err);
-      return fallback;
-    }
+    `SELECT id, name, rating, message, category, created_at,
+            COUNT(*) OVER ()::int AS total,
+            AVG(rating) OVER ()::float AS average
+       FROM reviews
+      WHERE status = 'approved'
+      ORDER BY created_at DESC, id DESC
+      LIMIT $1`,
+    [SNAPSHOT_LIMIT],
+  )) as { id: string | number; name: string; rating: number; message: string; category: string | null; created_at: string | Date; total: number; average: number }[];
+  return {
+    reviews: rows.map((r) => ({
+      id: Number(r.id),
+      name: r.name,
+      rating: Number(r.rating),
+      message: r.message,
+      category: r.category,
+      createdAt: new Date(r.created_at).toISOString(),
+    })),
+    summary: rows.length ? { count: Number(rows[0].total), average: Number(rows[0].average) } : EMPTY.summary,
   };
 }
 
-export const getApprovedReviews = unstable_cache(
-  (limit: number) => (usingDevReviews() ? Promise.resolve(devReviews.slice(0, limit)) : safe(() => fetchApproved(limit), [])()),
-  ["approved-reviews"],
-  { revalidate: REVIEWS_REVALIDATE_SECONDS, tags: ["reviews"] },
-);
-
-function devSummary(): Promise<ReviewSummary> {
+function devSnapshot(): ReviewSnapshot {
   const total = devReviews.reduce((s, r) => s + r.rating, 0);
-  return Promise.resolve({ count: devReviews.length, average: total / devReviews.length });
+  return { reviews: devReviews.slice(0, SNAPSHOT_LIMIT), summary: { count: devReviews.length, average: total / devReviews.length } };
 }
 
-export const getReviewSummary = unstable_cache(() => (usingDevReviews() ? devSummary() : safe(fetchSummary, { count: 0, average: 0 })()), ["review-summary"], {
-  revalidate: REVIEWS_REVALIDATE_SECONDS,
-  tags: ["reviews"],
-});
+/**
+ * The cached snapshot every public page reads. Never throws: if the database is unreachable the
+ * page shows the empty state (not older data), and the failure is logged.
+ */
+export const getReviewSnapshot = unstable_cache(
+  async (): Promise<ReviewSnapshot> => {
+    if (usingDevReviews()) return devSnapshot();
+    try {
+      return await fetchSnapshot();
+    } catch (err) {
+      console.error("reviews: database read failed", err);
+      return EMPTY;
+    }
+  },
+  ["review-snapshot"],
+  { revalidate: REVIEWS_REVALIDATE_SECONDS, tags: [REVIEWS_CACHE_TAG] },
+);
+
+/** Newest approved reviews, from the shared snapshot. */
+export async function getApprovedReviews(limit: number): Promise<PublicReview[]> {
+  return (await getReviewSnapshot()).reviews.slice(0, limit);
+}
+
+/** Count and average of approved reviews, from the same snapshot as getApprovedReviews. */
+export async function getReviewSummary(): Promise<ReviewSummary> {
+  return (await getReviewSnapshot()).summary;
+}
 
 export type SubmitOutcome = "saved" | "duplicate" | "rate-limited" | "unavailable";
 

@@ -6,7 +6,8 @@ import { indexableRoutes } from "@/lib/routes";
 import { getReviewSummary } from "@/lib/reviews/store";
 import { absoluteUrl } from "@/lib/site-config";
 
-export const revalidate = 3600;
+// The Reviews page joins the sitemap once it has approved reviews; rechecked with the review data.
+export const revalidate = 60;
 
 /** Illustrations shown on each page, listed as image-sitemap entries so search engines can find them. */
 const PAGE_IMAGES: Record<string, string[]> = Object.fromEntries([
