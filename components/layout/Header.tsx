@@ -1,4 +1,5 @@
 import { buildSearchIndex } from "@/lib/search";
+import { AuthorProfile } from "./AuthorProfile";
 import { Logo } from "./Logo";
 import { DesktopNav, MobileNav } from "./NavMenu";
 import { SearchDialog } from "./SearchDialog";
@@ -12,6 +13,7 @@ export function Header() {
         <Logo />
         <div className="ml-auto flex items-center gap-2">
           <DesktopNav />
+          <AuthorProfile />
           <div className="flex items-center gap-1.5 sm:gap-2 lg:ml-3">
             <SearchDialog items={buildSearchIndex()} />
             <ThemeToggle />

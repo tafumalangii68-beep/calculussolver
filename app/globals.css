@@ -415,3 +415,41 @@
     scroll-snap-align: start;
   }
 }
+
+/* Henry's author profile (native <dialog>): fade and lift in, reverse on close.
+   Browsers without @starting-style simply open and close without the animation. */
+.author-dialog {
+  opacity: 0;
+  transform: translateY(16px) scale(0.97);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    overlay 0.25s ease allow-discrete,
+    display 0.25s ease allow-discrete;
+}
+.author-dialog[open] {
+  opacity: 1;
+  transform: none;
+}
+.author-dialog::backdrop {
+  opacity: 0;
+  transition:
+    opacity 0.25s ease,
+    overlay 0.25s ease allow-discrete,
+    display 0.25s ease allow-discrete;
+}
+.author-dialog[open]::backdrop {
+  opacity: 1;
+}
+@starting-style {
+  .author-dialog[open] {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  .author-dialog[open]::backdrop {
+    opacity: 0;
+  }
+}
+html:has(.author-dialog[open]) {
+  overflow: hidden;
+}
