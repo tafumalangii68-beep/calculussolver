@@ -1,6 +1,6 @@
 // SAMPLE testimonial cards for the homepage carousel, shown ONLY while there are no approved
 // real reviews. The names are invented placeholders and the cards are visibly labelled
-// "Sample review" in the UI, with a section notice saying they are not from real users.
+// "Sample · <topic>" in the UI, with a section notice saying they are not from real users.
 // They are never counted in ratings, never used in structured data, and describe only
 // features the site actually has.
 

@@ -4,15 +4,12 @@ import { initials } from "./TestimonialCard";
 
 /**
  * Sample card in the testimonial style, used only until real reviews exist.
- * Visibly tagged "Sample review" (and announced as such to screen readers); the stars are a
+ * Visibly marked "Sample · topic" (and announced as such to screen readers); the stars are a
  * visual example only and are never counted in any rating.
  */
 export function ExampleCard({ card }: { card: ExampleCardData }) {
   return (
     <figure className="relative flex h-full min-h-[350px] flex-col rounded-[25px] border border-line bg-surface p-6 shadow-[0_5px_18px_rgb(21_25_54/0.07)] transition-shadow duration-300 hover:shadow-[0_10px_25px_rgb(76_34_201/0.14)] sm:min-h-[390px] sm:px-[30px] sm:py-7">
-      <span className="absolute right-6 top-6 rounded-full border border-line-strong bg-sunken px-3 py-1 text-xs font-semibold uppercase tracking-wider text-muted">
-        Sample review
-      </span>
       <span aria-hidden className="block h-[65px] select-none font-display text-[92px] font-bold leading-none text-accent">
         &ldquo;
       </span>
