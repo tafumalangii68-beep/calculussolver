@@ -12,7 +12,7 @@ const RELATED: Record<Operation, { href: string; label: string }> = {
   "definite-integral": { href: "/integral-calculator", label: "Learn more about definite integrals" },
   limit: { href: "/limit-calculator", label: "Learn how limits are evaluated" },
   taylor: { href: "/taylor-series-calculator", label: "Learn how Taylor polynomials are built" },
-  "critical-points": { href: "/critical-points-calculator", label: "Learn how critical points are classified" },
+  "critical-points": { href: "/blog/how-to-find-critical-points-and-classify-them", label: "Learn how critical points are classified" },
   "partial-derivative": { href: "/partial-derivative-calculator", label: "Learn how partial derivatives work" },
   implicit: { href: "/implicit-differentiation-calculator", label: "Learn how implicit differentiation works" },
 };

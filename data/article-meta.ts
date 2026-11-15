@@ -45,4 +45,13 @@ export const articleMeta: Record<string, ArticleMeta> = {
       { after: "at-a-point", kind: "note", text: "f′(a) is the slope of the tangent line at x = a, so the tangent line is y = f(a) + f′(a)(x − a)." },
     ],
   },
+  "how-to-find-critical-points-and-classify-them": {
+    category: "Derivatives",
+    related: ["critical-points-calculator", "derivative-calculator", "second-derivative-calculator"],
+    callouts: [
+      { after: "how-to-find", kind: "tip", text: "Factor f′ completely before solving. The factored form gives you the critical points and the signs for the first derivative test at the same time." },
+      { after: "second-derivative-test", kind: "note", text: "f″(c) = 0 does not mean “neither”. It only means this test cannot decide, so switch to the first derivative test." },
+      { after: "absolute-extrema", kind: "tip", text: "On a closed interval, always check the endpoints. The absolute maximum or minimum is often there, not at a critical point." },
+    ],
+  },
 };

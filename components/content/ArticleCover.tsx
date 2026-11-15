@@ -89,6 +89,28 @@ function Motif({ slug, id }: { slug: string; id: (name: string) => string }) {
           </text>
         </g>
       );
+    case "how-to-find-critical-points-and-classify-them":
+      // A curve with flat tangents at its peak and valley, and the sign of f′ on each stretch.
+      return (
+        <g>
+          <path d="M50 300 C 130 300, 150 90, 220 90 S 320 250, 390 250 S 500 60, 560 40" fill="none" stroke="#c4a8ff" strokeWidth="5" strokeLinecap="round" />
+          <path d="M165 90 H275 M335 250 H445" stroke="#3fd1c1" strokeWidth="4" strokeLinecap="round" />
+          <circle cx="220" cy="90" r="9" fill="#ffffff" stroke="#7438f5" strokeWidth="4" />
+          <circle cx="390" cy="250" r="9" fill="#ffffff" stroke="#7438f5" strokeWidth="4" />
+          <g fontFamily="var(--font-inter), system-ui, sans-serif" fontSize="16" fill="#ffffff" fillOpacity="0.85" textAnchor="middle">
+            <text x="220" y="62">max</text>
+            <text x="390" y="290">min</text>
+          </g>
+          <g fontSize="30" fill="#fbbf6a" textAnchor="middle" style={math}>
+            <text x="135" y="200">+</text>
+            <text x="305" y="160">−</text>
+            <text x="480" y="200">+</text>
+          </g>
+          <text x="560" y="320" textAnchor="end" fill="#ffffff" fontSize="24" style={math}>
+            {"f′(x) = 0"}
+          </text>
+        </g>
+      );
     default:
       return <path d="M60 280 C 200 280, 260 120, 340 120 S 480 220, 560 120" fill="none" stroke="#c4a8ff" strokeWidth="5" strokeLinecap="round" />;
   }

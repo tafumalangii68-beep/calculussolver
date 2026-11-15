@@ -144,6 +144,8 @@ export default function HowItWorksPage() {
 
       <p>
         <strong>Try it:</strong> <Link href="/critical-points-calculator">Critical Points Calculator</Link>
+        {" · "}
+        <strong>Learn it:</strong> <Link href="/blog/how-to-find-critical-points-and-classify-them">How to find and classify critical points</Link>
       </p>
 
       <h2>9. Partial derivatives</h2>

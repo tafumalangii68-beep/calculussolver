@@ -120,6 +120,11 @@ export const guides: Guide[] = [
             text: "New to derivatives? Start with the limit definition and a full walkthrough in",
             link: { href: "/blog/how-to-find-the-derivative-of-a-function", label: "How to Find the Derivative of a Function" },
           },
+          {
+            type: "p",
+            text: "One of the most common uses of these rules is finding the maxima and minima of a function. Learn how in",
+            link: { href: "/blog/how-to-find-critical-points-and-classify-them", label: "How to Find Critical Points and Classify Them" },
+          },
         ],
       },
     ],
