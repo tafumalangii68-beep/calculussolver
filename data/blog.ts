@@ -314,6 +314,7 @@ export const posts: Guide[] = [
   {
     slug: "how-to-find-critical-points-and-classify-them",
     titleClass: "text-blog-critical",
+    image: { src: "/images/blog-critical-points.webp", alt: "A curve with a flat horizontal tangent at a hilltop, at a valley and at a level shelf, marking three critical points", width: 1536, height: 1024, caption: "All three marked points have f′(x) = 0: a local maximum, a local minimum, and a flat point that is neither, because the curve keeps rising through it." },
     published: "2026-11-15",
     title: "How to Find Critical Points and Classify Them (First and Second Derivative Test)",
     metaTitle: "How to Find Critical Points: First & Second Derivative Test",
@@ -579,6 +580,7 @@ export const posts: Guide[] = [
   {
     slug: "squeeze-theorem-explained-with-examples",
     titleClass: "text-blog-squeeze",
+    image: { src: "/images/blog-squeeze-theorem.webp", alt: "An oscillating curve trapped between an upper and a lower curve that meet at a single point, illustrating the squeeze theorem", width: 1536, height: 1024, caption: "The wavy function is trapped between two bounds that meet at one point, so as x approaches that point it is squeezed to the same limit." },
     published: "2026-11-16",
     title: "Squeeze Theorem Explained With Examples (Sandwich Theorem)",
     metaTitle: "Squeeze Theorem Explained With Examples (Step by Step)",
