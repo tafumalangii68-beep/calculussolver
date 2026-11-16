@@ -3,6 +3,14 @@
 
 const math = { fontFamily: "'Times New Roman', Georgia, serif", fontStyle: "italic" as const };
 
+/** Squeeze cover: u²·sin(5/|u|)-style oscillation, scaled to stay inside the bounds y = 170 ± 130u². */
+const squeezeWiggle = Array.from({ length: 229 }, (_, i) => {
+  const x = 72 + i * 2;
+  const u = (x - 300) / 230;
+  const y = 170 + 0.85 * 130 * u * u * Math.sin(5 / (Math.abs(u) + 0.04));
+  return `${i ? "L" : "M"}${x} ${y.toFixed(1)}`;
+}).join(" ");
+
 function Motif({ slug, id }: { slug: string; id: (name: string) => string }) {
   switch (slug) {
     case "derivative-rules":
@@ -108,6 +116,24 @@ function Motif({ slug, id }: { slug: string; id: (name: string) => string }) {
           </g>
           <text x="560" y="320" textAnchor="end" fill="#ffffff" fontSize="24" style={math}>
             {"f′(x) = 0"}
+          </text>
+        </g>
+      );
+    case "squeeze-theorem-explained-with-examples":
+      // An oscillating curve trapped between an upper and a lower bound that pinch together at one point.
+      return (
+        <g>
+          {/* h and g are the parabolas y = 170 ∓ 130u² (u = (x − 300)/230); the wiggle stays inside them. */}
+          <path d="M70 40 Q 300 300, 530 40" fill="none" stroke="#67d8ec" strokeWidth="4" strokeLinecap="round" />
+          <path d="M70 300 Q 300 40, 530 300" fill="none" stroke="#67d8ec" strokeWidth="4" strokeLinecap="round" />
+          <path d={squeezeWiggle} fill="none" stroke="#c4a8ff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+          <circle cx="300" cy="170" r="9" fill="#ffffff" stroke="#7438f5" strokeWidth="4" />
+          <g fontSize="22" fill="#ffffff" style={math}>
+            <text x="540" y="40">h(x)</text>
+            <text x="540" y="312">g(x)</text>
+          </g>
+          <text x="300" y="322" textAnchor="middle" fill="#ffffff" fontSize="22" style={math}>
+            L
           </text>
         </g>
       );

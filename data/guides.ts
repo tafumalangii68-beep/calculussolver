@@ -64,6 +64,11 @@ export const guides: Guide[] = [
               [t`\arctan x`, t`\frac{1}{1 + x^{2}}`],
             ],
           },
+          {
+            type: "p",
+            text: "The derivative of sin x is cos x because sin(x)/x → 1 as x → 0, a limit proved with the squeeze theorem. See",
+            link: { href: "/blog/squeeze-theorem-explained-with-examples", label: "Squeeze Theorem Explained With Examples" },
+          },
         ],
       },
       {

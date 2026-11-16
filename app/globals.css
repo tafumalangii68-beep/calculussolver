@@ -61,6 +61,7 @@
   --color-guide-integration: #0f7a5c;
   --color-blog-derivative: #be185d;
   --color-blog-critical: #b45309;
+  --color-blog-squeeze: #0e7490;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   /* Headings. */
@@ -326,6 +327,7 @@
   --color-guide-integration: #6fdcb8;
   --color-blog-derivative: #ff9cc8;
   --color-blog-critical: #fbbf6a;
+  --color-blog-squeeze: #67d8ec;
   --color-calc-derivative-soft: #1f1a4d;
   --color-calc-integral-soft: #0f2c2a;
   --color-calc-limit-soft: #2e2218;

@@ -121,6 +121,8 @@ export default function HowItWorksPage() {
 
       <p>
         <strong>Try it:</strong> <Link href="/limit-calculator">Limit Calculator</Link>
+        {" · "}
+        <strong>Learn it:</strong> <Link href="/blog/squeeze-theorem-explained-with-examples">The squeeze theorem, with examples</Link>
       </p>
 
       <h2>7. Taylor polynomials</h2>

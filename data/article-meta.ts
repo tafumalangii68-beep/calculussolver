@@ -54,4 +54,13 @@ export const articleMeta: Record<string, ArticleMeta> = {
       { after: "absolute-extrema", kind: "tip", text: "On a closed interval, always check the endpoints. The absolute maximum or minimum is often there, not at a critical point." },
     ],
   },
+  "squeeze-theorem-explained-with-examples": {
+    category: "Limits",
+    related: ["limit-calculator", "derivative-calculator"],
+    callouts: [
+      { after: "statement", kind: "note", text: "The two outer limits must be equal. If they differ, the squeeze theorem gives no information about the middle function." },
+      { after: "method", kind: "tip", text: "Most squeeze problems start from −1 ≤ sin(…) ≤ 1 or −1 ≤ cos(…) ≤ 1. Find the bounded factor first, then build the rest of the function around it." },
+      { after: "sin-x-over-x", kind: "note", text: "This limit only equals 1 when x is measured in radians, which is why calculus always uses radians." },
+    ],
+  },
 };

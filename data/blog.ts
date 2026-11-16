@@ -576,6 +576,223 @@ export const posts: Guide[] = [
     ],
     calculator: { href: "/critical-points-calculator", label: "Find and classify critical points with the Critical Points Calculator" },
   },
+  {
+    slug: "squeeze-theorem-explained-with-examples",
+    titleClass: "text-blog-squeeze",
+    published: "2026-11-16",
+    title: "Squeeze Theorem Explained With Examples (Sandwich Theorem)",
+    metaTitle: "Squeeze Theorem Explained With Examples (Step by Step)",
+    description:
+      "Learn what the squeeze theorem says, when to use it and how to find the bounding functions, with seven worked examples including x² sin(1/x) and sin(x)/x.",
+    intro:
+      "Some limits cannot be found by substitution, factoring or L'Hôpital's rule, usually because a factor such as sin(1/x) keeps oscillating forever. The squeeze theorem handles these by trapping the function between two simpler functions that share the same limit. This guide explains the theorem, gives a step-by-step method for finding the bounds, and works through seven examples.",
+    sections: [
+      {
+        id: "statement",
+        heading: "What the squeeze theorem says",
+        blocks: [
+          {
+            type: "p",
+            text: "Suppose three functions g, f and h satisfy g(x) ≤ f(x) ≤ h(x) for every x near a (except possibly at a itself). If g and h have the same limit L at a, then f is forced to have that limit too:",
+          },
+          { type: "math", latex: t`g(x) \le f(x) \le h(x) \ \text{ near } a \quad\text{and}\quad \lim_{x \to a} g(x) = \lim_{x \to a} h(x) = L \quad\Longrightarrow\quad \lim_{x \to a} f(x) = L` },
+          {
+            type: "p",
+            text: "The idea is simple: f is sandwiched between g and h. As x approaches a, the lower function g and the upper function h both close in on L, so f, which is always between them, has nowhere else to go. That is why the result is also called the sandwich theorem or the pinching theorem.",
+          },
+          {
+            type: "p",
+            text: "The theorem works the same way for one-sided limits (x → a⁺ or x → a⁻) and for limits at infinity (x → ∞ or x → −∞). In each case the inequality only needs to hold on the side, or far enough out, that the limit looks at.",
+          },
+        ],
+      },
+      {
+        id: "when-to-use",
+        heading: "When should you use the squeeze theorem?",
+        blocks: [
+          { type: "p", text: "Reach for the squeeze theorem when the usual methods fail and the expression contains a factor that is bounded but has no limit. Typical signs:" },
+          {
+            type: "list",
+            items: [
+              "A sine or cosine of something that blows up, such as sin(1/x) as x → 0 or cos(x) as x → ∞. These oscillate between −1 and 1 forever, so they have no limit.",
+              "That bounded factor is multiplied by something that goes to 0, such as x², √x or e^(−x).",
+              "Substitution gives an undefined expression, and L'Hôpital's rule does not apply or makes things worse.",
+            ],
+          },
+          {
+            type: "p",
+            text: "The product rule for limits, lim(f·g) = lim f · lim g, cannot be used here, because one of the two limits does not exist. The squeeze theorem gets around that by never needing the limit of the oscillating factor, only its bounds.",
+          },
+        ],
+      },
+      {
+        id: "method",
+        heading: "How to use the squeeze theorem, step by step",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "Step 1: Find the bounded part. Write down an inequality you already know, most often −1 ≤ sin(anything) ≤ 1 or −1 ≤ cos(anything) ≤ 1.",
+              "Step 2: Build up to f(x). Multiply, divide or add to every part of the inequality until the middle is exactly f(x). Multiplying by a positive quantity keeps the inequality signs; multiplying by a negative one flips them.",
+              "Step 3: Find the limits of the two outer functions. They should be easy limits, found by substitution.",
+              "Step 4: Check that the two outer limits are equal. If they are, f has that same limit. If they differ, the bounds are too loose and the theorem says nothing.",
+            ],
+          },
+          {
+            type: "p",
+            text: "Step 2 is where care is needed. In x² sin(1/x), the factor x² is never negative, so multiplying −1 ≤ sin(1/x) ≤ 1 by x² is safe. In x sin(1/x), x can be negative, so use absolute values instead (see the next section).",
+          },
+        ],
+      },
+      {
+        id: "absolute-value",
+        heading: "The absolute value shortcut",
+        blocks: [
+          { type: "p", text: "When the limit you expect is 0, there is a quicker form of the theorem that avoids sign problems:" },
+          { type: "math", latex: t`\lim_{x \to a} |f(x)| = 0 \quad\Longrightarrow\quad \lim_{x \to a} f(x) = 0` },
+          {
+            type: "p",
+            text: "This follows from the squeeze theorem, because −|f(x)| ≤ f(x) ≤ |f(x)| and both outer functions go to 0. In practice it means you can bound |f(x)| instead of f(x). For example, |x sin(1/x)| = |x|·|sin(1/x)| ≤ |x|, and |x| → 0, so x sin(1/x) → 0 as x → 0, whether x is positive or negative.",
+          },
+        ],
+      },
+      {
+        id: "sin-x-over-x",
+        heading: "The most famous squeeze: sin(x)/x as x → 0",
+        blocks: [
+          {
+            type: "p",
+            text: "The limit of sin(x)/x as x → 0 is the reason the derivative of sin x is cos x, and it is usually proved with the squeeze theorem. Comparing the areas of two triangles and a circular sector in the unit circle gives, for small x ≠ 0:",
+          },
+          { type: "math", latex: t`\cos x \le \frac{\sin x}{x} \le 1` },
+          {
+            type: "p",
+            text: "As x → 0, cos x → 1 and the constant 1 stays at 1. Both bounds have the same limit, so the squeeze theorem gives the result:",
+          },
+          { type: "math", latex: t`\lim_{x \to 0} \frac{\sin x}{x} = 1` },
+          {
+            type: "p",
+            text: "Note that x must be in radians. In degrees, the same limit equals π/180.",
+          },
+        ],
+      },
+      {
+        id: "mistakes",
+        heading: "Common mistakes to avoid",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "Using bounds with different limits. From −x² − 1 ≤ f(x) ≤ x² + 1 near 0, the limits are −1 and 1, which tells you nothing about f.",
+              "Forgetting to flip the inequalities when multiplying by a negative number. Multiplying −1 ≤ sin(1/x) ≤ 1 by x is only safe for x > 0; use |x| or the absolute value shortcut instead.",
+              "Writing lim sin(1/x) = 0 or treating lim x sin(1/x) as (lim x)(lim sin(1/x)). The limit of sin(1/x) as x → 0 does not exist, so the product rule for limits cannot be used.",
+              "Checking the inequality only at the point. It must hold for all x near a, not just at x = a, where f may not even be defined.",
+              "Squeezing when it isn't needed. If substitution, factoring or L'Hôpital's rule works, use it; the squeeze theorem is for the cases they cannot handle.",
+            ],
+          },
+        ],
+      },
+    ],
+    examples: [
+      {
+        title: "The classic: x² sin(1/x)",
+        problem: t`\lim_{x \to 0} x^{2}\sin\!\left(\frac{1}{x}\right)`,
+        steps: [
+          { text: "sin(1/x) has no limit at 0, but it is always between −1 and 1:", math: t`-1 \le \sin\!\left(\frac{1}{x}\right) \le 1` },
+          { text: "Multiply every part by x², which is never negative, so the inequalities keep their direction:", math: t`-x^{2} \le x^{2}\sin\!\left(\frac{1}{x}\right) \le x^{2}` },
+          { text: "Both −x² and x² approach 0 as x → 0, so the middle function does too." },
+        ],
+        answer: t`0`,
+        check: { operation: "limit", expression: "x^2 sin(1/x)", point: "0", expected: "0" },
+      },
+      {
+        title: "Using absolute values: x sin(1/x)",
+        problem: t`\lim_{x \to 0} x\sin\!\left(\frac{1}{x}\right)`,
+        steps: [
+          { text: "x can be negative, so multiplying by x could flip the signs. Bound the absolute value instead:", math: t`\left|x\sin\!\left(\frac{1}{x}\right)\right| = |x|\left|\sin\!\left(\frac{1}{x}\right)\right| \le |x|` },
+          { text: "So −|x| ≤ x sin(1/x) ≤ |x|, and |x| → 0 as x → 0." },
+        ],
+        answer: t`0`,
+        check: { operation: "limit", expression: "x sin(1/x)", point: "0", expected: "0" },
+      },
+      {
+        title: "A one-sided limit",
+        problem: t`\lim_{x \to 0^{+}} \sqrt{x}\,e^{\sin(\pi/x)}`,
+        steps: [
+          { text: "Since −1 ≤ sin(π/x) ≤ 1 and eᵗ is increasing, the exponential factor is bounded:", math: t`e^{-1} \le e^{\sin(\pi/x)} \le e` },
+          { text: "For x > 0, √x is positive. Multiply through:", math: t`\frac{\sqrt{x}}{e} \le \sqrt{x}\,e^{\sin(\pi/x)} \le e\sqrt{x}` },
+          { text: "Both bounds approach 0 as x → 0⁺. The limit is one-sided because √x is only defined for x ≥ 0." },
+        ],
+        answer: t`0`,
+        check: { operation: "limit", expression: "sqrt(x) e^(sin(pi/x))", point: "0", side: "right", expected: "0" },
+      },
+      {
+        title: "A limit at infinity: sin(x)/x",
+        problem: t`\lim_{x \to \infty} \frac{\sin x}{x}`,
+        steps: [
+          { text: "For x > 0, divide −1 ≤ sin x ≤ 1 by x:", math: t`-\frac{1}{x} \le \frac{\sin x}{x} \le \frac{1}{x}` },
+          { text: "Both −1/x and 1/x approach 0 as x → ∞. Compare this with x → 0, where the same expression has limit 1." },
+        ],
+        answer: t`0`,
+        check: { operation: "limit", expression: "sin(x)/x", point: "inf", expected: "0" },
+      },
+      {
+        title: "Bounds that are not symmetric",
+        problem: t`\lim_{x \to \infty} \frac{2 + \cos x}{x^{2}}`,
+        steps: [
+          { text: "Since −1 ≤ cos x ≤ 1, the numerator is between 1 and 3:", math: t`1 \le 2 + \cos x \le 3` },
+          { text: "Divide by x², which is positive:", math: t`\frac{1}{x^{2}} \le \frac{2 + \cos x}{x^{2}} \le \frac{3}{x^{2}}` },
+          { text: "Both bounds approach 0 as x → ∞. The bounds do not need to be mirror images; they only need the same limit." },
+        ],
+        answer: t`0`,
+        check: { operation: "limit", expression: "(2 + cos(x))/x^2", point: "inf", expected: "0" },
+      },
+      {
+        title: "A squeeze to a nonzero limit",
+        problem: t`\lim_{x \to \infty} \frac{x + \sin x}{x}`,
+        steps: [
+          { text: "Split the fraction:", math: t`\frac{x + \sin x}{x} = 1 + \frac{\sin x}{x}` },
+          { text: "For x > 0, −1/x ≤ sin(x)/x ≤ 1/x. Add 1 to every part:", math: t`1 - \frac{1}{x} \le \frac{x + \sin x}{x} \le 1 + \frac{1}{x}` },
+          { text: "Both bounds approach 1. L'Hôpital's rule would fail here: it gives (1 + cos x)/1, which has no limit." },
+        ],
+        answer: t`1`,
+        check: { operation: "limit", expression: "(x + sin(x))/x", point: "inf", expected: "1" },
+      },
+      {
+        title: "The fundamental trig limit",
+        problem: t`\lim_{x \to 0} \frac{\sin x}{x}`,
+        steps: [
+          { text: "From the unit-circle area argument, for small x ≠ 0:", math: t`\cos x \le \frac{\sin x}{x} \le 1` },
+          { text: "As x → 0, cos x → cos 0 = 1, and the upper bound is the constant 1. Both bounds approach 1." },
+        ],
+        answer: t`1`,
+        check: { operation: "limit", expression: "sin(x)/x", point: "0", expected: "1" },
+      },
+    ],
+    faqs: [
+      {
+        q: "Is the squeeze theorem the same as the sandwich theorem?",
+        a: "Yes. Squeeze theorem, sandwich theorem and pinching theorem are three names for the same result. Some books also call it the sandwich rule or the two policemen theorem.",
+      },
+      {
+        q: "How do I find the bounding functions?",
+        a: "Start from a bound you already know, usually −1 ≤ sin(…) ≤ 1 or −1 ≤ cos(…) ≤ 1, then multiply, divide or add to every part until the middle matches your function. Keep track of signs: multiplying by a negative number flips the inequalities.",
+      },
+      {
+        q: "Does the squeeze theorem work for limits at infinity?",
+        a: "Yes. The inequality g(x) ≤ f(x) ≤ h(x) only needs to hold for all large enough x, and if g and h have the same limit as x → ∞, so does f. sin(x)/x → 0 is a standard example.",
+      },
+      {
+        q: "Why can't I just use L'Hôpital's rule?",
+        a: "L'Hôpital's rule needs a 0/0 or ∞/∞ form and needs the new limit to exist. For limits like x² sin(1/x) there is no such quotient, and for (x + sin x)/x the derivative quotient (1 + cos x)/1 has no limit, so the rule gives no answer.",
+      },
+      {
+        q: "What if the upper and lower limits are different?",
+        a: "Then the squeeze theorem tells you nothing. f might still have a limit, but you need tighter bounds or a different method to find it.",
+      },
+    ],
+    calculator: { href: "/limit-calculator", label: "Check any limit with the Limit Calculator" },
+  },
 ];
 
 export function getPost(slug: string): Guide | undefined {
