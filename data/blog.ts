@@ -676,6 +676,11 @@ export const posts: Guide[] = [
             type: "p",
             text: "Note that x must be in radians. In degrees, the same limit equals π/180.",
           },
+          {
+            type: "p",
+            text: "This limit, used inside the limit definition of the derivative, is what gives d/dx[sin x] = cos x. To see how the definition turns into the everyday differentiation rules, read",
+            link: { href: "/blog/how-to-find-the-derivative-of-a-function", label: "How to Find the Derivative of a Function" },
+          },
         ],
       },
       {

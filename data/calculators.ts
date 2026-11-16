@@ -286,6 +286,7 @@ const coreCalculators: Record<string, CalculatorPage> = {
     ],
     related: ["derivative-calculator", "limit-calculator", "taylor-series-calculator"],
     guide: { href: "/guides/integration-techniques", label: "Integration techniques: when to use each one" },
+    articles: ["how-to-find-the-derivative-of-a-function"],
   },
 
   "limit-calculator": {

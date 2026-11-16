@@ -9,6 +9,7 @@ const t = String.raw;
 export const derivativeCalculators: CalculatorPage[] = [
   {
     slug: "second-derivative-calculator",
+    image: { src: "/images/second-derivative.webp", alt: "An S-shaped curve that bends downward on the left and upward on the right, with its inflection point marked where the bending changes", width: 1600, height: 800, caption: "Concave down on the left (f″ < 0), concave up on the right (f″ > 0). Where the bending switches is the inflection point." },
     metaTitle: "Second Derivative Calculator with Steps – f″(x) and Concavity",
     metaDescription:
       "Find the second derivative f″(x) of any function step by step, then use it for concavity, inflection points and the second derivative test. Free and private.",
@@ -127,6 +128,7 @@ export const derivativeCalculators: CalculatorPage[] = [
 
   {
     slug: "partial-derivative-calculator",
+    image: { src: "/images/partial-derivative.webp", alt: "A hill-shaped surface z = f(x, y) with two curves through one point, one along the x direction and one along the y direction, and their tangent lines", width: 1600, height: 800, caption: "Holding y fixed and moving in x traces one curve on the surface; its slope is ∂f/∂x. Holding x fixed gives the other curve and ∂f/∂y." },
     metaTitle: "Partial Derivative Calculator with Steps – fx, fy and fxy",
     metaDescription:
       "Find partial derivatives of functions of several variables step by step: ∂f/∂x, ∂f/∂y and second-order partials like fxx and fxy. Free, runs in your browser.",
@@ -243,10 +245,12 @@ export const derivativeCalculators: CalculatorPage[] = [
     ],
     related: ["derivative-calculator", "implicit-differentiation-calculator", "chain-rule-calculator"],
     guide: { href: "/guides/derivative-rules", label: "The derivative rules every partial derivative uses" },
+    articles: ["how-to-find-the-derivative-of-a-function"],
   },
 
   {
     slug: "chain-rule-calculator",
+    image: { src: "/images/chain-rule.webp", alt: "Three interlocking gears of different sizes, the middle one highlighted, showing how one turning gear drives the next", width: 1600, height: 800, caption: "Like linked gears, rates of change multiply through a composition: dy/dx = dy/du · du/dx." },
     metaTitle: "Chain Rule Calculator with Steps – Differentiate Compositions",
     metaDescription:
       "Differentiate composite functions with the chain rule step by step. See the outer and inner functions named at every layer, including nested compositions.",
@@ -361,6 +365,7 @@ export const derivativeCalculators: CalculatorPage[] = [
 
   {
     slug: "implicit-differentiation-calculator",
+    image: { src: "/images/implicit-differentiation.webp", alt: "A circle centred at the origin with a tangent line touching it at a point in the upper right", width: 1600, height: 800, caption: "A circle x² + y² = r² is not the graph of one function, yet implicit differentiation still gives the slope of the tangent line at any point: dy/dx = −x/y." },
     metaTitle: "Implicit Differentiation Calculator with Steps – Find dy/dx",
     metaDescription:
       "Find dy/dx for equations like x² + y² = 25 step by step, then get the slope and tangent line at a point on the curve. Free and runs in your browser.",
@@ -473,5 +478,6 @@ export const derivativeCalculators: CalculatorPage[] = [
     ],
     related: ["derivative-calculator", "partial-derivative-calculator", "chain-rule-calculator"],
     guide: { href: "/guides/derivative-rules", label: "Derivative rules, including the chain rule behind implicit differentiation" },
+    articles: ["how-to-find-the-derivative-of-a-function"],
   },
 ];
