@@ -808,6 +808,7 @@ export const posts: Guide[] = [
   {
     slug: "lhopitals-rule-explained-with-examples",
     titleClass: "text-blog-lhopital",
+    image: { src: "/images/blog-lhopital.webp", alt: "Two curves that both pass through the origin, each with a dashed tangent line showing a different slope there", width: 1536, height: 1024, caption: "Both functions are 0 at the same point, so their ratio there is 0/0. Near that point each curve follows its tangent line, so the ratio approaches the ratio of the slopes, f′/g′." },
     published: "2026-11-17",
     title: "L'Hôpital's Rule Explained With Examples (Step by Step)",
     metaTitle: "L'Hôpital's Rule Explained With Examples (0/0 and ∞/∞)",
