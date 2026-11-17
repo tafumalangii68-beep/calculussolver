@@ -119,6 +119,26 @@ function Motif({ slug, id }: { slug: string; id: (name: string) => string }) {
           </text>
         </g>
       );
+    case "lhopitals-rule-explained-with-examples":
+      // Two curves through the same zero, their tangent lines, and 0/0 turning into f′/g′.
+      return (
+        <g>
+          <path d="M80 300 C 180 240, 240 200, 300 170 S 440 60, 540 30" fill="none" stroke="#c4a8ff" strokeWidth="5" strokeLinecap="round" />
+          <path d="M80 250 C 180 215, 240 190, 300 170 S 440 140, 540 120" fill="none" stroke="#93b4ff" strokeWidth="5" strokeLinecap="round" />
+          <path d="M190 240 L410 100" stroke="#c4a8ff" strokeOpacity="0.55" strokeWidth="2.5" strokeDasharray="6 6" />
+          <path d="M190 210 L410 130" stroke="#93b4ff" strokeOpacity="0.55" strokeWidth="2.5" strokeDasharray="6 6" />
+          <circle cx="300" cy="170" r="9" fill="#ffffff" stroke="#7438f5" strokeWidth="4" />
+          <g fill="#ffffff" style={math} fontSize="30">
+            <text x="96" y="92">0/0</text>
+            <text x="206" y="92" fill="#3fd1c1">→</text>
+            <text x="250" y="92">{"f′/g′"}</text>
+          </g>
+          <g fontSize="20" style={math}>
+            <text x="548" y="40" fill="#c4a8ff">f</text>
+            <text x="548" y="128" fill="#93b4ff">g</text>
+          </g>
+        </g>
+      );
     case "squeeze-theorem-explained-with-examples":
       // An oscillating curve trapped between an upper and a lower bound that pinch together at one point.
       return (

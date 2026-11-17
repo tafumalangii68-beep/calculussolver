@@ -625,6 +625,11 @@ export const posts: Guide[] = [
             type: "p",
             text: "The product rule for limits, lim(f·g) = lim f · lim g, cannot be used here, because one of the two limits does not exist. The squeeze theorem gets around that by never needing the limit of the oscillating factor, only its bounds.",
           },
+          {
+            type: "p",
+            text: "If the limit is a 0/0 or ∞/∞ fraction of smooth functions with no oscillating factor, L'Hôpital's rule is usually faster. Learn when it applies in",
+            link: { href: "/blog/lhopitals-rule-explained-with-examples", label: "L'Hôpital's Rule Explained With Examples" },
+          },
         ],
       },
       {
@@ -799,6 +804,241 @@ export const posts: Guide[] = [
       },
     ],
     calculator: { href: "/limit-calculator", label: "Check any limit with the Limit Calculator" },
+  },
+  {
+    slug: "lhopitals-rule-explained-with-examples",
+    titleClass: "text-blog-lhopital",
+    published: "2026-11-17",
+    title: "L'Hôpital's Rule Explained With Examples (Step by Step)",
+    metaTitle: "L'Hôpital's Rule Explained With Examples (0/0 and ∞/∞)",
+    description:
+      "Learn when and how to use L'Hôpital's rule for 0/0 and ∞/∞ limits, how to rewrite 0·∞, ∞ − ∞, 0⁰, 1^∞ and ∞⁰ forms, and when the rule fails, with eight worked examples.",
+    intro:
+      "Many limits come out as 0/0 or ∞/∞ when you substitute, which tells you nothing about the actual answer. L'Hôpital's rule resolves these by replacing the fraction with the ratio of the derivatives. This guide shows exactly when the rule applies, how to use it step by step, how to turn the other indeterminate forms into 0/0 or ∞/∞, and the cases where it fails. Eight fully worked examples follow.",
+    sections: [
+      {
+        id: "statement",
+        heading: "What L'Hôpital's rule says",
+        blocks: [
+          {
+            type: "p",
+            text: "Suppose f and g are differentiable near a (except possibly at a), g′(x) ≠ 0 near a, and the limit of f(x)/g(x) is an indeterminate form 0/0 or ±∞/±∞. Then the limit of the fraction equals the limit of the ratio of derivatives, provided that second limit exists (or is ±∞):",
+          },
+          { type: "math", latex: t`\lim_{x \to a} \frac{f(x)}{g(x)} = \lim_{x \to a} \frac{f'(x)}{g'(x)}` },
+          {
+            type: "p",
+            text: "The rule also works for one-sided limits and for limits as x → ∞ or x → −∞. The important detail is that you differentiate the numerator and the denominator separately. It is not the quotient rule: you never differentiate the fraction as a whole.",
+          },
+          {
+            type: "p",
+            text: "Why it works: near a point where f(a) = g(a) = 0, both functions are close to their tangent lines, so f(x) ≈ f′(a)(x − a) and g(x) ≈ g′(a)(x − a). The factors (x − a) cancel, leaving f′(a)/g′(a).",
+          },
+        ],
+      },
+      {
+        id: "when-to-use",
+        heading: "When can you use L'Hôpital's rule?",
+        blocks: [
+          { type: "p", text: "Only when direct substitution gives one of these two forms:" },
+          { type: "math", latex: t`\frac{0}{0} \qquad\text{or}\qquad \frac{\pm\infty}{\pm\infty}` },
+          {
+            type: "p",
+            text: "Always substitute first. If you get a number, that is the answer and L'Hôpital's rule must not be used. For example, the limit of (x + 1)/(x + 2) as x → 0 is 1/2 by substitution. Applying the rule anyway would give 1/1 = 1, which is wrong.",
+          },
+          {
+            type: "p",
+            text: "Forms such as 1/0, 5/∞ or ∞/3 are not indeterminate either. 1/0 means the limit is infinite or does not exist, and 5/∞ means the limit is 0. Neither needs the rule.",
+          },
+        ],
+      },
+      {
+        id: "method",
+        heading: "How to use L'Hôpital's rule, step by step",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "Step 1: Substitute the limit point. Confirm the result is exactly 0/0 or ∞/∞. If it is another indeterminate form, rewrite it first (see below).",
+              "Step 2: Differentiate the numerator and the denominator separately. Do not use the quotient rule.",
+              "Step 3: Take the limit of the new fraction f′(x)/g′(x), simplifying first if you can.",
+              "Step 4: If the result is still 0/0 or ∞/∞, apply the rule again. Check the form before every application.",
+            ],
+          },
+          {
+            type: "p",
+            text: "Simplify between steps whenever possible. Cancelling a common factor or using a known limit such as sin(x)/x → 1 can save one or two rounds of differentiation.",
+          },
+        ],
+      },
+      {
+        id: "other-forms",
+        heading: "Rewriting other indeterminate forms",
+        blocks: [
+          { type: "p", text: "Five more indeterminate forms can be turned into 0/0 or ∞/∞, after which L'Hôpital's rule applies:" },
+          {
+            type: "table",
+            caption: "How to convert each indeterminate form",
+            headers: ["Form", "Typical example", "Rewrite as"],
+            rows: [
+              [t`0 \cdot \infty`, t`x \ln x \ (x \to 0^{+})`, t`\dfrac{\ln x}{1/x} \ \ (\infty/\infty)`],
+              [t`\infty - \infty`, t`\dfrac{1}{x} - \dfrac{1}{e^{x} - 1}`, t`\text{one fraction over a common denominator}`],
+              [t`0^{0}`, t`x^{x} \ (x \to 0^{+})`, t`e^{\,x \ln x} \text{, then find } \lim x \ln x`],
+              [t`1^{\infty}`, t`\left(1 + \tfrac{3}{x}\right)^{x}`, t`e^{\,x \ln(1 + 3/x)}`],
+              [t`\infty^{0}`, t`x^{1/x} \ (x \to \infty)`, t`e^{\,\ln(x)/x}`],
+            ],
+          },
+          {
+            type: "p",
+            text: "The three power forms all use the same trick: write f(x)^g(x) as e^(g(x) ln f(x)), find the limit L of the exponent, and the answer is e^L. Because eˣ is continuous, the limit can move inside the exponential.",
+          },
+        ],
+      },
+      {
+        id: "when-it-fails",
+        heading: "When L'Hôpital's rule fails",
+        blocks: [
+          {
+            type: "p",
+            text: "The rule says that if lim f′/g′ exists, then lim f/g equals it. It says nothing when lim f′/g′ does not exist. Take the limit of (x + sin x)/x as x → ∞. It is ∞/∞, but the rule gives (1 + cos x)/1, which keeps oscillating between 0 and 2 and has no limit. The original limit is still 1, which you can show by splitting the fraction or with the squeeze theorem.",
+            link: { href: "/blog/squeeze-theorem-explained-with-examples", label: "See the squeeze theorem with examples" },
+          },
+          {
+            type: "p",
+            text: "The rule can also go round in circles. For x/√(x² + 1) as x → ∞, each application flips the fraction to √(x² + 1)/x and back again. Dividing the numerator and denominator by x gives the answer 1 immediately. When derivatives get more complicated instead of simpler, switch methods.",
+          },
+        ],
+      },
+      {
+        id: "mistakes",
+        heading: "Common mistakes to avoid",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "Using the quotient rule. L'Hôpital's rule differentiates the top and the bottom separately: f′/g′, not (f′g − fg′)/g².",
+              "Applying the rule without checking the form. If substitution gives a number, or a form like 1/0, the rule does not apply and will usually give a wrong answer.",
+              "Forgetting to check the form again before a second application. After one round, the new fraction may no longer be indeterminate.",
+              "Applying it directly to 0·∞, ∞ − ∞ or a power form. Rewrite as a single fraction first.",
+              "Forgetting to undo the logarithm in power forms. If the exponent's limit is L, the answer is e^L, not L.",
+              "Concluding that the limit does not exist because lim f′/g′ does not exist. The rule is simply inconclusive then.",
+            ],
+          },
+        ],
+      },
+    ],
+    examples: [
+      {
+        title: "A basic 0/0 limit",
+        problem: t`\lim_{x \to 0} \frac{e^{2x} - 1}{x}`,
+        steps: [
+          { text: "Substituting x = 0 gives (1 − 1)/0 = 0/0, so the rule applies." },
+          { text: "Differentiate the top and bottom separately (chain rule on the top):", math: t`\lim_{x \to 0} \frac{2e^{2x}}{1}` },
+          { text: "Substitute x = 0: 2e⁰/1 = 2." },
+        ],
+        answer: t`2`,
+        check: { operation: "limit", expression: "(e^(2x) - 1)/x", point: "0", expected: "2" },
+      },
+      {
+        title: "An ∞/∞ limit at infinity",
+        problem: t`\lim_{x \to \infty} \frac{\ln x}{x}`,
+        steps: [
+          { text: "As x → ∞, both ln x and x grow without bound: ∞/∞." },
+          { text: "Differentiate the top and bottom:", math: t`\lim_{x \to \infty} \frac{1/x}{1} = \lim_{x \to \infty} \frac{1}{x}` },
+          { text: "1/x → 0. This shows that x grows faster than ln x." },
+        ],
+        answer: t`0`,
+        check: { operation: "limit", expression: "ln(x)/x", point: "inf", expected: "0" },
+      },
+      {
+        title: "Applying the rule twice",
+        problem: t`\lim_{x \to 0} \frac{1 - \cos x}{x^{2}}`,
+        steps: [
+          { text: "0/0. First application:", math: t`\lim_{x \to 0} \frac{\sin x}{2x}` },
+          { text: "Still 0/0. Apply the rule again:", math: t`\lim_{x \to 0} \frac{\cos x}{2}` },
+          { text: "Substitute x = 0: cos 0/2 = 1/2." },
+        ],
+        answer: t`\frac{1}{2}`,
+        check: { operation: "limit", expression: "(1 - cos(x))/x^2", point: "0", expected: "1/2" },
+      },
+      {
+        title: "Exponentials beat polynomials",
+        problem: t`\lim_{x \to \infty} \frac{x^{2}}{e^{x}}`,
+        steps: [
+          { text: "∞/∞. First application:", math: t`\lim_{x \to \infty} \frac{2x}{e^{x}}` },
+          { text: "Still ∞/∞. Second application:", math: t`\lim_{x \to \infty} \frac{2}{e^{x}}` },
+          { text: "The numerator is constant and eˣ → ∞, so the fraction → 0. The same argument works for any power xⁿ." },
+        ],
+        answer: t`0`,
+        check: { operation: "limit", expression: "x^2/e^x", point: "inf", expected: "0" },
+      },
+      {
+        title: "A 0 · ∞ form",
+        problem: t`\lim_{x \to 0^{+}} x\ln x`,
+        steps: [
+          { text: "x → 0 and ln x → −∞, so this is 0 · ∞. Move x into the denominator as 1/x:", math: t`\lim_{x \to 0^{+}} \frac{\ln x}{1/x} \quad \left(\frac{-\infty}{\infty}\right)` },
+          { text: "Differentiate the top and bottom, then simplify:", math: t`\lim_{x \to 0^{+}} \frac{1/x}{-1/x^{2}} = \lim_{x \to 0^{+}} (-x)` },
+          { text: "−x → 0." },
+        ],
+        answer: t`0`,
+        check: { operation: "limit", expression: "x ln(x)", point: "0", side: "right", expected: "0" },
+      },
+      {
+        title: "An ∞ − ∞ form",
+        problem: t`\lim_{x \to 0} \left(\frac{1}{x} - \frac{1}{e^{x} - 1}\right)`,
+        steps: [
+          { text: "Combine over a common denominator:", math: t`\frac{e^{x} - 1 - x}{x\left(e^{x} - 1\right)} \quad \left(\frac{0}{0}\right)` },
+          { text: "First application (product rule on the bottom):", math: t`\frac{e^{x} - 1}{e^{x} - 1 + xe^{x}} \quad \left(\frac{0}{0}\right)` },
+          { text: "Second application:", math: t`\frac{e^{x}}{2e^{x} + xe^{x}} \;\xrightarrow{\;x \to 0\;}\; \frac{1}{2}` },
+        ],
+        answer: t`\frac{1}{2}`,
+        check: { operation: "limit", expression: "1/x - 1/(e^x - 1)", point: "0", expected: "1/2" },
+      },
+      {
+        title: "A 0⁰ form",
+        problem: t`\lim_{x \to 0^{+}} x^{x}`,
+        steps: [
+          { text: "Rewrite the power as an exponential:", math: t`x^{x} = e^{\,x \ln x}` },
+          { text: "The exponent x ln x → 0, as shown in the 0 · ∞ example above." },
+          { text: "So the limit is e⁰ = 1." },
+        ],
+        answer: t`1`,
+        check: { operation: "limit", expression: "x^x", point: "0", side: "right", expected: "1" },
+      },
+      {
+        title: "A 1^∞ form",
+        problem: t`\lim_{x \to \infty} \left(1 + \frac{3}{x}\right)^{x}`,
+        steps: [
+          { text: "Write it as e^(x ln(1 + 3/x)). The exponent is ∞ · 0; rewrite it as a fraction:", math: t`x\ln\!\left(1 + \frac{3}{x}\right) = \frac{\ln(1 + 3/x)}{1/x} \quad \left(\frac{0}{0}\right)` },
+          { text: "Differentiate the top and bottom, then simplify:", math: t`\frac{\dfrac{-3/x^{2}}{1 + 3/x}}{-1/x^{2}} = \frac{3}{1 + 3/x} \;\xrightarrow{\;x \to \infty\;}\; 3` },
+          { text: "The exponent tends to 3, so the limit is e³ ≈ 20.09." },
+        ],
+        answer: t`e^{3}`,
+        check: { operation: "limit", expression: "(1 + 3/x)^x", point: "inf", expected: "e^3" },
+      },
+    ],
+    faqs: [
+      {
+        q: "How do you pronounce and spell L'Hôpital?",
+        a: "It is pronounced “lo-pee-TAHL”. The rule is named after the French mathematician Guillaume de l'Hôpital, and is also spelled L'Hospital's rule, an older spelling of the same name.",
+      },
+      {
+        q: "Is L'Hôpital's rule the same as the quotient rule?",
+        a: "No. The quotient rule finds the derivative of a fraction. L'Hôpital's rule finds a limit by replacing f/g with f′/g′, where the numerator and denominator are differentiated separately.",
+      },
+      {
+        q: "Can I apply L'Hôpital's rule more than once?",
+        a: "Yes, as many times as needed, as long as the limit is still 0/0 or ∞/∞ before each application. Check the form every time.",
+      },
+      {
+        q: "Does L'Hôpital's rule work for limits at infinity?",
+        a: "Yes. It works for x → ∞ and x → −∞, and for one-sided limits, as long as the form is 0/0 or ∞/∞.",
+      },
+      {
+        q: "What if L'Hôpital's rule doesn't give an answer?",
+        a: "If lim f′/g′ does not exist or the derivatives keep getting worse, the rule is inconclusive. Try algebra instead: factoring, dividing by the highest power, combining fractions, a known limit, or the squeeze theorem.",
+      },
+    ],
+    calculator: { href: "/limit-calculator", label: "Check any limit step by step with the Limit Calculator" },
   },
 ];
 

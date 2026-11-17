@@ -63,4 +63,13 @@ export const articleMeta: Record<string, ArticleMeta> = {
       { after: "sin-x-over-x", kind: "note", text: "This limit only equals 1 when x is measured in radians, which is why calculus always uses radians." },
     ],
   },
+  "lhopitals-rule-explained-with-examples": {
+    category: "Limits",
+    related: ["limit-calculator", "derivative-calculator", "chain-rule-calculator"],
+    callouts: [
+      { after: "when-to-use", kind: "note", text: "Substitute first, every time. If you get a number, that is the answer; L'Hôpital's rule only applies to 0/0 and ∞/∞." },
+      { after: "method", kind: "tip", text: "Differentiate the numerator and the denominator separately. If you find yourself writing the quotient rule, stop: that is a different rule." },
+      { after: "other-forms", kind: "tip", text: "For any power form, take logarithms: find the limit L of g(x)·ln f(x), and the answer is e^L." },
+    ],
+  },
 };
