@@ -443,6 +443,11 @@ export const posts: Guide[] = [
             type: "p",
             text: "A good habit: try the second derivative test first, because it is quick. If f″(c) = 0 or f′(c) does not exist, switch to the first derivative test for that point. The critical points calculator follows exactly this rule.",
           },
+          {
+            type: "p",
+            text: "Functions of two variables add a third possibility, the saddle point, where the surface curves up in one direction and down in another. To see what f_x, f_y and the second partials mean on a surface, read",
+            link: { href: "/blog/what-partial-derivatives-mean-geometrically", label: "What Partial Derivatives Mean Geometrically" },
+          },
         ],
       },
       {
@@ -1040,6 +1045,264 @@ export const posts: Guide[] = [
       },
     ],
     calculator: { href: "/limit-calculator", label: "Check any limit step by step with the Limit Calculator" },
+  },
+  {
+    slug: "what-partial-derivatives-mean-geometrically",
+    titleClass: "text-blog-partial",
+    image: { src: "/images/blog-partial-derivatives.webp", alt: "A dome-shaped surface cut by a vertical plane, with the cross-section curve highlighted and a dashed tangent line at one point on it", width: 1536, height: 1024, caption: "Slicing the surface with a vertical plane leaves an ordinary curve. The slope of its tangent line at a point is the partial derivative in that direction." },
+    published: "2026-11-20",
+    title: "What Partial Derivatives Mean Geometrically (Slopes, Slices and Tangent Planes)",
+    metaTitle: "What Partial Derivatives Mean Geometrically (With Examples)",
+    description:
+      "See what ∂f/∂x and ∂f/∂y mean on a surface: slopes of slices, tangent lines, the tangent plane, second partials as curvature and the saddle, with seven worked examples.",
+    intro:
+      "Computing a partial derivative is easy: treat every other variable as a constant and differentiate. Understanding what the answer means takes a picture. This guide shows partial derivatives as slopes on a surface, explains how the two slopes build the tangent plane, what the second partials say about the shape, and how to read all of it from a contour map. Seven worked examples follow.",
+    sections: [
+      {
+        id: "surface",
+        heading: "Start with the surface z = f(x, y)",
+        blocks: [
+          {
+            type: "p",
+            text: "A function of two variables, z = f(x, y), assigns a height z to every point (x, y) in the plane. Plotting those heights gives a surface in 3D, like a landscape: hills where f is large, valleys where it is small. For example, f(x, y) = 9 − x² − 2y² is a smooth hill with its peak at (0, 0, 9).",
+          },
+          {
+            type: "p",
+            text: "On a landscape, “how steep is it here?” has no single answer: it depends on which way you walk. Walking east can be steep while walking north is nearly flat. Partial derivatives answer the question for the two simplest directions: along the x-axis and along the y-axis.",
+          },
+        ],
+      },
+      {
+        id: "slices",
+        heading: "∂f/∂x is the slope of a slice",
+        blocks: [
+          {
+            type: "p",
+            text: "Fix y at a value b and let only x vary. Geometrically, this cuts the surface with the vertical plane y = b. Where the plane meets the surface, you get an ordinary curve: z = f(x, b), a function of x alone. The partial derivative ∂f/∂x at (a, b) is the slope of that curve at x = a:",
+          },
+          { type: "math", latex: t`\frac{\partial f}{\partial x}(a, b) = \lim_{h \to 0} \frac{f(a + h,\, b) - f(a,\, b)}{h} = \frac{d}{dx}\, f(x, b)\Big|_{x = a}` },
+          {
+            type: "p",
+            text: "In the same way, fixing x = a cuts the surface with the plane x = a, giving the curve z = f(a, y). Its slope at y = b is ∂f/∂y(a, b). So a partial derivative is just an ordinary derivative of a slice. That is why the rule “treat the other variable as a constant” works: on the slice, the other variable really is constant.",
+          },
+          {
+            type: "list",
+            items: [
+              "∂f/∂x > 0: walking in the +x direction, you go uphill.",
+              "∂f/∂x < 0: walking in the +x direction, you go downhill.",
+              "∂f/∂x = 0: the x-slice is momentarily flat, as at the top of a hill.",
+              "The size |∂f/∂x| tells you how steep: rise in height per unit step in x.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "notation",
+        heading: "Notation and units",
+        blocks: [
+          {
+            type: "table",
+            caption: "Common notations for partial derivatives",
+            headers: ["Notation", "Read as", "Meaning on the surface"],
+            rows: [
+              [t`\dfrac{\partial f}{\partial x},\ f_x,\ \partial_x f`, t`\text{partial } f \text{ by } x`, t`\text{slope of the slice } y = \text{const}`],
+              [t`\dfrac{\partial f}{\partial y},\ f_y,\ \partial_y f`, t`\text{partial } f \text{ by } y`, t`\text{slope of the slice } x = \text{const}`],
+              [t`\dfrac{\partial^{2} f}{\partial x^{2}},\ f_{xx}`, t`\text{second partial in } x`, t`\text{curvature of the } x\text{-slice}`],
+              [t`\dfrac{\partial^{2} f}{\partial y\,\partial x},\ f_{xy}`, t`\text{mixed partial}`, t`\text{how the } x\text{-slope changes as } y \text{ changes}`],
+            ],
+          },
+          {
+            type: "p",
+            text: "Units follow the slope picture: if z is height in metres and x is distance in kilometres, ∂z/∂x is in metres per kilometre. If T(x, t) is temperature along a rod at time t, ∂T/∂t is how fast one point heats up, and ∂T/∂x is how quickly the temperature changes along the rod at one instant.",
+          },
+        ],
+      },
+      {
+        id: "tangent-plane",
+        heading: "Two slopes make the tangent plane",
+        blocks: [
+          {
+            type: "p",
+            text: "Each slice has a tangent line at the point (a, b, f(a, b)). The x-slice tangent moves 1 unit in x and rises f_x; the y-slice tangent moves 1 unit in y and rises f_y. As direction vectors:",
+          },
+          { type: "math", latex: t`\mathbf{u} = \big(1,\ 0,\ f_x(a, b)\big) \qquad \mathbf{v} = \big(0,\ 1,\ f_y(a, b)\big)` },
+          {
+            type: "p",
+            text: "Two lines through the same point determine a plane. For a smooth surface, that plane is the tangent plane: the flat surface that touches f at the point and best approximates it nearby:",
+          },
+          { type: "math", latex: t`z = f(a, b) + f_x(a, b)\,(x - a) + f_y(a, b)\,(y - b)` },
+          {
+            type: "p",
+            text: "This is the 3D version of the tangent line y = f(a) + f′(a)(x − a). Near the point, f(x, y) ≈ the tangent plane, which is the idea behind linear approximation and differentials.",
+          },
+        ],
+      },
+      {
+        id: "second-partials",
+        heading: "Second partials: curvature, saddles and twist",
+        blocks: [
+          {
+            type: "p",
+            text: "f_xx is the second derivative of the x-slice, so it measures that slice's concavity: f_xx > 0 means the x-slice bends upward like a cup, f_xx < 0 means it bends downward like a cap. f_yy does the same for the y-slice.",
+          },
+          {
+            type: "p",
+            text: "When the two disagree, you get a saddle. On f(x, y) = x² − y², the x-slice through the origin is z = x² (a cup, f_xx = 2) and the y-slice is z = −y² (a cap, f_yy = −2). The origin is a minimum in one direction and a maximum in the other, like the middle of a horse saddle or a mountain pass.",
+          },
+          {
+            type: "p",
+            text: "The mixed partial f_xy measures twist: how the x-slope changes as you step in the y direction. For smooth functions, Clairaut's theorem says the order does not matter, f_xy = f_yx. These three second partials together decide whether a critical point of f(x, y) is a maximum, minimum or saddle, just as f″ does in one variable.",
+            link: { href: "/blog/how-to-find-critical-points-and-classify-them", label: "Compare with critical points in one variable" },
+          },
+        ],
+      },
+      {
+        id: "contour-maps",
+        heading: "Reading partial derivatives from a contour map",
+        blocks: [
+          {
+            type: "p",
+            text: "A contour map draws the level curves f(x, y) = c, like the height lines on a hiking map. You can estimate partial derivatives from it without a formula:",
+          },
+          {
+            type: "list",
+            items: [
+              "Sign of f_x: move right from the point. If you cross contours with increasing values, f_x > 0; decreasing values, f_x < 0.",
+              "Size of f_x: closely spaced contours along the x direction mean a large |f_x|; widely spaced ones mean a small |f_x|.",
+              "f_x ≈ (change in contour value) ÷ (horizontal distance between them), measured along a horizontal line. Measure along a vertical line for f_y.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "other-directions",
+        heading: "What about other directions? The gradient",
+        blocks: [
+          {
+            type: "p",
+            text: "Partial derivatives only give slopes along the axes. The slope in any direction, given by a unit vector u = (u₁, u₂), is the directional derivative, built from the same two numbers:",
+          },
+          { type: "math", latex: t`D_{\mathbf{u}} f = f_x\,u_1 + f_y\,u_2 = \nabla f \cdot \mathbf{u}, \qquad \nabla f = \left(f_x,\ f_y\right)` },
+          {
+            type: "p",
+            text: "The gradient ∇f points in the direction of steepest ascent, its length is that steepest slope, and it is always perpendicular to the contour line through the point. So the two partial derivatives already contain the slope in every direction.",
+          },
+        ],
+      },
+      {
+        id: "mistakes",
+        heading: "Common mistakes to avoid",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "Thinking ∂f/∂x is “the” slope of the surface. It is the slope in one direction only; other directions usually have different slopes.",
+              "Mixing up which variable is held fixed. ∂f/∂x holds y constant, so its slice lies in a plane y = constant, parallel to the xz-plane.",
+              "Treating the other variable as zero instead of as a constant. In ∂/∂x of x²y, y stays as a factor: the answer is 2xy, not 2x.",
+              "Expecting a saddle point to have f_xx = 0. At a saddle, f_xx and f_yy can both be nonzero with opposite signs, as in x² − y².",
+              "Forgetting to substitute the point. f_x(x, y) is a formula; the slope at a point is the number you get after plugging in (a, b).",
+            ],
+          },
+        ],
+      },
+    ],
+    examples: [
+      {
+        title: "Slope of the x-slice on a hill",
+        problem: t`f(x, y) = 9 - x^{2} - 2y^{2}, \quad \text{find } f_x \text{ and its value at } (1, 1)`,
+        steps: [
+          { text: "Hold y constant, so −2y² is a constant and differentiates to 0:", math: t`f_x = -2x` },
+          { text: "At (1, 1): f_x = −2. Walking in the +x direction from the point (1, 1, 6), you go downhill, losing about 2 units of height per unit step." },
+        ],
+        answer: t`f_x = -2x,\quad f_x(1, 1) = -2`,
+        check: { operation: "partial-derivative", expression: "9 - x^2 - 2y^2", variable: "x", expected: "-2x" },
+      },
+      {
+        title: "Slope of the y-slice on the same hill",
+        problem: t`f(x, y) = 9 - x^{2} - 2y^{2}, \quad \text{find } f_y \text{ and its value at } (1, 1)`,
+        steps: [
+          { text: "Hold x constant:", math: t`f_y = -4y` },
+          { text: "At (1, 1): f_y = −4. The hill is twice as steep in the y direction as in the x direction at this point, because of the 2 in −2y²." },
+        ],
+        answer: t`f_y = -4y,\quad f_y(1, 1) = -4`,
+        check: { operation: "partial-derivative", expression: "9 - x^2 - 2y^2", variable: "y", expected: "-4y" },
+      },
+      {
+        title: "Building a tangent plane",
+        problem: t`f(x, y) = x^{2} + xy + y^{2}, \quad \text{tangent plane at } (1, 2)`,
+        steps: [
+          { text: "Find both partial derivatives:", math: t`f_x = 2x + y, \qquad f_y = x + 2y` },
+          { text: "Evaluate at (1, 2): f = 1 + 2 + 4 = 7, f_x = 4, f_y = 5." },
+          { text: "Substitute into the tangent plane formula:", math: t`z = 7 + 4(x - 1) + 5(y - 2)` },
+        ],
+        answer: t`z = 4x + 5y - 7`,
+        check: { operation: "partial-derivative", expression: "x^2 + x y + y^2", variable: "x", expected: "2x + y" },
+      },
+      {
+        title: "A saddle: the x-slice bends up",
+        problem: t`f(x, y) = x^{2} - y^{2}, \quad \text{find } f_{xx}`,
+        steps: [
+          { text: "f_x = 2x, then differentiate in x again:", math: t`f_{xx} = 2 > 0` },
+          { text: "Every x-slice is the cup z = x² − (constant), so it bends upward everywhere." },
+        ],
+        answer: t`f_{xx} = 2`,
+        check: { operation: "partial-derivative", expression: "x^2 - y^2", variable: "x", variable2: "x", expected: "2" },
+      },
+      {
+        title: "A saddle: the y-slice bends down",
+        problem: t`f(x, y) = x^{2} - y^{2}, \quad \text{find } f_{yy}`,
+        steps: [
+          { text: "f_y = −2y, then differentiate in y again:", math: t`f_{yy} = -2 < 0` },
+          { text: "Every y-slice is a cap. Up in one direction and down in the other: the origin is a saddle point, even though f_x = f_y = 0 there." },
+        ],
+        answer: t`f_{yy} = -2`,
+        check: { operation: "partial-derivative", expression: "x^2 - y^2", variable: "y", variable2: "y", expected: "-2" },
+      },
+      {
+        title: "The mixed partial (twist)",
+        problem: t`f(x, y) = x^{2}y^{3}, \quad \text{find } f_{xy}`,
+        steps: [
+          { text: "Differentiate in x first:", math: t`f_x = 2xy^{3}` },
+          { text: "Then in y:", math: t`f_{xy} = 6xy^{2}` },
+          { text: "Doing it in the other order gives f_y = 3x²y², then f_yx = 6xy², the same, as Clairaut's theorem promises." },
+        ],
+        answer: t`f_{xy} = f_{yx} = 6xy^{2}`,
+        check: { operation: "partial-derivative", expression: "x^2 y^3", variable: "x", variable2: "y", expected: "6x y^2" },
+      },
+      {
+        title: "Slope on a hemisphere",
+        problem: t`f(x, y) = \sqrt{25 - x^{2} - y^{2}}, \quad \text{find } f_x \text{ at } (3, 0)`,
+        steps: [
+          { text: "This surface is the top half of a sphere of radius 5. Chain rule, holding y constant:", math: t`f_x = \frac{-x}{\sqrt{25 - x^{2} - y^{2}}}` },
+          { text: "At (3, 0): f_x = −3/√16 = −3/4. On the circle where the plane y = 0 cuts the sphere, the slope at (3, 4) is −3/4, matching the tangent to a circle of radius 5." },
+        ],
+        answer: t`f_x(3, 0) = -\frac{3}{4}`,
+        check: { operation: "partial-derivative", expression: "sqrt(25 - x^2 - y^2)", variable: "x", expected: "-x/sqrt(25 - x^2 - y^2)" },
+      },
+    ],
+    faqs: [
+      {
+        q: "What does a partial derivative represent geometrically?",
+        a: "∂f/∂x at (a, b) is the slope of the curve you get by slicing the surface z = f(x, y) with the vertical plane y = b. ∂f/∂y is the slope of the slice by the plane x = a. Each is an ordinary slope in one direction.",
+      },
+      {
+        q: "What does it mean if a partial derivative is zero?",
+        a: "The slice in that direction is momentarily flat. If both f_x and f_y are zero, the tangent plane is horizontal, and the point is a critical point: a local maximum, local minimum or saddle point.",
+      },
+      {
+        q: "How are partial derivatives different from ordinary derivatives?",
+        a: "An ordinary derivative is the slope of a curve, which has only one direction. A surface has slopes in every direction; partial derivatives are the slopes along the x and y axes. Computationally, you differentiate in one variable and treat the others as constants.",
+      },
+      {
+        q: "What is the relationship between partial derivatives and the gradient?",
+        a: "The gradient ∇f = (f_x, f_y) is the vector of partial derivatives. It points in the direction of steepest ascent, its length is that maximum slope, and it is perpendicular to the level curves.",
+      },
+      {
+        q: "Does the order of mixed partial derivatives matter?",
+        a: "For functions whose second partial derivatives are continuous, which includes almost every function in a calculus course, no: f_xy = f_yx by Clairaut's theorem. Rare functions with discontinuous second partials can break this.",
+      },
+    ],
+    calculator: { href: "/partial-derivative-calculator", label: "Compute partial derivatives step by step with the Partial Derivative Calculator" },
   },
 ];
 

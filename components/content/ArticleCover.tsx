@@ -119,6 +119,27 @@ function Motif({ slug, id }: { slug: string; id: (name: string) => string }) {
           </text>
         </g>
       );
+    case "what-partial-derivatives-mean-geometrically":
+      // A wireframe hill sliced along x and y, with the two tangent lines at one point.
+      return (
+        <g>
+          <g fill="none" stroke="#c4a8ff" strokeOpacity="0.45" strokeWidth="1.5">
+            {[0, 1, 2, 3, 4, 5, 6].map((i) => (
+              <path key={`a${i}`} d={`M${90 + i * 40} ${290 - i * 18} Q ${210 + i * 40} ${70 - i * 6}, ${330 + i * 40} ${290 - i * 18}`} />
+            ))}
+          </g>
+          <path d="M150 272 Q 270 52, 390 272" fill="none" stroke="#f0abfc" strokeWidth="4" strokeLinecap="round" />
+          <path d="M210 304 Q 300 44, 470 224" fill="none" stroke="#3fd1c1" strokeWidth="4" strokeLinecap="round" />
+          {/* Both slices pass through (294, 166); each dashed line is that slice's tangent there. */}
+          <path d="M233 144 L355 188" stroke="#f0abfc" strokeWidth="2.5" strokeDasharray="6 6" />
+          <path d="M240 203 L348 129" stroke="#3fd1c1" strokeWidth="2.5" strokeDasharray="6 6" />
+          <circle cx="294" cy="166" r="9" fill="#ffffff" stroke="#7438f5" strokeWidth="4" />
+          <g fontSize="24" style={math}>
+            <text x="470" y="80" fill="#f0abfc">{"∂f/∂x"}</text>
+            <text x="470" y="120" fill="#3fd1c1">{"∂f/∂y"}</text>
+          </g>
+        </g>
+      );
     case "lhopitals-rule-explained-with-examples":
       // Two curves through the same zero, their tangent lines, and 0/0 turning into f′/g′.
       return (

@@ -245,7 +245,7 @@ export const derivativeCalculators: CalculatorPage[] = [
     ],
     related: ["derivative-calculator", "implicit-differentiation-calculator", "chain-rule-calculator"],
     guide: { href: "/guides/derivative-rules", label: "The derivative rules every partial derivative uses" },
-    articles: ["how-to-find-the-derivative-of-a-function"],
+    articles: ["what-partial-derivatives-mean-geometrically", "how-to-find-the-derivative-of-a-function"],
   },
 
   {
@@ -478,6 +478,6 @@ export const derivativeCalculators: CalculatorPage[] = [
     ],
     related: ["derivative-calculator", "partial-derivative-calculator", "chain-rule-calculator"],
     guide: { href: "/guides/derivative-rules", label: "Derivative rules, including the chain rule behind implicit differentiation" },
-    articles: ["how-to-find-the-derivative-of-a-function"],
+    articles: ["how-to-find-the-derivative-of-a-function", "what-partial-derivatives-mean-geometrically"],
   },
 ];

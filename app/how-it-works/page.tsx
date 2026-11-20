@@ -162,6 +162,8 @@ export default function HowItWorksPage() {
 
       <p>
         <strong>Try it:</strong> <Link href="/partial-derivative-calculator">Partial Derivative Calculator</Link>
+        {" · "}
+        <strong>Learn it:</strong> <Link href="/blog/what-partial-derivatives-mean-geometrically">What partial derivatives mean geometrically</Link>
       </p>
 
       <h2>10. Implicit differentiation</h2>

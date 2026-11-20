@@ -72,4 +72,13 @@ export const articleMeta: Record<string, ArticleMeta> = {
       { after: "other-forms", kind: "tip", text: "For any power form, take logarithms: find the limit L of g(x)·ln f(x), and the answer is e^L." },
     ],
   },
+  "what-partial-derivatives-mean-geometrically": {
+    category: "Derivatives",
+    related: ["partial-derivative-calculator", "derivative-calculator", "implicit-differentiation-calculator"],
+    callouts: [
+      { after: "slices", kind: "tip", text: "Picture a knife cutting the surface. ∂f/∂x cuts parallel to the x-axis (y fixed); ∂f/∂y cuts parallel to the y-axis (x fixed). Each cut leaves an ordinary curve with an ordinary slope." },
+      { after: "tangent-plane", kind: "note", text: "The tangent plane uses only f, f_x and f_y at one point, exactly like the tangent line uses only f and f′." },
+      { after: "second-partials", kind: "note", text: "f_x = f_y = 0 only says the tangent plane is flat. The second partials decide whether the point is a peak, a pit or a saddle." },
+    ],
+  },
 };
