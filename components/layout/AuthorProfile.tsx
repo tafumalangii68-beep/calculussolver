@@ -1,6 +1,6 @@
 "use client";
 
-import { Calculator, Code, GraduationCap, Heart, Layers, Monitor, Target, UserRound, X } from "lucide-react";
+import { Calculator, ChevronDown, Code, GraduationCap, Heart, Layers, Monitor, Target, UserRound, X } from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef } from "react";
@@ -58,7 +58,7 @@ export function AuthorProfile() {
         onClick={open}
         aria-haspopup="dialog"
         aria-label="About Henry, founder of Calculus Solver"
-        className="group -mx-0.5 max-[374px]:-mx-1 flex shrink-0 items-center gap-2 rounded-full text-white/90 transition-colors hover:bg-white/10 hover:text-white sm:mx-0 sm:p-0.5 sm:pr-3 lg:pr-0.5 xl:ml-2 xl:pr-3"
+        className="group -mx-0.5 max-[374px]:-mx-1 flex shrink-0 items-center gap-2 rounded-full text-white/90 transition-colors hover:bg-accent-soft/60 hover:text-white sm:mx-0 sm:p-0.5 sm:pr-2.5 lg:pr-0.5 xl:ml-2 xl:pr-3"
       >
         <Image
           src={PHOTO}
@@ -69,6 +69,7 @@ export function AuthorProfile() {
         />
         {/* Beside the full desktop nav there is only room for the photo between lg and xl. */}
         <span className="hidden text-sm font-semibold sm:inline lg:hidden xl:inline">Henry</span>
+        <ChevronDown aria-hidden className="hidden h-3.5 w-3.5 text-muted transition-colors group-hover:text-accent-strong sm:block lg:hidden xl:block" />
       </button>
 
       <dialog
