@@ -133,11 +133,8 @@ export default function HomePage() {
               Free Online Calculus Calculator
             </p>
             <h1 id="hero-title" className="mt-6 font-display text-[clamp(1.9rem,3.6vw,2.6rem)] font-bold leading-[1.12] tracking-tight">
-              Solve Calculus Problems <br className="hidden xl:block" />
-              with{" "}
-              <span className="text-accent-strong xl:whitespace-nowrap">
-                Step-by-Step Solutions
-              </span>
+              Calculus Solver – <br className="hidden xl:block" />
+              <span className="text-accent-strong xl:whitespace-nowrap">Where Math Becomes Clear</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/80">
               Calculate derivatives, integrals, limits, Taylor series and more with clear, accurate and easy-to-follow explanations,
