@@ -26,6 +26,7 @@ import { WorkedExample } from "@/components/content/WorkedExample";
 import { TangentAreaFigure } from "@/components/home/TangentAreaFigure";
 import { StudentReviews } from "@/components/reviews/StudentReviews";
 import { StatsCard } from "@/components/reviews/StatsCard";
+import { HeroIllustration } from "@/components/home/HeroIllustration";
 import { Solver } from "@/components/solver/Solver";
 import { posts } from "@/data/blog";
 import { guides } from "@/data/guides";
@@ -125,7 +126,7 @@ export default function HomePage() {
       {/* Hero */}
       <section aria-labelledby="hero-title" className="relative isolate overflow-hidden bg-navy-gradient pb-40 pt-12 text-white sm:pt-16 lg:pb-44">
 
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1.15fr_1fr]">
           <div>
             <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium text-white/90 backdrop-blur">
               <GraduationCap aria-hidden className="h-4 w-4 text-accent" />
@@ -170,6 +171,7 @@ export default function HomePage() {
               ))}
             </ul>
           </div>
+          <HeroIllustration className="mx-auto w-full max-w-[400px] sm:max-w-[520px] lg:max-w-[640px] animate-fade-up [animation-delay:150ms]" />
         </div>
       </section>
 
