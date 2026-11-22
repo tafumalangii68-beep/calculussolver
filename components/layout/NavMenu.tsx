@@ -68,10 +68,10 @@ export function DesktopNav() {
           >
             Calculators <ChevronDown aria-hidden className={`h-4 w-4 transition-transform duration-200 ${calcOpen ? "rotate-180" : ""}`} />
           </button>
-          {/* Two columns, filled top to bottom: the five derivative calculators, then the rest. */}
+          {/* Two columns, filled top to bottom: the derivative calculators, then the rest. */}
           <ul
             id="calculator-menu"
-            className={`absolute left-0 top-full mt-3 grid w-[40rem] grid-flow-col grid-rows-5 gap-0.5 rounded-2xl border border-line bg-surface p-2 shadow-2xl shadow-navy-950/20 transition-all duration-200 ${
+            className={`absolute left-0 top-full mt-3 grid w-[40rem] grid-flow-col grid-rows-7 gap-0.5 rounded-2xl border border-line bg-surface p-2 shadow-2xl shadow-navy-950/20 transition-all duration-200 ${
               calcOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0"
             }`}
           >

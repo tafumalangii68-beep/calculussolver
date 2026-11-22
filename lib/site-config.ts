@@ -42,16 +42,24 @@ export type CalculatorSlug =
   | "second-derivative-calculator"
   | "partial-derivative-calculator"
   | "chain-rule-calculator"
-  | "implicit-differentiation-calculator";
+  | "implicit-differentiation-calculator"
+  | "mixed-partial-derivative-calculator"
+  | "clairauts-theorem-calculator"
+  | "leibniz-vs-lagrange-notation-calculator"
+  | "average-value-of-a-function-calculator";
 
 // `titleClass` gives each calculator its own title colour in the menus (tokens in app/globals.css).
 export const calculatorNav: { slug: CalculatorSlug; label: string; blurb: string; titleClass: string }[] = [
   { slug: "derivative-calculator", label: "Derivative Calculator", blurb: "Any order, with every rule shown", titleClass: "text-calc-derivative" },
   { slug: "second-derivative-calculator", label: "Second Derivative Calculator", blurb: "f″(x), concavity and inflection", titleClass: "text-calc-second" },
   { slug: "partial-derivative-calculator", label: "Partial Derivative Calculator", blurb: "∂f/∂x, ∂f/∂y and fxy", titleClass: "text-calc-partial" },
+  { slug: "mixed-partial-derivative-calculator", label: "Mixed Partial Derivative Calculator", blurb: "fxy, fyx, fxx and fyy", titleClass: "text-calc-mixed" },
+  { slug: "clairauts-theorem-calculator", label: "Clairaut's Theorem Calculator", blurb: "Check whether fxy = fyx", titleClass: "text-calc-clairaut" },
   { slug: "chain-rule-calculator", label: "Chain Rule Calculator", blurb: "Compositions, layer by layer", titleClass: "text-calc-chain" },
   { slug: "implicit-differentiation-calculator", label: "Implicit Differentiation Calculator", blurb: "dy/dx for equations in x and y", titleClass: "text-calc-implicit" },
+  { slug: "leibniz-vs-lagrange-notation-calculator", label: "Leibniz vs Lagrange Notation", blurb: "dy/dx, f′(x), D and dot notation", titleClass: "text-calc-notation" },
   { slug: "integral-calculator", label: "Integral Calculator", blurb: "Indefinite and definite integrals", titleClass: "text-calc-integral" },
+  { slug: "average-value-of-a-function-calculator", label: "Average Value Calculator", blurb: "Average of f(x) on [a, b]", titleClass: "text-calc-average" },
   { slug: "limit-calculator", label: "Limit Calculator", blurb: "One-sided, two-sided and at infinity", titleClass: "text-calc-limit" },
   { slug: "taylor-series-calculator", label: "Taylor Series Calculator", blurb: "Taylor and Maclaurin polynomials", titleClass: "text-calc-taylor" },
   { slug: "critical-points-calculator", label: "Critical Points Calculator", blurb: "Find and classify extrema", titleClass: "text-calc-critical" },

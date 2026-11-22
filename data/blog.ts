@@ -33,6 +33,11 @@ export const posts: Guide[] = [
             type: "p",
             text: "f′(x) (“f prime of x”) is Lagrange's notation. dy/dx is Leibniz's notation, which is handy when y is defined by an equation such as y = x². The operator d/dx[…] means “take the derivative of what's in the brackets with respect to x”.",
           },
+          {
+            type: "p",
+            text: "To see any derivative written in Lagrange, Leibniz, Euler and Newton notation side by side, use",
+            link: { href: "/leibniz-vs-lagrange-notation-calculator", label: "the Leibniz vs Lagrange notation calculator" },
+          },
         ],
       },
       {
@@ -1153,6 +1158,11 @@ export const posts: Guide[] = [
             type: "p",
             text: "The mixed partial f_xy measures twist: how the x-slope changes as you step in the y direction. For smooth functions, Clairaut's theorem says the order does not matter, f_xy = f_yx. These three second partials together decide whether a critical point of f(x, y) is a maximum, minimum or saddle, just as f″ does in one variable.",
             link: { href: "/blog/how-to-find-critical-points-and-classify-them", label: "Compare with critical points in one variable" },
+          },
+          {
+            type: "p",
+            text: "To compute f_xx, f_yy and f_xy for any function with every step shown, use the mixed partial derivative calculator. To check that f_xy and f_yx agree, use",
+            link: { href: "/clairauts-theorem-calculator", label: "the Clairaut's theorem calculator" },
           },
         ],
       },

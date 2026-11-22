@@ -123,6 +123,8 @@ function texPow(base: Node, exp: Node): string {
   if (exp.k === "num" && exp.v.n < 0) {
     return `\\frac{1}{${texPow(base, { k: "num", v: { n: -exp.v.n, d: exp.v.d } })}}`;
   }
+  // A power of 1 (reached from an exponent of −1 above) is just the base: 1/(e − 1), not 1/(e − 1)¹.
+  if (exp.k === "num" && exp.v.n === 1 && exp.v.d === 1) return toLatex(base);
   if (exp.k === "num" && exp.v.n === 1 && exp.v.d === 2) return `\\sqrt{${toLatex(base)}}`;
   if (exp.k === "num" && exp.v.n === 1 && exp.v.d > 2) return `\\sqrt[${exp.v.d}]{${toLatex(base)}}`;
   if (exp.k === "neg") return `\\frac{1}{${texPow(base, exp.arg)}}`;

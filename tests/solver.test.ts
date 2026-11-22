@@ -320,3 +320,55 @@ describe("implicit differentiation", () => {
     expect(r.ok).toBe(false);
   });
 });
+
+describe("Clairaut's theorem", () => {
+  it("finds equal mixed partials and lists all four partials", async () => {
+    const r = await ok({ operation: "clairaut", expression: "x^2 y^3", variable2: "y" });
+    expect(r.answerLatex).toContain("f_{xy} = f_{yx}");
+    expect(r.table?.rows.map((row) => row[0])).toEqual(["f_{x}", "f_{y}", "f_{xy}", "f_{yx}"]);
+    expect(r.check?.status).toBe("verified");
+  });
+
+  it("rejects the same variable twice", async () => {
+    const r = await solve({ operation: "clairaut", expression: "x^2 y", variable: "x", variable2: "x" });
+    expect(r.ok).toBe(false);
+  });
+});
+
+describe("derivative notation", () => {
+  it("writes the derivative in Lagrange, Leibniz, Euler and Newton notation", async () => {
+    const r = await ok({ operation: "derivative-notation", expression: "t^3", variable: "t", order: 2 });
+    sameFunction(r.answerText.replace(/t/g, "x"), "6x");
+    expect(r.table?.rows.map((row) => row[0])).toEqual(["Lagrange (prime)", "Leibniz (d/dx)", "Euler (operator D)", "Newton (dot)"]);
+    expect(r.answerLatex).toContain(String.raw`\frac{d^{2}y}{dt^{2}}`);
+  });
+
+  it("omits Newton's dot notation above the second order", async () => {
+    const r = await ok({ operation: "derivative-notation", expression: "x^5", order: 3 });
+    expect(r.table?.rows).toHaveLength(3);
+  });
+});
+
+describe("average value", () => {
+  it("divides the integral by the length of the interval", async () => {
+    const r = await ok({ operation: "average-value", expression: "x^2", lower: "0", upper: "3" });
+    expect(r.answerText).toBe("3");
+    expect(r.notes.some((n) => n.includes("Mean value theorem"))).toBe(true);
+  });
+
+  it("gives a decimal when the integral has no exact value", async () => {
+    const r = await ok({ operation: "average-value", expression: "e^(-x^2)", lower: "0", upper: "1" });
+    expect(Number(r.answerText)).toBeCloseTo(0.7468241328, 8);
+    expect(r.answerLatex).toContain(String.raw`\approx`);
+  });
+
+  it.each([
+    ["x", "0", "inf"],
+    ["x", "2", "2"],
+    ["x", "3", "1"],
+    ["1/x^2", "-1", "1"],
+  ])("rejects %s on [%s, %s]", async (expression, lower, upper) => {
+    const r = await solve({ operation: "average-value", expression, variable: "x", lower, upper });
+    expect(r.ok).toBe(false);
+  });
+});

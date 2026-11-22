@@ -15,6 +15,10 @@ export const visualLabels: Record<CalculatorSlug, string> = {
   "limit-calculator": "A curve with a gap at one point, with arrows approaching the gap from the left and from the right",
   "taylor-series-calculator": "Several approximating curves hugging an original curve closely near one central point",
   "critical-points-calculator": "A curve with a flat tangent at the top of a hill and at the bottom of a valley, marking a local maximum and minimum",
+  "mixed-partial-derivative-calculator": "A wireframe surface with an x-slice and a y-slice through one point, showing how the slope in one direction changes along the other",
+  "clairauts-theorem-calculator": "Two paths from f to the same mixed partial derivative: through f_x and then y, or through f_y and then x",
+  "leibniz-vs-lagrange-notation-calculator": "The same derivative written four ways: f′(x), dy/dx, D_x f and a dot over y",
+  "average-value-of-a-function-calculator": "The area under a curve on [a, b] beside a rectangle of the same area, whose height is the average value",
 };
 
 const W = 400;
@@ -139,6 +143,112 @@ export function CalculatorVisual({ slug, label }: { slug: CalculatorSlug; label:
           <path d="M120 232 H280 M270 226 L282 232 L270 238" stroke={ACCENT} strokeWidth="2.5" fill="none" />
           <Label x={160} y={252} color={ACCENT}>∂f/∂x</Label>
           <Label x={252} y={70} color="#ff9cc8">y held constant</Label>
+        </Frame>
+      );
+    }
+    case "mixed-partial-derivative-calculator": {
+      // Same oblique wireframe as the partial page; an x-slice and a y-slice cross at one point.
+      const pt = (i: number, u: number) => {
+        const x = 50 + i * 20 + u * 250;
+        const y = 196 - i * 20 - 46 * Math.sin(u * Math.PI) * (0.65 + 0.35 * Math.cos(i / 2)) - u * 8;
+        return [x, y] as const;
+      };
+      const line = (points: (readonly [number, number])[]) => points.map(([x, y], k) => `${k === 0 ? "M" : "L"}${x.toFixed(1)} ${y.toFixed(1)}`).join(" ");
+      const rows = Array.from({ length: 7 }, (_, i) => line(Array.from({ length: 41 }, (_, k) => pt(i, k / 40))));
+      const cols = Array.from({ length: 6 }, (_, j) => line(Array.from({ length: 7 }, (_, i) => pt(i, j / 5))));
+      const [px, py] = pt(3, 0.4);
+      return (
+        <Frame label={label}>
+          {cols.map((d, j) => (
+            <path key={`c${j}`} d={d} fill="none" stroke={j === 2 ? ACCENT : CURVE} strokeOpacity={j === 2 ? 1 : 0.3} strokeWidth={j === 2 ? 4 : 1.25} />
+          ))}
+          {rows.map((d, i) => (
+            <path key={i} d={d} fill="none" stroke={i === 3 ? "#ffa3b8" : CURVE} strokeOpacity={i === 3 ? 1 : 0.45} strokeWidth={i === 3 ? 4 : 1.5} />
+          ))}
+          <Dot cx={px} cy={py} />
+          <Label x={252} y={64} color="#ffa3b8">x-slice: slope f_x</Label>
+          <Label x={40} y={248} color={ACCENT}>{"moving in y changes f_x  →  f_xy"}</Label>
+        </Frame>
+      );
+    }
+    case "clairauts-theorem-calculator": {
+      const node = (x: number, y: number, text: string, accent = false) => (
+        <g>
+          <rect x={x - 46} y={y - 24} width="92" height="48" rx="14" fill={accent ? "#7438f5" : "#ffffff"} fillOpacity={accent ? 0.35 : 0.08} stroke={accent ? "#c4a8ff" : CURVE} strokeOpacity="0.8" />
+          <text x={x} y={y + 7} textAnchor="middle" fill="#ffffff" fontSize="20" style={math}>
+            {text}
+          </text>
+        </g>
+      );
+      const arrow = (x1: number, y1: number, x2: number, y2: number, text: string, color: string) => {
+        const a = Math.atan2(y2 - y1, x2 - x1);
+        const head = `M${x2 - 10 * Math.cos(a - 0.45)} ${y2 - 10 * Math.sin(a - 0.45)} L${x2} ${y2} L${x2 - 10 * Math.cos(a + 0.45)} ${y2 - 10 * Math.sin(a + 0.45)}`;
+        return (
+          <g>
+            <path d={`M${x1} ${y1} L${x2} ${y2} ${head}`} stroke={color} strokeWidth="2.5" fill="none" />
+            <Label x={(x1 + x2) / 2 - 18} y={(y1 + y2) / 2 + (y2 < y1 ? -8 : 20)} size={14} color={color}>
+              {text}
+            </Label>
+          </g>
+        );
+      };
+      return (
+        <Frame label={label}>
+          {node(70, 130, "f")}
+          {node(200, 66, "f_x")}
+          {node(200, 194, "f_y")}
+          {node(330, 130, "f_xy = f_yx", true)}
+          {arrow(116, 116, 154, 80, "∂/∂x", "#ffa3b8")}
+          {arrow(116, 144, 154, 180, "∂/∂y", ACCENT)}
+          {arrow(246, 80, 284, 112, "∂/∂y", ACCENT)}
+          {arrow(246, 180, 284, 148, "∂/∂x", "#ffa3b8")}
+        </Frame>
+      );
+    }
+    case "leibniz-vs-lagrange-notation-calculator": {
+      const cell = (x: number, y: number, text: string, name: string, color: string) => (
+        <g>
+          <rect x={x} y={y} width="150" height="78" rx="16" fill="#ffffff" fillOpacity="0.07" stroke={color} strokeOpacity="0.7" />
+          <text x={x + 75} y={y + 40} textAnchor="middle" fill="#ffffff" fontSize="26" style={math}>
+            {text}
+          </text>
+          <text x={x + 75} y={y + 64} textAnchor="middle" fill={color} fontSize="12" fontFamily="var(--font-inter), system-ui, sans-serif">
+            {name}
+          </text>
+        </g>
+      );
+      return (
+        <Frame label={label}>
+          {cell(38, 28, "f′(x)", "Lagrange", "#c4a8ff")}
+          {cell(212, 28, "dy/dx", "Leibniz", ACCENT)}
+          {cell(38, 140, "Dₓ f", "Euler", "#7fdcef")}
+          {cell(212, 140, "ẏ", "Newton", "#ffbf80")}
+          <text x="200" y="122" textAnchor="middle" fill="#ffffff" fillOpacity="0.8" fontSize="22" style={math}>
+            =
+          </text>
+          <text x="200" y="245" textAnchor="middle" fill="#ffffff" fillOpacity="0.6" fontSize="13" fontFamily="var(--font-inter), system-ui, sans-serif">
+            four ways to write the same derivative
+          </text>
+        </Frame>
+      );
+    }
+    case "average-value-of-a-function-calculator": {
+      // sin-like hump on [a, b]; the dashed rectangle of height f_avg has the same area.
+      const f = (t: number) => Math.sin(t);
+      const X = (t: number) => 70 + (t / Math.PI) * 280;
+      const Y = (v: number) => 220 - v * 170;
+      const avg = 2 / Math.PI;
+      return (
+        <Frame label={label}>
+          <Axes />
+          <path d={`${plot(f, 0, Math.PI, [70, 350, Y(1), Y(0)], 0, 1)} L350 220 L70 220 Z`} fill="#10b981" fillOpacity="0.18" />
+          <rect x="70" y={Y(avg)} width="280" height={220 - Y(avg)} fill="none" stroke={ACCENT} strokeWidth="2.5" strokeDasharray="7 6" />
+          <path d={plot(f, 0, Math.PI, [70, 350, Y(1), Y(0)], 0, 1)} fill="none" stroke={CURVE} strokeWidth="4" strokeLinecap="round" />
+          <Dot cx={X(Math.asin(avg))} cy={Y(avg)} />
+          <Label x={356} y={Y(avg) + 5} size={15} color={ACCENT}>f_avg</Label>
+          <Label x={66} y={238} size={15}>a</Label>
+          <Label x={346} y={238} size={15}>b</Label>
+          <Label x={X(Math.asin(avg)) - 4} y={Y(avg) - 12} size={14}>c</Label>
         </Frame>
       );
     }

@@ -5,6 +5,7 @@ import type { CalculatorSlug } from "@/lib/site-config";
 import type { Faq, Illustration, SolverExample, WorkedExample } from "@/types/content";
 import type { Operation } from "@/types/solver";
 import { derivativeCalculators } from "./calculators-derivatives";
+import { extraCalculators } from "./calculators-extra";
 
 const t = String.raw;
 
@@ -25,6 +26,8 @@ export interface CalculatorPage {
   operations: Operation[];
   /** Starting derivative order for the solver (the second derivative calculator uses 2). */
   initialOrder?: number;
+  /** Starting second variable for partial derivatives (the mixed partial calculator uses "y"). */
+  initialVariable2?: string;
   solverExamples: SolverExample[];
   definition: { heading: string; paragraphs: string[]; formula?: string };
   rules: { heading: string; intro: string; items: Rule[] };
@@ -156,7 +159,7 @@ const coreCalculators: Record<string, CalculatorPage> = {
       { q: "Does it support implicit differentiation?", a: "This calculator differentiates explicit functions y = f(x). For an equation such as x² + y² = 25, use the implicit differentiation calculator, which finds dy/dx and the slope at a point." },
       { q: "How does the calculator know which rule to apply?", a: "It looks at the outermost operation of the expression. A sum gets the sum rule, a product the product rule, a quotient the quotient rule, and a function of something other than plain x gets the chain rule. It then works inward." },
     ],
-    related: ["second-derivative-calculator", "chain-rule-calculator", "partial-derivative-calculator", "implicit-differentiation-calculator", "critical-points-calculator"],
+    related: ["second-derivative-calculator", "chain-rule-calculator", "partial-derivative-calculator", "implicit-differentiation-calculator", "critical-points-calculator", "leibniz-vs-lagrange-notation-calculator"],
     articles: ["how-to-find-the-derivative-of-a-function", "how-to-find-critical-points-and-classify-them"],
     guide: { href: "/guides/derivative-rules", label: "Derivative rules explained with examples" },
   },
@@ -284,7 +287,7 @@ const coreCalculators: Record<string, CalculatorPage> = {
       { q: "How is each answer checked?", a: "The calculator differentiates its own answer and compares it numerically with your integrand at many sample points. Definite integrals are also compared with an independent numerical integration." },
       { q: "Can it solve improper integrals?", a: "Yes. Use inf or -inf as a bound. The calculator also detects vertical asymptotes inside the interval and reports when an integral diverges." },
     ],
-    related: ["derivative-calculator", "limit-calculator", "taylor-series-calculator"],
+    related: ["average-value-of-a-function-calculator", "derivative-calculator", "limit-calculator"],
     guide: { href: "/guides/integration-techniques", label: "Integration techniques: when to use each one" },
     articles: ["how-to-find-the-derivative-of-a-function"],
   },
@@ -608,7 +611,7 @@ const coreCalculators: Record<string, CalculatorPage> = {
 };
 
 export const calculators = Object.fromEntries(
-  [...Object.values(coreCalculators), ...derivativeCalculators].map((page) => [page.slug, page]),
+  [...Object.values(coreCalculators), ...derivativeCalculators, ...extraCalculators].map((page) => [page.slug, page]),
 ) as Record<CalculatorSlug, CalculatorPage>;
 
 export const calculatorList = Object.values(calculators);

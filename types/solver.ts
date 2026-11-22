@@ -6,7 +6,13 @@ export type Operation =
   | "taylor"
   | "critical-points"
   | "partial-derivative"
-  | "implicit";
+  | "implicit"
+  /** Both mixed partials f_xy and f_yx, compared (Clairaut's theorem). */
+  | "clairaut"
+  /** An ordinary derivative, also written out in Lagrange, Leibniz, Euler and Newton notation. */
+  | "derivative-notation"
+  /** Average value of f on [a, b]: the definite integral divided by b − a. */
+  | "average-value";
 
 export type LimitSide = "both" | "left" | "right";
 
@@ -14,11 +20,11 @@ export interface SolveRequest {
   operation: Operation;
   expression: string;
   variable: string;
-  /** Partial derivatives: optional second variable for mixed or repeated partials (f_xy, f_xx). */
+  /** Partial derivatives: optional second variable for mixed or repeated partials (f_xy, f_xx). Required for "clairaut". */
   variable2?: string;
   /** Derivative order, or the highest power kept in a Taylor polynomial. */
   order?: number;
-  /** Definite integral bounds. */
+  /** Definite integral (and average value) bounds. */
   lower?: string;
   upper?: string;
   /** Limit approach value, or Taylor series center. */

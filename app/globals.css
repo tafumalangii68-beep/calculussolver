@@ -51,6 +51,10 @@
   --color-calc-partial: #be185d;
   --color-calc-chain: #1d4ed8;
   --color-calc-implicit: #7e22ce;
+  --color-calc-mixed: #be123c;
+  --color-calc-clairaut: #a21caf;
+  --color-calc-notation: #0e7490;
+  --color-calc-average: #0f766e;
   /* Review stars. The darker gold outline keeps them at 3:1 contrast on white. */
   --color-star: #f5b82e;
   --color-star-stroke: #a87300;
@@ -117,6 +121,10 @@
   --color-calc-partial-soft: #ffe8f1;
   --color-calc-chain-soft: #e8eeff;
   --color-calc-implicit-soft: #f6eaff;
+  --color-calc-mixed-soft: #ffe9ee;
+  --color-calc-clairaut-soft: #fbe8fd;
+  --color-calc-notation-soft: #e3f6fa;
+  --color-calc-average-soft: #e2f5f2;
 }
 :root {
   --heading-gradient: linear-gradient(90deg, #4c22c9 0%, #7438f5 50%, #923eff 100%);
@@ -321,6 +329,10 @@
   --color-calc-partial: #ff9cc8;
   --color-calc-chain: #a5b8ff;
   --color-calc-implicit: #dcaaff;
+  --color-calc-mixed: #ffa3b8;
+  --color-calc-clairaut: #f5b0ff;
+  --color-calc-notation: #7fdcef;
+  --color-calc-average: #7ee3d3;
   --color-star: #f2c14e;
   --color-star-stroke: #f2c14e;
   --color-star-empty: #3d4374;
@@ -341,6 +353,10 @@
   --color-calc-partial-soft: #34172f;
   --color-calc-chain-soft: #161f4b;
   --color-calc-implicit-soft: #2a1846;
+  --color-calc-mixed-soft: #351726;
+  --color-calc-clairaut-soft: #321838;
+  --color-calc-notation-soft: #0f2a34;
+  --color-calc-average-soft: #0f2b2a;
   --heading-gradient: linear-gradient(90deg, #c4a8ff 0%, #a77bff 50%, #d5bfff 100%);
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.25);
 }

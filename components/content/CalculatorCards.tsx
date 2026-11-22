@@ -17,6 +17,10 @@ export const calculatorStyle: Record<CalculatorSlug, { card: string; text: strin
   },
   "second-derivative-calculator": { card: "bg-calc-second-soft", text: "text-calc-second", icon: <span className="font-display text-2xl font-bold italic">f″</span> },
   "partial-derivative-calculator": { card: "bg-calc-partial-soft", text: "text-calc-partial", icon: <span className="font-display text-3xl font-bold italic">∂</span> },
+  "mixed-partial-derivative-calculator": { card: "bg-calc-mixed-soft", text: "text-calc-mixed", icon: <span className="font-display text-xl font-bold italic">∂²</span> },
+  "clairauts-theorem-calculator": { card: "bg-calc-clairaut-soft", text: "text-calc-clairaut", icon: <span className="font-display text-lg font-bold italic">=</span> },
+  "leibniz-vs-lagrange-notation-calculator": { card: "bg-calc-notation-soft", text: "text-calc-notation", icon: <span className="font-display text-lg font-bold italic">f′</span> },
+  "average-value-of-a-function-calculator": { card: "bg-calc-average-soft", text: "text-calc-average", icon: <span className="font-display text-2xl font-bold italic">f̄</span> },
   "chain-rule-calculator": { card: "bg-calc-chain-soft", text: "text-calc-chain", icon: <Link2 className="h-7 w-7" strokeWidth={2.25} /> },
   "implicit-differentiation-calculator": {
     card: "bg-calc-implicit-soft",
@@ -40,6 +44,10 @@ export const CARD_ORDER: CalculatorSlug[] = [
   "critical-points-calculator",
   "implicit-differentiation-calculator",
   "second-derivative-calculator",
+  "mixed-partial-derivative-calculator",
+  "clairauts-theorem-calculator",
+  "leibniz-vs-lagrange-notation-calculator",
+  "average-value-of-a-function-calculator",
 ];
 
 /** Colourful calculator cards with icon, title, short description and arrow. */

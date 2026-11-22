@@ -29,7 +29,7 @@ export const articleMeta: Record<string, ArticleMeta> = {
   },
   "integration-techniques": {
     category: "Integrals",
-    related: ["integral-calculator", "derivative-calculator", "taylor-series-calculator"],
+    related: ["integral-calculator", "average-value-of-a-function-calculator", "derivative-calculator", "taylor-series-calculator"],
     callouts: [
       { after: "decision-order", kind: "tip", text: "Check any antiderivative by differentiating it. If you get the integrand back, the answer is right (up to the constant C)." },
       { after: "parts", kind: "tip", text: "LIATE (logarithmic, inverse trig, algebraic, trigonometric, exponential) is a common rule of thumb for choosing u: pick the type that comes first in the list." },
@@ -38,7 +38,7 @@ export const articleMeta: Record<string, ArticleMeta> = {
   },
   "how-to-find-the-derivative-of-a-function": {
     category: "Derivatives",
-    related: ["derivative-calculator", "second-derivative-calculator", "chain-rule-calculator", "implicit-differentiation-calculator"],
+    related: ["derivative-calculator", "second-derivative-calculator", "chain-rule-calculator", "implicit-differentiation-calculator", "leibniz-vs-lagrange-notation-calculator"],
     callouts: [
       { after: "first-principles", kind: "note", text: "The limit definition always works, but for most functions the differentiation rules give the same answer much faster." },
       { after: "rewrite-first", kind: "tip", text: "Simplify before you differentiate. Expanding a product or splitting a fraction can turn a quotient-rule problem into a power-rule one." },
@@ -74,7 +74,7 @@ export const articleMeta: Record<string, ArticleMeta> = {
   },
   "what-partial-derivatives-mean-geometrically": {
     category: "Derivatives",
-    related: ["partial-derivative-calculator", "derivative-calculator", "implicit-differentiation-calculator"],
+    related: ["partial-derivative-calculator", "mixed-partial-derivative-calculator", "clairauts-theorem-calculator", "implicit-differentiation-calculator"],
     callouts: [
       { after: "slices", kind: "tip", text: "Picture a knife cutting the surface. ∂f/∂x cuts parallel to the x-axis (y fixed); ∂f/∂y cuts parallel to the y-axis (x fixed). Each cut leaves an ordinary curve with an ordinary slope." },
       { after: "tangent-plane", kind: "note", text: "The tangent plane uses only f, f_x and f_y at one point, exactly like the tangent line uses only f and f′." },

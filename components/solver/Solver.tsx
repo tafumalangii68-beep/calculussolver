@@ -21,6 +21,9 @@ export const OPERATION_LABELS: Record<Operation, string> = {
   "critical-points": "Critical points",
   "partial-derivative": "Partial derivative",
   implicit: "Implicit differentiation",
+  clairaut: "Clairaut's theorem (f_xy vs f_yx)",
+  "derivative-notation": "Derivative in every notation",
+  "average-value": "Average value",
 };
 
 /** Shorter names where a tab has little room. */
@@ -36,6 +39,9 @@ const OPERATION_SYMBOLS: Record<Operation, string> = {
   "critical-points": "f′=0",
   "partial-derivative": "∂",
   implicit: "dy/dx",
+  clairaut: "fxy=fyx",
+  "derivative-notation": "f′ dy/dx",
+  "average-value": "f̄",
 };
 
 const VARIABLES = ["x", "t", "y", "z", "u", "θ"];
@@ -78,8 +84,10 @@ function toRequest(op: Operation, f: Fields): SolveRequest {
   const base = { operation: op, expression: f.expression, variable: f.variable };
   switch (op) {
     case "derivative":
+    case "derivative-notation":
       return { ...base, order: f.order };
     case "definite-integral":
+    case "average-value":
       return { ...base, lower: f.lower, upper: f.upper };
     case "limit":
       return { ...base, point: f.point, side: f.side };
@@ -89,6 +97,8 @@ function toRequest(op: Operation, f: Fields): SolveRequest {
       return { ...base, rangeMin: f.rangeMin, rangeMax: f.rangeMax };
     case "partial-derivative":
       return { ...base, variable2: f.variable2 || undefined };
+    case "clairaut":
+      return { ...base, variable2: f.variable2 || (f.variable === "y" ? "x" : "y") };
     case "implicit":
       return { ...base, variable: "x", point: f.implicitPoint };
     default:
@@ -98,11 +108,11 @@ function toRequest(op: Operation, f: Fields): SolveRequest {
 
 function fromExample(ex: SolverExample, current: Fields): Fields {
   const next: Fields = { ...current, expression: ex.expression, variable: ex.variable ?? "x" };
-  if (ex.operation === "derivative") next.order = ex.order ?? 1;
-  if (ex.operation === "definite-integral") Object.assign(next, { lower: ex.lower ?? "0", upper: ex.upper ?? "1" });
+  if (ex.operation === "derivative" || ex.operation === "derivative-notation") next.order = ex.order ?? 1;
+  if (ex.operation === "definite-integral" || ex.operation === "average-value") Object.assign(next, { lower: ex.lower ?? "0", upper: ex.upper ?? "1" });
   if (ex.operation === "limit") Object.assign(next, { point: ex.point ?? "0", side: ex.side ?? "both" });
   if (ex.operation === "taylor") Object.assign(next, { center: ex.point ?? "0", taylorOrder: ex.order ?? 5 });
-  if (ex.operation === "partial-derivative") next.variable2 = ex.variable2 ?? "";
+  if (ex.operation === "partial-derivative" || ex.operation === "clairaut") next.variable2 = ex.variable2 ?? "";
   if (ex.operation === "implicit") next.implicitPoint = ex.point ?? "";
   return next;
 }
@@ -124,15 +134,17 @@ export interface SolverProps {
   title: string;
   /** Starting derivative order (the second derivative calculator uses 2). */
   initialOrder?: number;
+  /** Starting second variable for partial derivatives (the mixed partial calculator uses "y"). */
+  initialVariable2?: string;
   /** Visible panel heading (e.g. "Calculus Calculator"). Without it, `title` labels the region invisibly. */
   heading?: string;
   /** Operations shown as tabs; the rest go into a "More tools" menu. Default: all as tabs. */
   primaryOperations?: Operation[];
 }
 
-export function Solver({ operations, examples, title, initialOrder = 1, heading, primaryOperations }: SolverProps) {
+export function Solver({ operations, examples, title, initialOrder = 1, initialVariable2 = "", heading, primaryOperations }: SolverProps) {
   const uid = useId();
-  const startFields: Fields = { ...DEFAULTS, order: initialOrder };
+  const startFields: Fields = { ...DEFAULTS, order: initialOrder, variable2: initialVariable2 };
   const [operation, setOperation] = useState<Operation>(operations[0]);
   const [fields, setFields] = useState<Fields>(startFields);
   const [keypad, setKeypad] = useState(false);
@@ -156,7 +168,7 @@ export function Solver({ operations, examples, title, initialOrder = 1, heading,
   const set = <K extends keyof Fields>(key: K, value: Fields[K]) => setFields((f) => ({ ...f, [key]: value }));
 
   const isImplicit = operation === "implicit";
-  const isPartial = operation === "partial-derivative";
+  const isPartial = operation === "partial-derivative" || operation === "clairaut";
   const preview = useMemo(() => {
     if (!fields.expression.trim()) return null;
     try {
@@ -271,7 +283,7 @@ export function Solver({ operations, examples, title, initialOrder = 1, heading,
           </div>
           <div hidden={isImplicit} className="min-w-0">
             <label htmlFor={id("var")} className={labelClass}>
-              {isPartial ? "With respect to" : "Variable"}
+              {operation === "clairaut" ? "First variable" : isPartial ? "With respect to" : "Variable"}
             </label>
             <select id={id("var")} value={v} onChange={(e) => set("variable", e.target.value)} className={`${inputClass} mt-1 h-12`}>
               {VARIABLES.map((name) => (
@@ -495,6 +507,26 @@ function OperationOptions({
           </select>
         </div>
       );
+    case "clairaut": {
+      const second = fields.variable2 || (fields.variable === "y" ? "x" : "y");
+      return (
+        <div className="mt-4 max-w-xs">
+          <label htmlFor={id("var2")} className={labelClass}>
+            Second variable
+          </label>
+          <select id={id("var2")} value={second} onChange={(e) => set("variable2", e.target.value)} className={`${inputClass} mt-1`}>
+            {VARIABLES.map((name) => (
+              <option key={name} value={name}>
+                {name}
+              </option>
+            ))}
+          </select>
+          <p className="mt-1 text-xs text-muted">
+            Computes f<sub>{fields.variable + second}</sub> and f<sub>{second + fields.variable}</sub>, then compares them.
+          </p>
+        </div>
+      );
+    }
     case "implicit":
       return (
         <div className="mt-4 max-w-md">
@@ -506,6 +538,7 @@ function OperationOptions({
         </div>
       );
     case "derivative":
+    case "derivative-notation":
       return (
         <div className="mt-4 max-w-48">
           <label htmlFor={id("order")} className={labelClass}>
@@ -521,6 +554,7 @@ function OperationOptions({
         </div>
       );
     case "definite-integral":
+    case "average-value":
       return (
         <div className="mt-4 grid max-w-md grid-cols-2 gap-3">
           <div>
@@ -535,7 +569,9 @@ function OperationOptions({
             </label>
             <input id={id("upper")} value={fields.upper} onChange={(e) => set("upper", e.target.value)} className={small} {...mathInput} placeholder="1, inf, e" />
           </div>
-          <p className="col-span-2 text-xs text-muted">Use inf or -inf for improper integrals.</p>
+          <p className="col-span-2 text-xs text-muted">
+            {operation === "average-value" ? "The interval [a, b] must be finite, with b larger than a." : "Use inf or -inf for improper integrals."}
+          </p>
         </div>
       );
     case "limit":

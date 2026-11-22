@@ -69,6 +69,11 @@ export const guides: Guide[] = [
             text: "The derivative of sin x is cos x because sin(x)/x → 1 as x → 0, a limit proved with the squeeze theorem. See",
             link: { href: "/blog/squeeze-theorem-explained-with-examples", label: "Squeeze Theorem Explained With Examples" },
           },
+          {
+            type: "p",
+            text: "This table uses Lagrange's prime notation. The same derivatives can be written in Leibniz's d/dx notation; compare them with",
+            link: { href: "/leibniz-vs-lagrange-notation-calculator", label: "the Leibniz vs Lagrange notation calculator" },
+          },
         ],
       },
       {
@@ -233,6 +238,11 @@ export const guides: Guide[] = [
         heading: "When there is no elementary answer",
         blocks: [
           { type: "p", text: "Some integrals cannot be expressed with elementary functions at all. Common examples are ∫e^(−x²) dx, ∫sin(x)/x dx and ∫1/ln(x) dx. This is a proven fact, not a gap in technique. For such integrands, definite integrals are computed numerically." },
+          {
+            type: "p",
+            text: "A common use of a definite integral is the average value of a function: the integral over [a, b] divided by b − a. Work one out step by step with",
+            link: { href: "/average-value-of-a-function-calculator", label: "the average value calculator" },
+          },
         ],
       },
     ],

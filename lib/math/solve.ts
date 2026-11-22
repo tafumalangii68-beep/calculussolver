@@ -517,6 +517,195 @@ function solvePartial(req: SolveRequest): SolveSuccess {
   };
 }
 
+// ---------- Clairaut's theorem (both mixed partials) ----------
+
+function solveClairaut(req: SolveRequest): SolveSuccess {
+  const v = req.variable;
+  const w = req.variable2 ?? "";
+  if (!VARIABLES.includes(w as (typeof VARIABLES)[number])) throw new MathError("Choose a second variable, for example y.");
+  if (w === v) throw new MathError("Choose two different variables, for example x and y.", "Mixed partial derivatives compare the two orders f_xy and f_yx.");
+  const { node, notes } = parse(req.expression);
+  const [vt, wt] = [vTex(v), vTex(w)];
+  if (!contains(node, v) || !contains(node, w)) {
+    notes.push(`The function does not contain both ${v} and ${w}, so both mixed partials are 0.`);
+  }
+
+  const sections: StepSection[] = [];
+  const checks: (ResultCheck | undefined)[] = [];
+  const mixed = (a: string, b: string): Node => {
+    const first = differentiateWithSteps(node, a, { partial: true });
+    const second = differentiateWithSteps(first.result, b, { partial: true });
+    const [at, bt] = [vTex(a), vTex(b)];
+    sections.push({
+      title: `f_${a}${b}: differentiate with respect to ${a}, then ${b}`,
+      steps: [
+        ...first.steps,
+        { rule: "First partial", latex: `f_{${at}} = ${toLatex(first.result)}`, depth: 0 },
+        ...second.steps,
+        { rule: "Mixed partial", latex: `f_{${at}${bt}} = ${toLatex(second.result)}`, depth: 0 },
+      ],
+      truncated: first.truncated || second.truncated,
+    });
+    checks.push(finiteDifferenceCheck(node, first.result, a), finiteDifferenceCheck(first.result, second.result, b));
+    return second.result;
+  };
+  const fvw = mixed(v, w);
+  const fwv = mixed(w, v);
+
+  // Equal symbolically, or failing that, at every sample point where both are defined.
+  const symbolic = isNum(simplify(add(fvw, mul(num(-1), fwv))), 0);
+  const env = paramEnv([fvw, fwv], [v, w]);
+  let agree = 0;
+  let differ = false;
+  for (let i = 0; i < SAMPLE_POINTS.length; i++) {
+    const at = { ...env, [v]: SAMPLE_POINTS[i], [w]: SAMPLE_POINTS[(i + 3) % SAMPLE_POINTS.length] * 0.83 + 0.21 };
+    const [p, q] = [evaluate(fvw, at), evaluate(fwv, at)];
+    if (!Number.isFinite(p) || !Number.isFinite(q)) continue;
+    if (Math.abs(p - q) > 1e-8 * Math.max(1, Math.abs(p))) differ = true;
+    else agree++;
+  }
+  const equal = symbolic || (!differ && agree >= 3);
+
+  sections.push({
+    title: "Compare the two mixed partials",
+    steps: [{
+      rule: equal ? "They are equal" : "They differ",
+      latex: equal
+        ? `f_{${vt}${wt}} = f_{${wt}${vt}} = ${toLatex(fvw)}`
+        : `f_{${vt}${wt}} = ${toLatex(fvw)} \\;\\neq\\; f_{${wt}${vt}} = ${toLatex(fwv)}`,
+      note: equal
+        ? "The order of differentiation did not matter, as Clairaut's theorem predicts for functions with continuous second partial derivatives."
+        : "Clairaut's theorem only applies where the mixed partials are continuous; check the function for points where it is not smooth.",
+      depth: 0,
+    }],
+  });
+  notes.push(equal
+    ? `Clairaut's theorem: if f_${v}${w} and f_${w}${v} are continuous near a point, they are equal there. Here they agree${symbolic ? " identically" : ` at all ${agree} sample points checked`}.`
+    : "The two mixed partials disagreed at one or more sample points.");
+
+  const warning = checks.find((c) => c?.status === "warning");
+  const check: ResultCheck | undefined = warning ?? (checks.every((c) => c?.status === "verified")
+    ? { status: "verified", message: "Checked numerically: each of the four partial derivatives matches a finite-difference estimate." }
+    : undefined);
+
+  return {
+    ok: true,
+    operation: "clairaut",
+    problemLatex: `\\frac{\\partial^{2} f}{\\partial ${wt}\\,\\partial ${vt}} \\;\\text{vs}\\; \\frac{\\partial^{2} f}{\\partial ${vt}\\,\\partial ${wt}}, \\quad f = ${toLatex(node)}`,
+    answerLatex: equal
+      ? `f_{${vt}${wt}} = f_{${wt}${vt}} = ${toLatex(fvw)}`
+      : `f_{${vt}${wt}} = ${toLatex(fvw)},\\quad f_{${wt}${vt}} = ${toLatex(fwv)}`,
+    answerText: equal ? toText(fvw) : `f_${v}${w} = ${toText(fvw)}; f_${w}${v} = ${toText(fwv)}`,
+    method: "Both orders of mixed partial differentiation, compared symbolically and at sample points.",
+    sections,
+    notes,
+    check,
+    table: {
+      caption: "The partial derivatives involved",
+      headers: ["Derivative", "Result"],
+      rows: [
+        [`f_{${vt}}`, toLatex(simplify(differentiate(node, v)))],
+        [`f_{${wt}}`, toLatex(simplify(differentiate(node, w)))],
+        [`f_{${vt}${wt}}`, toLatex(fvw)],
+        [`f_{${wt}${vt}}`, toLatex(fwv)],
+      ],
+    },
+  };
+}
+
+// ---------- derivative in every notation ----------
+
+function solveNotation(req: SolveRequest): SolveSuccess {
+  const base = solveDerivative(req);
+  const n = req.order ?? 1;
+  const v = vTex(req.variable);
+  const ans = base.answerLatex;
+  const lagrange = n <= 3 ? `f${"'".repeat(n)}(${v})` : `f^{(${n})}(${v})`;
+  const leibniz = n === 1 ? `\\frac{dy}{d${v}}` : `\\frac{d^{${n}}y}{d${v}^{${n}}}`;
+  const euler = n === 1 ? `D_{${v}} f` : `D_{${v}}^{${n}} f`;
+  const rows = [
+    ["Lagrange (prime)", `${lagrange} = ${ans}`],
+    ["Leibniz (d/dx)", `${leibniz} = ${ans}`],
+    ["Euler (operator D)", `${euler} = ${ans}`],
+  ];
+  if (n <= 2) rows.push([`Newton (dot)${req.variable === "t" ? "" : ", mostly for time t"}`, `${n === 1 ? "\\dot{y}" : "\\ddot{y}"} = ${ans}`]);
+  return {
+    ...base,
+    operation: "derivative-notation",
+    answerLatex: `${lagrange} = ${leibniz} = ${ans}`,
+    method: "Symbolic differentiation; the result is then written in each standard notation.",
+    notes: [
+      ...base.notes,
+      "Every notation in the table means the same derivative. Lagrange's prime is shortest for evaluating at a point, like f′(2); Leibniz's dy/dx makes the chain rule and related rates easy to read.",
+    ],
+    table: { caption: "The same derivative in each notation", headers: ["Notation", "How it is written"], rows, textColumns: [0] },
+  };
+}
+
+// ---------- average value of a function ----------
+
+async function solveAverage(req: SolveRequest): Promise<SolveResult> {
+  const v = req.variable;
+  const lower = parsePoint(req.lower ?? "", "lower bound");
+  const upper = parsePoint(req.upper ?? "", "upper bound");
+  if (lower.kind !== "finite" || upper.kind !== "finite") {
+    throw new MathError("The average value needs a finite interval [a, b].", "An infinite interval has infinite length, so there is no average value in this sense.");
+  }
+  const length = simplify(add(upper.node, mul(num(-1), lower.node)));
+  const lengthValue = evaluate(length);
+  if (!Number.isFinite(lengthValue) || lengthValue === 0) throw new MathError("The bounds must be different numbers.");
+  if (lengthValue < 0) throw new MathError("The upper bound must be larger than the lower bound.");
+
+  const integral = await solveDefinite(req);
+  if (!integral.ok) return integral;
+  if (integral.answerText === "diverges") {
+    throw new MathError("The integral diverges on this interval, so f has no finite average value there.");
+  }
+
+  const isExact = !integral.answerLatex.startsWith("\\approx");
+  const integralNode = parse(integral.answerText).node;
+  const average = isExact ? simplify(mul(integralNode, pow(length, num(-1)))) : null;
+  const averageValue = average ? evaluate(average) : evaluate(integralNode) / lengthValue;
+  const averageTex = average ? toLatex(average) : formatNumber(averageValue);
+  const rel = average ? "=" : "\\approx";
+
+  const { node } = parseIn(req.expression, v);
+  const f = simplify(node);
+  const [a, b] = [evaluate(lower.node), evaluate(upper.node)];
+  const notes = [...integral.notes];
+  const cs = findRoots((x) => evalAt(f, v, x) - averageValue, a, b, 2000).filter((c) => c > a && c < b);
+  if (cs.length) {
+    notes.push(`Mean value theorem for integrals: f(${v}) equals its average value at ${v} ≈ ${cs.slice(0, 3).map((c) => formatNumber(c, 6)).join(", ")} in this interval.`);
+  }
+
+  const [aTex, bTex] = [pointTex(lower), pointTex(upper)];
+  const integralTex = `\\int_{${aTex}}^{${bTex}} ${wrapped(node)}\\,d${vTex(v)}`;
+  return {
+    ok: true,
+    operation: "average-value",
+    problemLatex: `f_{\\text{avg}} = \\frac{1}{${bTex} - ${aTex.startsWith("-") ? `\\left(${aTex}\\right)` : aTex}}${integralTex}`,
+    answerLatex: `f_{\\text{avg}} ${rel} ${averageTex}`,
+    answerText: average ? toText(average) : formatNumber(averageValue),
+    approx: average ? approxOf(average) : undefined,
+    method: "Average value = (1/(b − a)) × the definite integral of f from a to b.",
+    sections: [
+      ...integral.sections,
+      {
+        title: "Divide by the length of the interval",
+        steps: [{
+          rule: "Average value formula",
+          latex: `f_{\\text{avg}} = \\frac{1}{b - a}\\int_{a}^{b} f(${vTex(v)})\\,d${vTex(v)} = \\frac{1}{${toLatex(length)}}\\cdot ${isExact ? toLatex(integralNode) : `\\left(${formatNumber(evaluate(integralNode))}\\right)`} ${rel} ${averageTex}`,
+          note: "The interval has length b − a; dividing the signed area by it gives the height of the rectangle with the same area.",
+          depth: 0,
+        }],
+      },
+    ],
+    notes,
+    // The integral's own check mentions the integral's value, so say which number it refers to.
+    check: integral.check && { ...integral.check, message: `For the integral step: ${integral.check.message.charAt(0).toLowerCase()}${integral.check.message.slice(1)}` },
+  };
+}
+
 // ---------- implicit differentiation ----------
 
 /** Parses "3, 4" or "(3, 4)" into two exact numbers. */
@@ -710,6 +899,12 @@ export async function solve(req: SolveRequest): Promise<SolveResult> {
         return solvePartial(req);
       case "implicit":
         return solveImplicit(req);
+      case "clairaut":
+        return solveClairaut(req);
+      case "derivative-notation":
+        return solveNotation(req);
+      case "average-value":
+        return await solveAverage(req);
     }
   } catch (err) {
     if (err instanceof MathError) return { ok: false, error: err.message, hint: err.hint };

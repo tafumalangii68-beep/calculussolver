@@ -62,7 +62,7 @@ export default function HowItWorksPage() {
       </p>
 
       <p>
-        <strong>Try it:</strong> <Link href="/derivative-calculator">Derivative Calculator</Link>, <Link href="/second-derivative-calculator">Second Derivative Calculator</Link> and <Link href="/chain-rule-calculator">Chain Rule Calculator</Link>. The rules are explained in the <Link href="/guides/derivative-rules">derivative rules guide</Link>.
+        <strong>Try it:</strong> <Link href="/derivative-calculator">Derivative Calculator</Link>, <Link href="/second-derivative-calculator">Second Derivative Calculator</Link>, <Link href="/chain-rule-calculator">Chain Rule Calculator</Link> and <Link href="/leibniz-vs-lagrange-notation-calculator">Leibniz vs Lagrange Notation</Link>, which writes each answer in every notation. The rules are explained in the <Link href="/guides/derivative-rules">derivative rules guide</Link>.
       </p>
 
       <h2>4. Integrals</h2>
@@ -103,6 +103,11 @@ export default function HowItWorksPage() {
         and Mori, 1974). This method handles endpoint singularities such as 1/√x well, and maps infinite intervals onto finite
         ones. The exact and numerical values must agree. When there is no antiderivative, the numerical value is reported,
         marked ≈.
+      </p>
+      <p>
+        <strong>Try it:</strong> <Link href="/integral-calculator">Integral Calculator</Link>, and the{" "}
+        <Link href="/average-value-of-a-function-calculator">Average Value Calculator</Link>, which divides a definite integral by
+        the length of the interval.
       </p>
 
       <h2>6. Limits</h2>
@@ -161,7 +166,9 @@ export default function HowItWorksPage() {
       </p>
 
       <p>
-        <strong>Try it:</strong> <Link href="/partial-derivative-calculator">Partial Derivative Calculator</Link>
+        <strong>Try it:</strong> <Link href="/partial-derivative-calculator">Partial Derivative Calculator</Link>,{" "}
+        <Link href="/mixed-partial-derivative-calculator">Mixed Partial Derivative Calculator</Link> and{" "}
+        <Link href="/clairauts-theorem-calculator">Clairaut&apos;s Theorem Calculator</Link>, which computes f<sub>xy</sub> and f<sub>yx</sub> and compares them
         {" · "}
         <strong>Learn it:</strong> <Link href="/blog/what-partial-derivatives-mean-geometrically">What partial derivatives mean geometrically</Link>
       </p>

@@ -316,7 +316,7 @@ export function CalculatorPageView({ page }: { page: CalculatorPage }) {
 
       {/* Calculator + quick start */}
       <div className="relative z-10 mx-auto -mt-28 grid max-w-7xl items-start gap-6 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_18rem]">
-        <Solver operations={page.operations} examples={page.solverExamples} title={page.h1} heading={label} initialOrder={page.initialOrder} />
+        <Solver operations={page.operations} examples={page.solverExamples} title={page.h1} heading={label} initialOrder={page.initialOrder} initialVariable2={page.initialVariable2} />
         <aside aria-labelledby="quick-start" className="rounded-3xl border border-line bg-surface p-6 shadow-[0_24px_60px_-20px_rgb(21_25_54/0.22)]">
           <h2 id="quick-start" className="flex items-center gap-2 font-display text-lg font-bold text-ink">
             <ListOrdered aria-hidden className="h-5 w-5 text-accent-strong" /> Quick start
