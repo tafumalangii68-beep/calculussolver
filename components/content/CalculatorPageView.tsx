@@ -284,8 +284,6 @@ export function CalculatorPageView({ page }: { page: CalculatorPage }) {
 
       {/* Hero */}
       <div className="relative isolate overflow-hidden bg-navy-gradient pb-36 pt-8 text-white sm:pt-10">
-        <div aria-hidden className="absolute -right-24 -top-24 -z-10 h-[28rem] w-[28rem] rounded-full opacity-40 blur-3xl" style={{ background: theme.glow }} />
-        <div aria-hidden className="absolute -bottom-40 left-1/4 -z-10 h-80 w-80 rounded-full bg-[#4c22c9]/30 blur-3xl" />
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1.15fr_1fr]">
           <div>
             <Breadcrumbs items={[{ name: label, path }]} tone="dark" />
@@ -295,14 +293,14 @@ export function CalculatorPageView({ page }: { page: CalculatorPage }) {
               </span>
               <span className="rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-sm font-medium text-white/90">Free · Step by step · Private</span>
             </div>
-            <h1 id="page-title" className="mt-5 font-display text-[clamp(2.1rem,4.6vw,3.25rem)] font-extrabold leading-[1.1] tracking-tight">
+            <h1 id="page-title" className="mt-5 font-display text-[clamp(1.9rem,3.6vw,2.6rem)] font-bold leading-[1.1] tracking-tight">
               {page.h1}
             </h1>
             <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/80">{page.intro}</p>
             <ul className="mt-6 flex flex-wrap gap-2">
               {theme.highlights.map((h) => (
                 <li key={h} className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3.5 py-1.5 text-sm font-medium text-white/90 ring-1 ring-white/15">
-                  <CheckCircle2 aria-hidden className="h-4 w-4 text-[#c9a8ff]" />
+                  <CheckCircle2 aria-hidden className="h-4 w-4 text-accent" />
                   {h}
                 </li>
               ))}
@@ -317,7 +315,7 @@ export function CalculatorPageView({ page }: { page: CalculatorPage }) {
       {/* Calculator + quick start */}
       <div className="relative z-10 mx-auto -mt-28 grid max-w-7xl items-start gap-6 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_18rem]">
         <Solver operations={page.operations} examples={page.solverExamples} title={page.h1} heading={label} initialOrder={page.initialOrder} initialVariable2={page.initialVariable2} />
-        <aside aria-labelledby="quick-start" className="rounded-3xl border border-line bg-surface p-6 shadow-[0_24px_60px_-20px_rgb(21_25_54/0.22)]">
+        <aside aria-labelledby="quick-start" className="rounded-3xl border border-line bg-surface p-6 shadow-card">
           <h2 id="quick-start" className="flex items-center gap-2 font-display text-lg font-bold text-ink">
             <ListOrdered aria-hidden className="h-5 w-5 text-accent-strong" /> Quick start
           </h2>
@@ -378,7 +376,6 @@ export function CalculatorPageView({ page }: { page: CalculatorPage }) {
         </section>
 
         <section aria-labelledby="next-step" className="relative isolate mt-20 overflow-hidden rounded-3xl bg-navy-gradient px-6 py-10 text-white sm:px-12">
-          <div aria-hidden className="absolute -right-16 -top-16 -z-10 h-64 w-64 rounded-full opacity-40 blur-3xl" style={{ background: theme.glow }} />
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-2xl">
               <h2 id="next-step" className="font-display text-2xl font-extrabold tracking-tight sm:text-3xl">

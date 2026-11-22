@@ -45,7 +45,7 @@ function plot(f: (t: number) => number, t0: number, t1: number, box: [number, nu
 
 function Frame({ children, label }: { children: React.ReactNode; label: string }) {
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={label} className="h-auto w-full">
+    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={label} className="illustration h-auto w-full">
       <g stroke={GRID}>
         {Array.from({ length: 9 }, (_, i) => (
           <path key={`v${i}`} d={`M${40 + i * 42} 16 V232`} />

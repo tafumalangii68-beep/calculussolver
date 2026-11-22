@@ -98,7 +98,7 @@ export function ContactForm({ email }: { email: string | null }) {
 
   if (status === "opened") {
     return (
-      <div role="status" className="rounded-3xl border border-ok/30 bg-surface p-6 shadow-[0_24px_60px_-24px_rgb(21_25_54/0.25)] sm:p-8">
+      <div role="status" className="rounded-3xl border border-ok/30 bg-surface p-6 shadow-card sm:p-8">
         <span aria-hidden className="grid h-12 w-12 place-items-center rounded-2xl bg-ok-soft text-ok">
           <CheckCircle2 className="h-6 w-6" />
         </span>
@@ -141,7 +141,7 @@ export function ContactForm({ email }: { email: string | null }) {
       noValidate
       onSubmit={onSubmit}
       aria-labelledby="contact-form-title"
-      className="rounded-3xl border border-line bg-surface p-6 shadow-[0_24px_60px_-24px_rgb(21_25_54/0.25)] sm:p-8"
+      className="rounded-3xl border border-line bg-surface p-6 shadow-card sm:p-8"
     >
       <div className="flex items-center gap-3">
         <span aria-hidden className="grid h-11 w-11 place-items-center rounded-2xl bg-brand-gradient text-white shadow-glow">

@@ -43,7 +43,7 @@ export function FaqBrowser({ groups }: { groups: FaqGroup[] }) {
 
   return (
     <>
-      <div className="rounded-2xl border border-line bg-surface p-4 shadow-[0_24px_60px_-24px_rgb(21_25_54/0.25)] sm:p-5">
+      <div className="rounded-2xl border border-line bg-surface p-4 shadow-card sm:p-5">
         <label htmlFor={inputId} className="sr-only">
           Search the FAQ
         </label>

@@ -50,7 +50,7 @@ export const CARD_ORDER: CalculatorSlug[] = [
   "average-value-of-a-function-calculator",
 ];
 
-/** Colourful calculator cards with icon, title, short description and arrow. */
+/** Calculator cards: a plain bordered card with icon, title, short description and arrow. */
 export function CalculatorCards({ slugs = CARD_ORDER, className = "" }: { slugs?: CalculatorSlug[]; className?: string }) {
   return (
     <ul className={`grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 ${className}`}>
@@ -61,16 +61,16 @@ export function CalculatorCards({ slugs = CARD_ORDER, className = "" }: { slugs?
           <li key={slug} className="flex">
             <Link
               href={`/${slug}`}
-              className={`group flex w-full items-center gap-4 rounded-2xl border border-transparent p-4 transition-all duration-300 hover:-translate-y-1 hover:border-line hover:shadow-[0_16px_36px_-14px_rgb(21_25_54/0.25)] sm:p-5 ${s.card}`}
+              className={`group flex w-full items-center gap-4 rounded-xl border border-line p-4 transition-colors duration-200 hover:border-accent/40 hover:bg-sunken/60 ${s.card}`}
             >
-              <span aria-hidden className={`grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-surface/80 shadow-sm transition-transform duration-300 group-hover:scale-105 ${s.text}`}>
+              <span aria-hidden className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-accent-soft text-accent-strong">
                 {s.icon}
               </span>
               <span className="min-w-0 flex-1">
-                <span className="block font-display text-[17px] font-bold leading-snug text-ink">{nav.label}</span>
+                <span className="block font-display text-base font-semibold leading-snug text-ink">{nav.label}</span>
                 <span className="mt-0.5 block text-sm leading-snug text-muted">{nav.blurb}</span>
               </span>
-              <span aria-hidden className={`grid h-9 w-9 shrink-0 place-items-center rounded-full bg-surface shadow-sm transition-transform duration-300 group-hover:translate-x-1 ${s.text}`}>
+              <span aria-hidden className="grid h-8 w-8 shrink-0 place-items-center text-muted transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-accent-strong">
                 <ArrowRight className="h-4 w-4" />
               </span>
             </Link>

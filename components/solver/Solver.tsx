@@ -224,7 +224,7 @@ export function Solver({ operations, examples, title, initialOrder = 1, initialV
       aria-labelledby={heading ? id("heading") : undefined}
       onPointerEnter={loadRenderer}
       onFocusCapture={loadRenderer}
-      className="rounded-[1.5rem] border border-line bg-surface p-4 shadow-[0_24px_60px_-20px_rgb(21_25_54/0.22)] sm:p-7"
+      className="rounded-[1.5rem] border border-line bg-surface p-4 shadow-card sm:p-7"
     >
       {heading && (
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">

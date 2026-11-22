@@ -94,7 +94,7 @@ export default function ContactPage() {
               ].map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} className="group flex items-center gap-3 rounded-xl border border-white/15 px-4 py-3 text-sm font-semibold hover:bg-white/10">
-                    <span aria-hidden className="text-[#c9a8ff] [&>svg]:h-4 [&>svg]:w-4">
+                    <span aria-hidden className="text-accent [&>svg]:h-4 [&>svg]:w-4">
                       {l.icon}
                     </span>
                     <span className="flex-1">{l.label}</span>

@@ -65,7 +65,7 @@ export function AuthorProfile() {
           alt=""
           width={36}
           height={36}
-          className="h-8 w-8 max-[374px]:h-6 max-[374px]:w-6 rounded-full object-cover ring-2 ring-[#b48cff]/70 transition-[box-shadow] group-hover:ring-[#b48cff] sm:h-9 sm:w-9"
+          className="h-8 w-8 max-[374px]:h-6 max-[374px]:w-6 rounded-full object-cover ring-1 ring-line-strong transition-[box-shadow] group-hover:ring-accent sm:h-9 sm:w-9"
         />
         {/* Beside the full desktop nav there is only room for the photo between lg and xl. */}
         <span className="hidden text-sm font-semibold sm:inline lg:hidden xl:inline">Henry</span>
@@ -90,7 +90,6 @@ export function AuthorProfile() {
         <div className="author-dialog-body grid max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain [scrollbar-width:thin] md:grid-cols-[17rem_1fr]">
           {/* Photo, name and title. */}
           <div className="relative flex flex-col items-center overflow-hidden border-b border-line bg-sunken px-6 pb-7 pt-10 text-center md:border-b-0 md:border-r md:pb-10">
-            <div aria-hidden className="pointer-events-none absolute -left-16 -top-16 h-44 w-44 rounded-full bg-accent/15 blur-2xl" />
             <div className="relative rounded-full bg-brand-gradient p-1 shadow-glow">
               <Image src={PHOTO} alt="Henry, founder and creator of Calculus Solver" width={176} height={176} className="h-32 w-32 rounded-full border-4 border-surface object-cover md:h-44 md:w-44" />
             </div>

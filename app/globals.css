@@ -4,25 +4,24 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /*
- * Design tokens: navy and violet premium theme.
- * Light pages use a cool off-white with white panels; brand surfaces (header, footer,
- * heroes) use the navy scale in both themes. Text colours meet WCAG AA on their backgrounds.
+ * Design tokens: a calm, minimal palette. Off-white pages, white panels, navy text, one violet
+ * accent, soft grey secondary text and light grey borders. Text colours meet WCAG AA.
  */
 @theme {
-  --color-paper: #f8f9ff;
+  --color-paper: #fafafb;
   --color-surface: #ffffff;
-  --color-sunken: #f2f1fb;
-  --color-line: #e5e7f2;
-  --color-line-strong: #cdd1e4;
-  --color-ink: #151936;
-  --color-ink-soft: #2f3557;
-  --color-muted: #5f6a85;
+  --color-sunken: #f4f4f7;
+  --color-line: #e8e8ee;
+  --color-line-strong: #d4d5de;
+  --color-ink: #161a33;
+  --color-ink-soft: #3a3f58;
+  --color-muted: #646b80;
   /* Primary violet: filled buttons, active states, focus rings (5.8:1 with white text). */
-  --color-accent: #7438f5;
+  --color-accent: #6d3ae8;
   /* Deep purple: links and accent text on light backgrounds (8.8:1 on white). */
-  --color-accent-strong: #4c22c9;
-  --color-accent-hover: #5f27e0;
-  --color-accent-soft: #f0eaff;
+  --color-accent-strong: #5428cc;
+  --color-accent-hover: #5a2bd4;
+  --color-accent-soft: #f2eefe;
   /* Teal: icons and decoration only (too light for small text on white). */
   --color-teal: #16a89a;
   --color-ok: #17734a;
@@ -41,33 +40,33 @@
   --color-violet-deep: #4c22c9;
   --color-lavender: #f0eaff;
 
-  /* One colour per calculator: titles in menus and cards (all 4.5:1+ on white). */
-  --color-calc-derivative: #6b2fd6;
-  --color-calc-integral: #0f7a5c;
-  --color-calc-limit: #b45309;
-  --color-calc-taylor: #1d5fd1;
-  --color-calc-critical: #15803d;
-  --color-calc-second: #7a3fc4;
-  --color-calc-partial: #be185d;
-  --color-calc-chain: #1d4ed8;
-  --color-calc-implicit: #7e22ce;
-  --color-calc-mixed: #be123c;
-  --color-calc-clairaut: #a21caf;
-  --color-calc-notation: #0e7490;
-  --color-calc-average: #0f766e;
+  /* Calculator, guide and post titles all use the main text colour (one calm palette). */
+  --color-calc-derivative: var(--color-ink);
+  --color-calc-integral: var(--color-ink);
+  --color-calc-limit: var(--color-ink);
+  --color-calc-taylor: var(--color-ink);
+  --color-calc-critical: var(--color-ink);
+  --color-calc-second: var(--color-ink);
+  --color-calc-partial: var(--color-ink);
+  --color-calc-chain: var(--color-ink);
+  --color-calc-implicit: var(--color-ink);
+  --color-calc-mixed: var(--color-ink);
+  --color-calc-clairaut: var(--color-ink);
+  --color-calc-notation: var(--color-ink);
+  --color-calc-average: var(--color-ink);
   /* Review stars. The darker gold outline keeps them at 3:1 contrast on white. */
   --color-star: #f5b82e;
   --color-star-stroke: #a87300;
   --color-star-empty: #d5d8e8;
   --color-testimonial-bg: #f4f1ff;
   /* Guides and blog posts. */
-  --color-guide-derivative: #6b2fd6;
-  --color-guide-integration: #0f7a5c;
-  --color-blog-derivative: #be185d;
-  --color-blog-critical: #b45309;
-  --color-blog-squeeze: #0e7490;
-  --color-blog-lhopital: #1d4ed8;
-  --color-blog-partial: #a21caf;
+  --color-guide-derivative: var(--color-ink);
+  --color-guide-integration: var(--color-ink);
+  --color-blog-derivative: var(--color-ink);
+  --color-blog-critical: var(--color-ink);
+  --color-blog-squeeze: var(--color-ink);
+  --color-blog-lhopital: var(--color-ink);
+  --color-blog-partial: var(--color-ink);
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   /* Headings. */
@@ -75,59 +74,57 @@
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   --radius-card: 1rem;
-  --shadow-card: 0 1px 2px rgb(21 25 54 / 0.04), 0 8px 24px rgb(21 25 54 / 0.06);
-  --shadow-glow: 0 10px 30px rgb(116 56 245 / 0.35);
-}
-
-/* Brand gradients, used for primary buttons, highlights and navy sections. */
-@utility bg-brand-gradient {
-  background-image: linear-gradient(135deg, #7438f5 0%, #923eff 100%);
-}
-@utility bg-brand-gradient-hover {
-  background-image: linear-gradient(135deg, #5f27e0 0%, #7d2df0 100%);
-}
-@utility bg-navy-gradient {
-  background-color: #10143b;
-  background-image:
-    radial-gradient(ellipse 60% 80% at 85% 0%, rgb(146 62 255 / 0.28), transparent 70%),
-    radial-gradient(ellipse 50% 60% at 0% 100%, rgb(76 34 201 / 0.3), transparent 70%),
-    linear-gradient(180deg, #10143b 0%, #171b50 100%);
-}
-@utility text-brand-gradient {
-  background-image: linear-gradient(90deg, #b48cff 0%, #923eff 55%, #c9a8ff 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-/* Gradient highlight for headings on light surfaces (switches to the light gradient in dark mode, below). */
-@utility text-heading-gradient {
-  background-image: var(--heading-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  --shadow-card: 0 1px 2px rgb(22 26 51 / 0.04);
+  /* Kept as a token name for existing components; now just a hairline lift, no glow. */
+  --shadow-glow: 0 1px 2px rgb(22 26 51 / 0.08);
 }
 
 /*
- * Soft card backgrounds, one per calculator (lavender, mint, peach, light blue, pink, green).
- * Dark values are set with the other dark tokens further down.
+ * Former brand surfaces, now flat. The class names are kept so every page changes in one place.
+ *
+ * bg-navy-gradient (heroes, former dark sections) is now a plain light surface. Those sections were
+ * written with text-white / bg-white/10 / border-white/15 for a dark background, so the section
+ * points --color-white at the text colour: the same classes now give dark text, faint grey tints
+ * and light grey borders. bg-brand-gradient (buttons, badges) is the solid accent and points
+ * --color-white back at white for its own content.
  */
-@theme {
-  --color-calc-derivative-soft: #f1eaff;
-  --color-calc-integral-soft: #e4f6ee;
-  --color-calc-limit-soft: #fff0e1;
-  --color-calc-taylor-soft: #e7f0ff;
-  --color-calc-critical-soft: #e6f6e9;
-  --color-calc-second-soft: #f4ecff;
-  --color-calc-partial-soft: #ffe8f1;
-  --color-calc-chain-soft: #e8eeff;
-  --color-calc-implicit-soft: #f6eaff;
-  --color-calc-mixed-soft: #ffe9ee;
-  --color-calc-clairaut-soft: #fbe8fd;
-  --color-calc-notation-soft: #e3f6fa;
-  --color-calc-average-soft: #e2f5f2;
+@utility bg-brand-gradient {
+  background-color: var(--color-accent);
+  --color-white: #fff;
 }
-:root {
-  --heading-gradient: linear-gradient(90deg, #4c22c9 0%, #7438f5 50%, #923eff 100%);
+@utility bg-brand-gradient-hover {
+  background-color: var(--color-accent-hover);
+}
+@utility bg-navy-gradient {
+  background-color: var(--color-paper);
+  --color-white: var(--color-ink);
+}
+/* For light surfaces that were written with text-white (the header). */
+@utility on-light {
+  --color-white: var(--color-ink);
+}
+@utility text-brand-gradient {
+  color: var(--color-accent-strong);
+}
+@utility text-heading-gradient {
+  color: var(--color-accent-strong);
+}
+
+/* Card backgrounds: one plain surface for every calculator card. */
+@theme {
+  --color-calc-derivative-soft: var(--color-surface);
+  --color-calc-integral-soft: var(--color-surface);
+  --color-calc-limit-soft: var(--color-surface);
+  --color-calc-taylor-soft: var(--color-surface);
+  --color-calc-critical-soft: var(--color-surface);
+  --color-calc-second-soft: var(--color-surface);
+  --color-calc-partial-soft: var(--color-surface);
+  --color-calc-chain-soft: var(--color-surface);
+  --color-calc-implicit-soft: var(--color-surface);
+  --color-calc-mixed-soft: var(--color-surface);
+  --color-calc-clairaut-soft: var(--color-surface);
+  --color-calc-notation-soft: var(--color-surface);
+  --color-calc-average-soft: var(--color-surface);
 }
 
 /* Hero decorations: slow floating, disabled for reduced motion by the base rule below. */
@@ -299,14 +296,14 @@
  */
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --color-paper: #0b0e2a;
-  --color-surface: #141838;
-  --color-sunken: #1c2148;
-  --color-line: #2a2f5a;
-  --color-line-strong: #3d4374;
-  --color-ink: #eef0ff;
-  --color-ink-soft: #c9cde8;
-  --color-muted: #9ba3c6;
+  --color-paper: #0f1120;
+  --color-surface: #161928;
+  --color-sunken: #1d2033;
+  --color-line: #2a2d42;
+  --color-line-strong: #3a3e57;
+  --color-ink: #eceef6;
+  --color-ink-soft: #c6c9d8;
+  --color-muted: #9a9fb5;
   /* 4.8:1 with white text. */
   --color-accent: #7c4dff;
   --color-accent-hover: #6a3bf0;
@@ -320,45 +317,12 @@
   --color-danger: #ff9aa8;
   --color-danger-soft: #3a1a26;
   --color-lavender: #241c52;
-  --color-calc-derivative: #c4a8ff;
-  --color-calc-integral: #6fdcb8;
-  --color-calc-limit: #ffbf80;
-  --color-calc-taylor: #93bbff;
-  --color-calc-critical: #86e0a2;
-  --color-calc-second: #d3b5ff;
-  --color-calc-partial: #ff9cc8;
-  --color-calc-chain: #a5b8ff;
-  --color-calc-implicit: #dcaaff;
-  --color-calc-mixed: #ffa3b8;
-  --color-calc-clairaut: #f5b0ff;
-  --color-calc-notation: #7fdcef;
-  --color-calc-average: #7ee3d3;
   --color-star: #f2c14e;
   --color-star-stroke: #f2c14e;
   --color-star-empty: #3d4374;
   --color-testimonial-bg: #10133a;
-  --color-guide-derivative: #c4a8ff;
-  --color-guide-integration: #6fdcb8;
-  --color-blog-derivative: #ff9cc8;
-  --color-blog-critical: #fbbf6a;
-  --color-blog-squeeze: #67d8ec;
-  --color-blog-lhopital: #93b4ff;
-  --color-blog-partial: #f0abfc;
-  --color-calc-derivative-soft: #1f1a4d;
-  --color-calc-integral-soft: #0f2c2a;
-  --color-calc-limit-soft: #2e2218;
-  --color-calc-taylor-soft: #13234a;
-  --color-calc-critical-soft: #122b22;
-  --color-calc-second-soft: #25193f;
-  --color-calc-partial-soft: #34172f;
-  --color-calc-chain-soft: #161f4b;
-  --color-calc-implicit-soft: #2a1846;
-  --color-calc-mixed-soft: #351726;
-  --color-calc-clairaut-soft: #321838;
-  --color-calc-notation-soft: #0f2a34;
-  --color-calc-average-soft: #0f2b2a;
-  --heading-gradient: linear-gradient(90deg, #c4a8ff 0%, #a77bff 50%, #d5bfff 100%);
-  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.25);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3);
+  --shadow-glow: 0 1px 2px rgb(0 0 0 / 0.3);
 }
 
 /*
@@ -474,4 +438,118 @@
 }
 html:has(.author-dialog[open]) {
   overflow: hidden;
+}
+
+/*
+ * Diagrams (CalculatorVisual, ArticleCover) were drawn for a navy background with white lines and
+ * pastel colours. On the light theme their colours are remapped here, so each diagram keeps its
+ * shapes but uses the page's text colour, one accent and the teal used for decoration.
+ */
+.illustration rect[fill^="url("] {
+  fill: var(--color-sunken);
+}
+.illustration [stroke="rgb(255 255 255 / 0.07)"] {
+  stroke: var(--color-line);
+}
+.illustration [stroke="rgb(255 255 255 / 0.45)"] {
+  stroke: var(--color-muted);
+}
+.illustration [stroke="#ffffff"] {
+  stroke: var(--color-ink);
+}
+.illustration [fill="#ffffff"] {
+  fill: var(--color-ink);
+}
+.illustration circle[fill="#ffffff"] {
+  fill: var(--color-surface);
+}
+.illustration circle[fill="#10143b"] {
+  fill: var(--color-surface);
+}
+.illustration [stroke="#c4a8ff"],
+.illustration [stroke="#8f7bff"],
+.illustration [stroke="#7438f5"],
+.illustration [stroke="#923eff"],
+.illustration [stroke="#b48cff"],
+.illustration [stroke="#d3b5ff"],
+.illustration [stroke="#e2d4ff"],
+.illustration [stroke="#ff9cc8"],
+.illustration [stroke="#ffa3b8"],
+.illustration [stroke="#f0abfc"],
+.illustration [stroke="#93bbff"],
+.illustration [stroke="#93b4ff"],
+.illustration [stroke="#7fdcef"],
+.illustration [stroke="#67d8ec"],
+.illustration [stroke="#6fdcb8"],
+.illustration [stroke="#ffbf80"],
+.illustration [stroke="#fbbf6a"],
+.illustration [stroke="#10b981"] {
+  stroke: var(--color-accent);
+}
+.illustration [fill="#c4a8ff"],
+.illustration [fill="#8f7bff"],
+.illustration [fill="#7438f5"],
+.illustration [fill="#923eff"],
+.illustration [fill="#b48cff"],
+.illustration [fill="#d3b5ff"],
+.illustration [fill="#e2d4ff"],
+.illustration [fill="#ff9cc8"],
+.illustration [fill="#ffa3b8"],
+.illustration [fill="#f0abfc"],
+.illustration [fill="#93bbff"],
+.illustration [fill="#93b4ff"],
+.illustration [fill="#7fdcef"],
+.illustration [fill="#67d8ec"],
+.illustration [fill="#6fdcb8"],
+.illustration [fill="#ffbf80"],
+.illustration [fill="#fbbf6a"],
+.illustration [fill="#10b981"] {
+  fill: var(--color-accent);
+}
+.illustration text[fill="#c4a8ff"],
+.illustration text[fill="#8f7bff"],
+.illustration text[fill="#7438f5"],
+.illustration text[fill="#923eff"],
+.illustration text[fill="#b48cff"],
+.illustration text[fill="#d3b5ff"],
+.illustration text[fill="#e2d4ff"],
+.illustration text[fill="#ff9cc8"],
+.illustration text[fill="#ffa3b8"],
+.illustration text[fill="#f0abfc"],
+.illustration text[fill="#93bbff"],
+.illustration text[fill="#93b4ff"],
+.illustration text[fill="#7fdcef"],
+.illustration text[fill="#67d8ec"],
+.illustration text[fill="#6fdcb8"],
+.illustration text[fill="#ffbf80"],
+.illustration text[fill="#fbbf6a"],
+.illustration text[fill="#10b981"] {
+  fill: var(--color-accent-strong);
+}
+.illustration [stroke="#3fd1c1"] {
+  stroke: var(--color-teal);
+}
+.illustration [fill="#3fd1c1"] {
+  fill: var(--color-teal);
+}
+.illustration text[fill="#3fd1c1"] {
+  fill: var(--color-ok);
+}
+
+/*
+ * In the former dark sections (bg-navy-gradient, the header), faint white tints were used for chips and
+ * panels. With --color-white now pointing at the text colour they would turn grey, so on these light
+ * surfaces the tints become a white panel with a light grey border instead.
+ */
+:is(.bg-navy-gradient, .on-light) :is(.bg-white\/10, .bg-white\/\[0\.04\], .bg-white\/\[0\.06\]) {
+  background-color: var(--color-surface);
+}
+:is(.bg-navy-gradient, .on-light) :is(.hover\:bg-white\/10:hover) {
+  background-color: var(--color-sunken);
+}
+:is(.bg-navy-gradient, .on-light) :is(.border-white\/10, .border-white\/15, .border-white\/25) {
+  border-color: var(--color-line-strong);
+}
+:is(.bg-navy-gradient, .on-light) .hover\:border-white\/50:hover {
+  border-color: var(--color-accent);
 }

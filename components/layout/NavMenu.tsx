@@ -33,7 +33,7 @@ function useMenuReset(close: () => void): string {
 
 const pill = (active: boolean) =>
   `rounded-xl px-3 py-2 text-sm font-medium transition-all duration-200 ${
-    active ? "bg-brand-gradient text-white shadow-glow" : "text-white/75 hover:bg-white/10 hover:text-white"
+    active ? "bg-accent-soft text-accent-strong" : "text-ink-soft hover:bg-sunken hover:text-ink"
   }`;
 
 export function DesktopNav() {
@@ -71,7 +71,7 @@ export function DesktopNav() {
           {/* Two columns, filled top to bottom: the derivative calculators, then the rest. */}
           <ul
             id="calculator-menu"
-            className={`absolute left-0 top-full mt-3 grid w-[40rem] grid-flow-col grid-rows-7 gap-0.5 rounded-2xl border border-line bg-surface p-2 shadow-2xl shadow-navy-950/20 transition-all duration-200 ${
+            className={`absolute left-0 top-full mt-3 grid w-[40rem] grid-flow-col grid-rows-7 gap-0.5 rounded-2xl border border-line bg-surface p-2 shadow-card transition-all duration-200 ${
               calcOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0"
             }`}
           >
@@ -114,7 +114,7 @@ export function MobileNav() {
 
   const item = (href: string) =>
     `block rounded-xl px-3 py-2.5 font-medium transition-colors ${
-      isActive(pathname, href) ? "bg-brand-gradient text-white" : "text-white/85 hover:bg-white/10 hover:text-white"
+      isActive(pathname, href) ? "bg-accent-soft text-accent-strong" : "text-ink-soft hover:bg-sunken hover:text-ink"
     }`;
 
   return (
@@ -132,7 +132,7 @@ export function MobileNav() {
       <div
         id="mobile-menu"
         hidden={!open}
-        className="absolute inset-x-0 top-full max-h-[calc(100dvh-72px)] overflow-y-auto border-b border-white/10 bg-navy-900 px-4 pb-6 pt-3 shadow-2xl"
+        className="absolute inset-x-0 top-full max-h-[calc(100dvh-72px)] overflow-y-auto border-b border-line bg-surface px-4 pb-6 pt-3 shadow-card"
       >
         <ul className="space-y-1">
           <li>

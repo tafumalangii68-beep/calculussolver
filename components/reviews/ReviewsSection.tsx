@@ -26,7 +26,7 @@ export async function ReviewsSection({
 
   return (
     <div className="space-y-10">
-      <section aria-labelledby="reviews-heading" className="rounded-3xl border border-line bg-gradient-to-b from-surface to-accent-soft/50 px-4 py-12 shadow-[0_24px_60px_-24px_rgb(21_25_54/0.25)] sm:px-8">
+      <section aria-labelledby="reviews-heading" className="rounded-3xl border border-line bg-gradient-to-b from-surface to-accent-soft/50 px-4 py-12 shadow-card sm:px-8">
         <div className="text-center">
           <p className="inline-flex items-center gap-2 rounded-full bg-accent-soft px-4 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-accent-strong"><span aria-hidden>✦</span> Student reviews</p>
           <h2 id="reviews-heading" className="mt-4 font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">

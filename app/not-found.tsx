@@ -31,11 +31,10 @@ export default function NotFound() {
   return (
     <>
       <div className="relative isolate overflow-hidden bg-navy-gradient pb-24 pt-12 text-white sm:pt-16">
-        <div aria-hidden className="absolute -right-24 -top-24 -z-10 h-[26rem] w-[26rem] rounded-full bg-[#923eff]/30 blur-3xl" />
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1.1fr_1fr]">
           <div>
             <p className="font-display text-7xl font-extrabold leading-none tracking-tight text-brand-gradient sm:text-8xl">404</p>
-            <h1 className="mt-4 font-display text-[clamp(2rem,4.5vw,3rem)] font-extrabold tracking-tight">This page doesn&apos;t exist</h1>
+            <h1 className="mt-4 font-display text-[clamp(1.9rem,3.6vw,2.6rem)] font-bold tracking-tight">This page doesn&apos;t exist</h1>
             <p className="mt-4 max-w-xl text-lg text-white/80">
               The link may be broken, or the page may have moved. The solver and the calculators below are a good place to continue.
             </p>

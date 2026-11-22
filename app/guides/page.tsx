@@ -26,13 +26,12 @@ export default function GuidesPage() {
     <>
       <JsonLd data={webPageLd("Calculus Study Guides", "/guides", description)} />
       <div className="relative isolate overflow-hidden bg-navy-gradient pb-20 pt-8 text-white sm:pt-10">
-        <div aria-hidden className="absolute -right-24 -top-24 -z-10 h-[26rem] w-[26rem] rounded-full bg-[#10b981]/25 blur-3xl" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <Breadcrumbs items={[{ name: "Guides", path: "/guides" }]} tone="dark" />
           <p className="mt-6 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm font-medium text-white/90 ring-1 ring-white/15">
-            <BookOpen aria-hidden className="h-4 w-4 text-[#c9a8ff]" /> Learn the techniques
+            <BookOpen aria-hidden className="h-4 w-4 text-accent" /> Learn the techniques
           </p>
-          <h1 className="mt-5 font-display text-[clamp(2.2rem,5vw,3.4rem)] font-extrabold tracking-tight">
+          <h1 className="mt-5 font-display text-[clamp(1.9rem,3.6vw,2.6rem)] font-bold tracking-tight">
             Calculus <span className="text-brand-gradient">Study Guides</span>
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-white/80">

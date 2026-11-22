@@ -108,7 +108,6 @@ export function GuideView({ guide, collection = GUIDES }: { guide: Guide; collec
 
       {/* Hero */}
       <div className="relative isolate overflow-hidden bg-navy-gradient pb-24 pt-8 text-white sm:pt-10">
-        <div aria-hidden className="absolute -right-24 -top-24 -z-10 h-[26rem] w-[26rem] rounded-full bg-[#923eff]/30 blur-3xl" />
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1.2fr_1fr]">
           <div>
             <Breadcrumbs items={[collection, { name: guide.title.split(/[:(]/)[0].trim(), path }]} tone="dark" />
@@ -119,7 +118,7 @@ export function GuideView({ guide, collection = GUIDES }: { guide: Guide; collec
               </span>
               {meta && <span className="rounded-full bg-white/10 px-3 py-1.5 text-white/85 ring-1 ring-white/15">{meta.category}</span>}
             </p>
-            <h1 className="mt-5 font-display text-[clamp(2rem,4.2vw,3rem)] font-extrabold leading-[1.12] tracking-tight">{guide.title}</h1>
+            <h1 className="mt-5 font-display text-[clamp(1.9rem,3.6vw,2.6rem)] font-bold leading-[1.12] tracking-tight">{guide.title}</h1>
             <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/80">{guide.intro}</p>
             <div className="mt-6">
               <ArticleMetaRow date={date} label={guide.published ? "Published" : "Last reviewed"} minutes={minutes} tone="dark" />
@@ -156,7 +155,7 @@ export function GuideView({ guide, collection = GUIDES }: { guide: Guide; collec
             </ol>
           </details>
 
-          <article className="prose-body max-w-none rounded-3xl border border-line bg-surface p-6 shadow-[0_24px_60px_-24px_rgb(21_25_54/0.25)] sm:p-10 lg:p-12">
+          <article className="prose-body max-w-none rounded-3xl border border-line bg-surface p-6 shadow-card sm:p-10 lg:p-12">
             {guide.image && <ContentFigure image={guide.image} className="mb-10" />}
             {guide.sections.map((section, si) => (
               <section key={section.id} aria-labelledby={section.id} className="scroll-mt-24">
@@ -184,7 +183,7 @@ export function GuideView({ guide, collection = GUIDES }: { guide: Guide; collec
             href={guide.calculator.href}
             className="group flex items-start gap-3 rounded-2xl bg-navy-gradient p-5 text-white shadow-card transition-transform hover:-translate-y-0.5"
           >
-            <Calculator aria-hidden className="mt-0.5 h-5 w-5 shrink-0 text-[#c9a8ff]" />
+            <Calculator aria-hidden className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
             <span className="text-sm font-semibold leading-snug">{guide.calculator.label}</span>
             <ArrowRight aria-hidden className="ml-auto mt-0.5 h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" />
           </Link>
@@ -269,7 +268,6 @@ export function GuideView({ guide, collection = GUIDES }: { guide: Guide; collec
         )}
 
         <section aria-labelledby="practice" className="relative isolate overflow-hidden rounded-3xl bg-navy-gradient px-6 py-10 text-white sm:px-12">
-          <div aria-hidden className="absolute -right-16 -top-16 -z-10 h-64 w-64 rounded-full bg-[#923eff]/35 blur-3xl" />
           <h2 id="practice" className="font-display text-2xl font-extrabold tracking-tight sm:text-3xl">
             Practice what you learned
           </h2>

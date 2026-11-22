@@ -187,7 +187,7 @@ function Motif({ slug, id }: { slug: string; id: (name: string) => string }) {
 export function ArticleCover({ slug, label, instance = "cover", className = "" }: { slug: string; label: string; instance?: string; className?: string }) {
   const id = (name: string) => `ac-${instance}-${slug}-${name}`;
   return (
-    <svg viewBox="0 0 600 340" role="img" aria-label={label} className={`h-auto w-full ${className}`} preserveAspectRatio="xMidYMid slice">
+    <svg viewBox="0 0 600 340" role="img" aria-label={label} className={`illustration h-auto w-full ${className}`} preserveAspectRatio="xMidYMid slice">
       <defs>
         <linearGradient id={id("bg")} x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#10143b" />

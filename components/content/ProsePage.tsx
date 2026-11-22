@@ -67,7 +67,7 @@ export function ProsePage({
       >
         <div
           id="page-content"
-          className="prose-body min-w-0 max-w-none rounded-3xl border border-line bg-surface p-6 shadow-[0_24px_60px_-24px_rgb(21_25_54/0.25)] sm:p-10 lg:p-12 [&>h2:first-child]:mt-0 [&>figure:first-child]:mt-0"
+          className="prose-body min-w-0 max-w-none rounded-3xl border border-line bg-surface p-6 shadow-card sm:p-10 lg:p-12 [&>h2:first-child]:mt-0 [&>figure:first-child]:mt-0"
         >
           {children}
         </div>

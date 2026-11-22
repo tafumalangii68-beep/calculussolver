@@ -21,7 +21,7 @@ const PROCESS = [
 /** Four numbered cards that summarise the solving pipeline. */
 export function ProcessCards() {
   return (
-    <section aria-labelledby="process-title" className="rounded-3xl border border-line bg-surface p-6 shadow-[0_24px_60px_-24px_rgb(21_25_54/0.25)] sm:p-10">
+    <section aria-labelledby="process-title" className="rounded-3xl border border-line bg-surface p-6 shadow-card sm:p-10">
       <SectionHeader id="process-title" eyebrow="The process" title="Every answer takes" highlight="four steps" />
       <ol className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {PROCESS.map((step, i) => (
@@ -136,7 +136,6 @@ const TRUST = [
 export function TrustGrid() {
   return (
     <section aria-labelledby="trust-title" className="relative isolate overflow-hidden rounded-[2rem] bg-navy-gradient px-6 py-12 text-white sm:px-10 sm:py-14">
-      <div aria-hidden className="absolute -right-20 -top-20 -z-10 h-80 w-80 rounded-full bg-[#923eff]/30 blur-3xl" />
       <div className="mx-auto max-w-3xl text-center">
         <p className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-white/90 ring-1 ring-white/15">
           <span aria-hidden>✦</span> Trust and transparency

@@ -99,7 +99,7 @@ export function ArticleCard({ data, featured = false, headingLevel = "h3" }: { d
   const Heading = headingLevel;
   return (
     <article
-      className={`group relative flex h-full overflow-hidden rounded-3xl border border-line bg-surface shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_20px_44px_-18px_rgb(21_25_54/0.3)] ${
+      className={`group relative flex h-full overflow-hidden rounded-3xl border border-line bg-surface shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-card ${
         featured ? "flex-col lg:flex-row" : "flex-col"
       }`}
     >
@@ -144,7 +144,7 @@ export function ArticleCard({ data, featured = false, headingLevel = "h3" }: { d
 export function VerifiedBadge() {
   return (
     <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-sm font-medium text-white/90 ring-1 ring-white/15">
-      <CheckCircle2 aria-hidden className="h-4 w-4 text-[#c9a8ff]" /> Worked examples verified
+      <CheckCircle2 aria-hidden className="h-4 w-4 text-accent" /> Worked examples verified
     </span>
   );
 }

@@ -23,7 +23,6 @@ import { JsonLd } from "@/components/content/JsonLd";
 import { SectionHeader } from "@/components/content/SectionHeader";
 import { Tex } from "@/components/content/Tex";
 import { WorkedExample } from "@/components/content/WorkedExample";
-import { HeroIllustration } from "@/components/home/HeroIllustration";
 import { TangentAreaFigure } from "@/components/home/TangentAreaFigure";
 import { StudentReviews } from "@/components/reviews/StudentReviews";
 import { StatsCard } from "@/components/reviews/StatsCard";
@@ -125,27 +124,18 @@ export default function HomePage() {
 
       {/* Hero */}
       <section aria-labelledby="hero-title" className="relative isolate overflow-hidden bg-navy-gradient pb-40 pt-12 text-white sm:pt-16 lg:pb-44">
-        {/* Decorative curves */}
-        <svg aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-40 w-full" viewBox="0 0 1440 160" preserveAspectRatio="none">
-          <path d="M0 110 C 320 40, 620 150, 960 90 S 1320 40, 1440 70 L1440 160 L0 160 Z" fill="#7438f5" fillOpacity="0.16" />
-          <path d="M0 140 C 380 80, 760 170, 1100 110 S 1380 90, 1440 110 L1440 160 L0 160 Z" fill="#923eff" fillOpacity="0.14" />
-        </svg>
-        <div aria-hidden className="pointer-events-none absolute -left-40 top-20 -z-10 h-96 w-96 rounded-full bg-[#4c22c9]/30 blur-3xl" />
 
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1.15fr_1fr]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div>
             <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium text-white/90 backdrop-blur">
-              <GraduationCap aria-hidden className="h-4 w-4 text-[#c9a8ff]" />
+              <GraduationCap aria-hidden className="h-4 w-4 text-accent" />
               Free Online Calculus Calculator
             </p>
-            <h1 id="hero-title" className="mt-6 font-display text-[clamp(2.2rem,4.4vw,2.85rem)] font-extrabold leading-[1.12] tracking-tight">
+            <h1 id="hero-title" className="mt-6 font-display text-[clamp(1.9rem,3.6vw,2.6rem)] font-bold leading-[1.12] tracking-tight">
               Solve Calculus Problems <br className="hidden xl:block" />
               with{" "}
-              <span className="relative inline-block text-brand-gradient xl:whitespace-nowrap">
+              <span className="text-accent-strong xl:whitespace-nowrap">
                 Step-by-Step Solutions
-                <svg aria-hidden viewBox="0 0 300 12" preserveAspectRatio="none" className="absolute -bottom-2 left-0 h-3 w-full">
-                  <path d="M2 9 C 80 2, 200 2, 298 7" fill="none" stroke="#923eff" strokeWidth="3" strokeLinecap="round" />
-                </svg>
               </span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/80">
@@ -155,7 +145,7 @@ export default function HomePage() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
                 href="#calculator"
-                className="group inline-flex items-center justify-center gap-2.5 rounded-xl bg-brand-gradient px-7 py-3.5 font-semibold text-white shadow-glow transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-gradient-hover"
+                className="group inline-flex items-center justify-center gap-2.5 rounded-xl bg-brand-gradient px-7 py-3.5 font-semibold text-white transition-colors duration-200 hover:bg-brand-gradient-hover"
               >
                 <Play aria-hidden className="h-4 w-4 fill-current" />
                 Start Solving Now
@@ -163,7 +153,7 @@ export default function HomePage() {
               </a>
               <a
                 href="#calculators"
-                className="inline-flex items-center justify-center gap-2.5 rounded-xl border border-white/25 bg-white/5 px-7 py-3.5 font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:border-white/50 hover:bg-white/10"
+                className="inline-flex items-center justify-center gap-2.5 rounded-xl border border-line-strong bg-surface px-7 py-3.5 font-semibold text-ink transition-colors duration-200 hover:border-accent/50 hover:text-accent-strong"
               >
                 <LayoutGrid aria-hidden className="h-4 w-4" />
                 Explore Calculators
@@ -180,7 +170,6 @@ export default function HomePage() {
               ))}
             </ul>
           </div>
-          <HeroIllustration className="mx-auto w-full max-w-[400px] sm:max-w-[520px] lg:max-w-[640px] animate-fade-up [animation-delay:150ms]" />
         </div>
       </section>
 
@@ -204,10 +193,10 @@ export default function HomePage() {
           </SectionHeader>
           <CalculatorCards className="mt-10" />
 
-          <ul className="mt-10 grid grid-cols-1 gap-y-6 rounded-3xl bg-navy-gradient px-6 py-7 text-white shadow-[0_24px_50px_-20px_rgb(16_20_59/0.6)] sm:grid-cols-2 sm:px-10 lg:grid-cols-4 lg:divide-x lg:divide-white/10">
+          <ul className="mt-10 grid grid-cols-1 gap-y-6 rounded-2xl border border-line bg-navy-gradient px-6 py-7 text-white sm:grid-cols-2 sm:px-10 lg:grid-cols-4 lg:divide-x lg:divide-white/10">
             {stats.map((s) => (
               <li key={s.value} className="flex items-center gap-4 lg:px-6 lg:first:pl-0">
-                <span aria-hidden className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-white/10 text-[#c9a8ff]">
+                <span aria-hidden className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-white/10 text-accent">
                   <s.icon className="h-6 w-6" />
                 </span>
                 <span>
@@ -475,9 +464,7 @@ export default function HomePage() {
       {/* Final call to action */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <section aria-labelledby="cta" className="relative isolate mt-20 overflow-hidden rounded-3xl bg-navy-gradient px-6 py-12 text-center text-white sm:px-12 sm:py-16">
-          <div aria-hidden className="absolute -right-20 -top-20 -z-10 h-72 w-72 rounded-full bg-[#923eff]/30 blur-3xl" />
-          <div aria-hidden className="absolute -bottom-24 -left-16 -z-10 h-72 w-72 rounded-full bg-[#4c22c9]/40 blur-3xl" />
-          <Sparkles aria-hidden className="mx-auto h-8 w-8 text-[#c9a8ff]" />
+          <Sparkles aria-hidden className="mx-auto h-8 w-8 text-accent" />
           <h2 id="cta" className="mt-4 font-display text-[clamp(1.75rem,3.5vw,2.6rem)] font-extrabold tracking-tight">
             Start with a problem you&apos;re stuck on
           </h2>
