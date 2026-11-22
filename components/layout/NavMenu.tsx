@@ -157,19 +157,20 @@ const panelClass = (open: boolean) =>
     open ? "visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0"
   }`;
 
-/** Nav items: soft purple tint when active, gentle hover; slightly tighter padding below xl so everything fits. */
+/** Solid purple with white text for the current page's item (literal colours: text-white is remapped in the header). */
+const ACTIVE = "bg-[#6d28d9] text-[#ffffff]";
+
+/** Nav items: solid purple when active, gentle hover otherwise; slightly tighter padding below xl so everything fits. */
 const pill = (active: boolean) =>
   `inline-flex items-center gap-1 rounded-2xl px-2 py-2 text-[15px] font-medium transition-colors duration-200 xl:px-3.5 ${
-    active ? "bg-accent-soft text-accent-strong" : "text-ink-soft hover:bg-accent-soft/60 hover:text-accent-strong"
+    active ? ACTIVE : "text-ink-soft hover:bg-accent-soft/60 hover:text-accent-strong"
   }`;
 
-/** The Home item's active state: same shape and size as pill(), solid purple with white text. */
-const homeActivePill =
-  "inline-flex items-center gap-1 rounded-2xl px-2 py-2 text-[15px] font-medium transition-colors duration-200 xl:px-3.5 bg-[#6d28d9] text-[#ffffff]";
-
+/** Calculators / Guides: solid purple on their own pages; while open elsewhere, a soft tint and thin ring. */
 function DropdownButton({ open, active, controls, onClick, children }: { open: boolean; active: boolean; controls: string; onClick: () => void; children: React.ReactNode }) {
+  const openStyle = open && !active ? "bg-accent-soft text-accent-strong ring-1 ring-accent/40" : "";
   return (
-    <button type="button" aria-expanded={open} aria-controls={controls} onClick={onClick} className={`${pill(active || open)} ${open ? "ring-1 ring-accent/40" : ""}`}>
+    <button type="button" aria-expanded={open} aria-controls={controls} onClick={onClick} className={`${pill(active)} ${openStyle}`}>
       {children}
       <ChevronDown aria-hidden className={`h-4 w-4 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
     </button>
@@ -187,12 +188,7 @@ export function DesktopNav() {
     <nav aria-label="Main" className="hidden lg:block">
       <ul className="flex items-center gap-0.5 xl:gap-1">
         <li>
-          {/* Home, when active, is solid purple with white text (literal colours: text-white is remapped in the header). */}
-          <Link
-            href="/"
-            className={isActive(pathname, "/") ? homeActivePill : pill(false)}
-            aria-current={pathname === "/" ? "page" : undefined}
-          >
+          <Link href="/" className={pill(isActive(pathname, "/"))} aria-current={pathname === "/" ? "page" : undefined}>
             Home
           </Link>
         </li>
@@ -267,7 +263,7 @@ export function MobileNav() {
 
   const item = (href: string) =>
     `block rounded-xl px-3 py-2.5 font-medium transition-colors ${
-      isActive(pathname, href) ? "bg-accent-soft text-accent-strong" : "text-ink-soft hover:bg-accent-soft/60 hover:text-accent-strong"
+      isActive(pathname, href) ? ACTIVE : "text-ink-soft hover:bg-accent-soft/60 hover:text-accent-strong"
     }`;
   const sectionTitle = "mt-5 px-3 text-xs font-semibold uppercase tracking-wider text-muted";
 
