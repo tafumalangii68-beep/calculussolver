@@ -163,6 +163,10 @@ const pill = (active: boolean) =>
     active ? "bg-accent-soft text-accent-strong" : "text-ink-soft hover:bg-accent-soft/60 hover:text-accent-strong"
   }`;
 
+/** The Home item's active state: same shape and size as pill(), solid purple with white text. */
+const homeActivePill =
+  "inline-flex items-center gap-1 rounded-2xl px-2 py-2 text-[15px] font-medium transition-colors duration-200 xl:px-3.5 bg-[#6d28d9] text-[#ffffff]";
+
 function DropdownButton({ open, active, controls, onClick, children }: { open: boolean; active: boolean; controls: string; onClick: () => void; children: React.ReactNode }) {
   return (
     <button type="button" aria-expanded={open} aria-controls={controls} onClick={onClick} className={`${pill(active || open)} ${open ? "ring-1 ring-accent/40" : ""}`}>
@@ -183,7 +187,12 @@ export function DesktopNav() {
     <nav aria-label="Main" className="hidden lg:block">
       <ul className="flex items-center gap-0.5 xl:gap-1">
         <li>
-          <Link href="/" className={pill(isActive(pathname, "/"))} aria-current={pathname === "/" ? "page" : undefined}>
+          {/* Home, when active, is solid purple with white text (literal colours: text-white is remapped in the header). */}
+          <Link
+            href="/"
+            className={isActive(pathname, "/") ? homeActivePill : pill(false)}
+            aria-current={pathname === "/" ? "page" : undefined}
+          >
             Home
           </Link>
         </li>
