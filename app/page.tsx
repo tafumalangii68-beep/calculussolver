@@ -132,9 +132,24 @@ export default function HomePage() {
               <GraduationCap aria-hidden className="h-4 w-4 text-accent" />
               Free Online Calculus Calculator
             </p>
-            <h1 id="hero-title" className="mt-6 font-display text-[clamp(1.9rem,3.6vw,2.6rem)] font-bold leading-[1.12] tracking-tight">
-              Calculus Solver – <br className="hidden xl:block" />
-              <span className="text-accent-strong xl:whitespace-nowrap">Where Math Becomes Clear</span>
+            {/* Wordmark-style title: the name with a brush underline and sparkle, then the tagline on a tilted purple band.
+                Screen readers and search engines read it as one sentence: "Calculus Solver – Where Math Becomes Clear". */}
+            <h1 id="hero-title" className="mt-7 font-display tracking-tight">
+              <span className="relative inline-block pr-6 text-[clamp(2.5rem,5.2vw,3.75rem)] font-extrabold leading-none text-[#0d0b26] dark:text-ink">
+                Calculus Solver
+                <svg aria-hidden viewBox="0 0 40 40" className="absolute -top-4 right-0 h-7 w-7 text-[#6d28d9] dark:text-accent">
+                  <path d="M8 4 L10 15 M24 6 L18 16 M36 18 L26 22" stroke="currentColor" strokeWidth="4" strokeLinecap="round" fill="none" />
+                </svg>
+                <svg aria-hidden viewBox="0 0 300 14" preserveAspectRatio="none" className="absolute -bottom-4 left-[18%] h-4 w-[68%] text-[#6d28d9] dark:text-accent">
+                  <path d="M3 11 C 70 3, 190 1, 297 6 C 200 5, 90 8, 12 13 Z" fill="currentColor" />
+                </svg>
+              </span>
+              <span className="sr-only"> – </span>
+              <span className="mt-7 block">
+                <span className="inline-block -skew-x-6 rounded-2xl bg-[#6d28d9] px-5 py-2 shadow-[6px_8px_0_#dcc9fb] sm:px-7 sm:py-2.5 dark:shadow-[6px_8px_0_rgb(109_40_217/0.35)]">
+                  <span className="block skew-x-6 text-[clamp(1.4rem,3vw,2.15rem)] font-extrabold italic leading-tight text-[#ffffff]">Where Math Becomes Clear</span>
+                </span>
+              </span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/80">
               Calculate derivatives, integrals, limits, Taylor series and more with clear, accurate and easy-to-follow explanations,
