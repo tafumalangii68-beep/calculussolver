@@ -160,7 +160,7 @@ const coreCalculators: Record<string, CalculatorPage> = {
       { q: "How does the calculator know which rule to apply?", a: "It looks at the outermost operation of the expression. A sum gets the sum rule, a product the product rule, a quotient the quotient rule, and a function of something other than plain x gets the chain rule. It then works inward." },
     ],
     related: ["second-derivative-calculator", "chain-rule-calculator", "partial-derivative-calculator", "implicit-differentiation-calculator", "critical-points-calculator", "leibniz-vs-lagrange-notation-calculator"],
-    articles: ["how-to-find-the-derivative-of-a-function", "how-to-find-critical-points-and-classify-them"],
+    articles: ["how-to-find-the-derivative-of-a-function", "how-to-find-critical-points-and-classify-them", "how-to-identify-inflection-points-using-the-second-derivative"],
     guide: { href: "/guides/derivative-rules", label: "Derivative rules explained with examples" },
   },
 
@@ -605,7 +605,7 @@ const coreCalculators: Record<string, CalculatorPage> = {
       { q: "Can I change where the calculator searches?", a: "Yes. Edit the “Search from” and “Search to” boxes. Narrow intervals give the numerical search more precision; wide ones help when you don't know where the points are." },
     ],
     related: ["derivative-calculator", "limit-calculator", "taylor-series-calculator"],
-    articles: ["how-to-find-critical-points-and-classify-them", "how-to-find-the-derivative-of-a-function"],
+    articles: ["how-to-find-critical-points-and-classify-them", "how-to-identify-inflection-points-using-the-second-derivative", "how-to-find-the-derivative-of-a-function"],
     guide: { href: "/guides/derivative-rules", label: "Derivative rules refresher" },
   },
 };

@@ -72,6 +72,15 @@ export const articleMeta: Record<string, ArticleMeta> = {
       { after: "other-forms", kind: "tip", text: "For any power form, take logarithms: find the limit L of g(x)·ln f(x), and the answer is e^L." },
     ],
   },
+  "how-to-identify-inflection-points-using-the-second-derivative": {
+    category: "Derivatives",
+    related: ["second-derivative-calculator", "critical-points-calculator", "derivative-calculator"],
+    callouts: [
+      { after: "method", kind: "tip", text: "Factor f″ completely. Each factor's sign is easy to read, so the sign chart almost fills itself in." },
+      { after: "zero-not-enough", kind: "note", text: "f″(c) = 0 only makes c a candidate. The sign change of f″ is what makes it an inflection point." },
+      { after: "critical-vs-inflection", kind: "tip", text: "Critical points come from f′ and tell you about peaks and valleys; inflection points come from f″ and tell you about bending." },
+    ],
+  },
   "what-partial-derivatives-mean-geometrically": {
     category: "Derivatives",
     related: ["partial-derivative-calculator", "mixed-partial-derivative-calculator", "clairauts-theorem-calculator", "implicit-differentiation-calculator"],

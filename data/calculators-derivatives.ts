@@ -123,7 +123,7 @@ export const derivativeCalculators: CalculatorPage[] = [
     ],
     related: ["derivative-calculator", "critical-points-calculator", "mixed-partial-derivative-calculator"],
     guide: { href: "/guides/derivative-rules", label: "The derivative rules, applied twice for f″(x)" },
-    articles: ["how-to-find-critical-points-and-classify-them", "how-to-find-the-derivative-of-a-function"],
+    articles: ["how-to-identify-inflection-points-using-the-second-derivative", "how-to-find-critical-points-and-classify-them", "how-to-find-the-derivative-of-a-function"],
   },
 
   {

@@ -175,6 +175,11 @@ export const posts: Guide[] = [
           },
           {
             type: "p",
+            text: "The sign of f″ also shows where a graph changes from concave up to concave down. Learn to find those points in",
+            link: { href: "/blog/how-to-identify-inflection-points-using-the-second-derivative", label: "How to Identify Inflection Points Using the Second Derivative" },
+          },
+          {
+            type: "p",
             text: "For the full method, including the first derivative test and what to do when f″(c) = 0, read",
             link: { href: "/blog/how-to-find-critical-points-and-classify-them", label: "How to Find Critical Points and Classify Them" },
           },
@@ -426,6 +431,11 @@ export const posts: Guide[] = [
           {
             type: "p",
             text: "The test has two limits. It only applies where f′(c) = 0, so it cannot classify a corner or cusp where f′ does not exist. And when f″(c) = 0, it says nothing at all: x⁴, −x⁴ and x³ all have f′(0) = f″(0) = 0, yet x = 0 is a minimum, a maximum and neither, respectively.",
+          },
+          {
+            type: "p",
+            text: "Where f″ changes sign, the graph switches between concave up and concave down. Those points are inflection points; see",
+            link: { href: "/blog/how-to-identify-inflection-points-using-the-second-derivative", label: "How to Identify Inflection Points Using the Second Derivative" },
           },
         ],
       },
@@ -1313,6 +1323,287 @@ export const posts: Guide[] = [
       },
     ],
     calculator: { href: "/partial-derivative-calculator", label: "Compute partial derivatives step by step with the Partial Derivative Calculator" },
+  },
+  {
+    slug: "how-to-identify-inflection-points-using-the-second-derivative",
+    titleClass: "text-blog-inflection",
+    image: { src: "/images/blog-inflection-points.webp", alt: "An S-shaped curve that bends upward on the left and downward on the right, with a tangent line crossing it at the inflection point", width: 1536, height: 1024, caption: "Left of the marked point the curve bends upward (f″ > 0), right of it downward (f″ < 0). At the inflection point the tangent line crosses the curve." },
+    published: "2026-11-23",
+    title: "How to Identify Inflection Points Using the Second Derivative",
+    metaTitle: "How to Find Inflection Points Using the Second Derivative",
+    description:
+      "Learn how to identify inflection points step by step with the second derivative: concavity, a sign chart for f″, why f″ = 0 is not enough, and seven worked examples.",
+    intro:
+      "An inflection point is where a curve changes the way it bends: from bending upward like a cup to bending downward like a cap, or the other way round. The second derivative tells you exactly where that happens. This guide explains concavity, gives a step-by-step method for finding inflection points, shows why f″(x) = 0 alone is not enough, and works through seven examples.",
+    sections: [
+      {
+        id: "what-is",
+        heading: "What is an inflection point?",
+        blocks: [
+          {
+            type: "p",
+            text: "A point (c, f(c)) on the graph of f is an inflection point if f is continuous at c and the graph changes concavity there: concave up on one side and concave down on the other. The curve passes from bending one way to bending the other way.",
+          },
+          {
+            type: "p",
+            text: "Picture driving along the graph from left to right. On a concave-up stretch the road turns left; on a concave-down stretch it turns right. The inflection point is the moment the steering wheel passes through straight and starts turning the other way.",
+          },
+          {
+            type: "p",
+            text: "Inflection points are about how the graph bends, not whether it rises or falls. A curve can be increasing on both sides of an inflection point, as y = x³ is at the origin.",
+          },
+        ],
+      },
+      {
+        id: "concavity",
+        heading: "Concavity and the second derivative",
+        blocks: [
+          {
+            type: "p",
+            text: "The second derivative f″ is the rate of change of the slope f′. When the slope is increasing, the curve bends upward; when the slope is decreasing, it bends downward:",
+          },
+          {
+            type: "table",
+            caption: "How the sign of f″ describes the shape of the graph",
+            headers: ["Sign of f″ on an interval", "Slope f′ is", "The graph is"],
+            rows: [
+              [t`f''(x) > 0`, t`\text{increasing}`, t`\text{concave up (cup shape)}`],
+              [t`f''(x) < 0`, t`\text{decreasing}`, t`\text{concave down (cap shape)}`],
+              [t`f''\ \text{changes sign at } c`, t`\text{has a max or min at } c`, t`\text{has an inflection point at } c`],
+            ],
+          },
+          {
+            type: "p",
+            text: "So an inflection point is exactly where f″ changes sign. Equivalently, it is where the slope f′ reaches a local maximum or minimum: the point where the curve is steepest (or least steep) compared with its neighbourhood.",
+          },
+        ],
+      },
+      {
+        id: "method",
+        heading: "How to find inflection points, step by step",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "Step 1: Find the domain of f, and note any points where f is undefined.",
+              "Step 2: Find f′(x), then f″(x). Simplify f″ into a single fraction and factor it.",
+              "Step 3: List the candidates: values of x in the domain of f where f″(x) = 0 or f″(x) is undefined.",
+              "Step 4: Make a sign chart for f″. Mark the candidates (and any points where f is undefined) on a number line, then test one value in each interval.",
+              "Step 5: Each candidate where f″ changes sign, and where f is continuous, is an inflection point. Find f(c) to state the point (c, f(c)).",
+            ],
+          },
+          {
+            type: "p",
+            text: "Step 4 is the one that is easiest to skip and most important. Candidates from Step 3 are only possible inflection points; the sign change is what confirms them. To compute f″ with every step shown, use",
+            link: { href: "/second-derivative-calculator", label: "the second derivative calculator" },
+          },
+        ],
+      },
+      {
+        id: "zero-not-enough",
+        heading: "Why f″(x) = 0 is not enough",
+        blocks: [
+          {
+            type: "p",
+            text: "If f has an inflection point at c and f″(c) exists, then f″(c) = 0. But the reverse is false: f″(c) = 0 does not guarantee an inflection point. The classic example is f(x) = x⁴:",
+          },
+          { type: "math", latex: t`f(x) = x^{4}, \qquad f''(x) = 12x^{2}, \qquad f''(0) = 0` },
+          {
+            type: "p",
+            text: "Yet 12x² is positive on both sides of 0, so the graph is concave up everywhere. x = 0 is the bottom of a cup, not a change of bend. This is why the sign chart is not optional: always check that f″ actually changes sign.",
+          },
+          {
+            type: "p",
+            text: "A quick way to spot this: if a factor of f″ is squared (or raised to any even power), f″ does not change sign at its zero. In 12x², the factor x² keeps the same sign on both sides of 0.",
+          },
+        ],
+      },
+      {
+        id: "undefined",
+        heading: "Inflection points where f″ is undefined",
+        blocks: [
+          {
+            type: "p",
+            text: "Concavity can also change where f″ does not exist, as long as f itself is continuous there. For f(x) = ∛x, the second derivative −2/(9x^(5/3)) is undefined at 0, but f(0) = 0 is defined and the graph changes from concave up to concave down: (0, 0) is an inflection point with a vertical tangent.",
+          },
+          {
+            type: "p",
+            text: "Points where f itself is undefined can never be inflection points. For f(x) = 1/x, f″(x) = 2/x³ changes sign at 0, but x = 0 is not in the domain. The concavity changes across the vertical asymptote, not at a point on the graph.",
+          },
+        ],
+      },
+      {
+        id: "critical-vs-inflection",
+        heading: "Inflection points vs critical points",
+        blocks: [
+          {
+            type: "table",
+            caption: "The two kinds of special point, compared",
+            headers: ["", "Critical point", "Inflection point"],
+            rows: [
+              [t`\text{Found from}`, t`f'(c) = 0 \text{ or undefined}`, t`f''(c) = 0 \text{ or undefined}`],
+              [t`\text{Confirmed by}`, t`\text{sign change of } f' \text{ (or } f''(c))`, t`\text{sign change of } f''`],
+              [t`\text{Tells you}`, t`\text{local max, min or neither}`, t`\text{where concavity changes}`],
+              [t`\text{Example}`, t`x = 1 \text{ for } x^{2} - 2x`, t`x = 0 \text{ for } x^{3}`],
+            ],
+          },
+          {
+            type: "p",
+            text: "A point can be both. For f(x) = x³, f′(0) = 0 and f″ changes sign at 0, so the origin is a stationary inflection point: the tangent is horizontal and the curve flattens without turning around. To find and classify critical points, see",
+            link: { href: "/blog/how-to-find-critical-points-and-classify-them", label: "How to Find Critical Points and Classify Them" },
+          },
+        ],
+      },
+      {
+        id: "third-derivative",
+        heading: "A shortcut: the third derivative test",
+        blocks: [
+          { type: "p", text: "When f″(c) = 0 and the third derivative exists, there is a quick test:" },
+          { type: "math", latex: t`f''(c) = 0 \ \text{and}\ f'''(c) \neq 0 \quad\Longrightarrow\quad (c, f(c)) \text{ is an inflection point}` },
+          {
+            type: "p",
+            text: "If f‴(c) = 0 as well, the test is inconclusive (x⁴ and x⁵ both have f″(0) = f‴(0) = 0, but only x⁵ has an inflection point there), so go back to the sign chart.",
+          },
+        ],
+      },
+      {
+        id: "meaning",
+        heading: "What inflection points mean in real problems",
+        blocks: [
+          {
+            type: "p",
+            text: "Because an inflection point is where the slope is at its largest or smallest, it often marks a turning moment in the rate of change:",
+          },
+          {
+            type: "list",
+            items: [
+              "Population or sales growth along an S-shaped (logistic) curve grows fastest at the inflection point, then starts to slow down.",
+              "In economics, the point of diminishing returns is the inflection point of an output curve: extra input still helps, but each unit helps less than the one before.",
+              "On a position–time graph, an inflection point is where the acceleration changes sign, so the speed is momentarily at a maximum or minimum.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "mistakes",
+        heading: "Common mistakes to avoid",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "Stopping at f″(c) = 0. Always confirm with a sign change; x⁴ shows why.",
+              "Forgetting points where f″ is undefined. Check the denominator of f″ as well as its numerator.",
+              "Listing points outside the domain. Concavity can change across an asymptote, but that is not an inflection point.",
+              "Confusing f′ and f″. Inflection points come from the second derivative; critical points come from the first.",
+              "Giving only the x-value when the question asks for the point. State (c, f(c)).",
+              "Dividing f″(x) = 0 by a factor containing x, which can lose a solution. Factor instead.",
+            ],
+          },
+        ],
+      },
+    ],
+    examples: [
+      {
+        title: "A cubic: one inflection point",
+        problem: t`f(x) = x^{3} - 6x^{2} + 9x + 1`,
+        steps: [
+          { text: "Differentiate twice:", math: t`f'(x) = 3x^{2} - 12x + 9, \qquad f''(x) = 6x - 12` },
+          { text: "f″(x) = 0 at x = 2. f″ is negative for x < 2 (concave down) and positive for x > 2 (concave up), so the concavity changes." },
+          { text: "f(2) = 8 − 24 + 18 + 1 = 3. Every cubic has exactly one inflection point, halfway between its turning points (here x = 1 and x = 3)." },
+        ],
+        answer: t`(2,\ 3)`,
+        check: { operation: "derivative", expression: "x^3 - 6x^2 + 9x + 1", variable: "x", order: 2, expected: "6x - 12" },
+      },
+      {
+        title: "A quartic with two inflection points",
+        problem: t`f(x) = x^{4} - 4x^{3}`,
+        steps: [
+          { text: "Second derivative, factored:", math: t`f''(x) = 12x^{2} - 24x = 12x(x - 2)` },
+          { text: "Candidates x = 0 and x = 2. Sign chart: f″ > 0 on (−∞, 0), f″ < 0 on (0, 2), f″ > 0 on (2, ∞). It changes sign at both." },
+          { text: "f(0) = 0 and f(2) = 16 − 32 = −16." },
+        ],
+        answer: t`(0,\ 0) \text{ and } (2,\ -16)`,
+        check: { operation: "derivative", expression: "x^4 - 4x^3", variable: "x", order: 2, expected: "12x^2 - 24x" },
+      },
+      {
+        title: "When f″ = 0 but there is no inflection point",
+        problem: t`f(x) = x^{5} - 5x^{4}`,
+        steps: [
+          { text: "Second derivative, factored:", math: t`f''(x) = 20x^{3} - 60x^{2} = 20x^{2}(x - 3)` },
+          { text: "Candidates x = 0 and x = 3. Because x² ≥ 0, the sign of f″ is the sign of x − 3: negative on both sides of 0, so x = 0 is not an inflection point." },
+          { text: "f″ changes from negative to positive at x = 3, where f(3) = 243 − 405 = −162." },
+        ],
+        answer: t`(3,\ -162) \text{ only}`,
+        check: { operation: "derivative", expression: "x^5 - 5x^4", variable: "x", order: 2, expected: "20x^3 - 60x^2" },
+      },
+      {
+        title: "An inflection point where f″ is undefined",
+        problem: t`f(x) = \sqrt[3]{x} = x^{1/3}`,
+        steps: [
+          { text: "Differentiate twice with the power rule:", math: t`f'(x) = \tfrac{1}{3}x^{-2/3}, \qquad f''(x) = -\tfrac{2}{9}x^{-5/3} = -\frac{2}{9x^{5/3}}` },
+          { text: "f″ is never 0 and is undefined at x = 0, where f(0) = 0 is defined. For x < 0, x^(5/3) < 0 so f″ > 0 (concave up); for x > 0, f″ < 0 (concave down)." },
+          { text: "The concavity changes at the origin, where the curve has a vertical tangent." },
+        ],
+        answer: t`(0,\ 0)`,
+        check: { operation: "derivative", expression: "x^(1/3)", variable: "x", order: 2, expected: "-2/(9 x^(5/3))" },
+      },
+      {
+        title: "An exponential",
+        problem: t`f(x) = x\,e^{-x}`,
+        steps: [
+          { text: "Product rule twice, then factor out e^(−x):", math: t`f'(x) = e^{-x}(1 - x), \qquad f''(x) = e^{-x}(x - 2)` },
+          { text: "e^(−x) is always positive, so the sign of f″ is the sign of x − 2: concave down for x < 2, concave up for x > 2." },
+          { text: "f(2) = 2e^(−2) = 2/e² ≈ 0.271." },
+        ],
+        answer: t`\left(2,\ \tfrac{2}{e^{2}}\right)`,
+        check: { operation: "derivative", expression: "x e^(-x)", variable: "x", order: 2, expected: "(x - 2) e^(-x)" },
+      },
+      {
+        title: "A rational function with three inflection points",
+        problem: t`f(x) = \frac{x}{x^{2} + 1}`,
+        steps: [
+          { text: "After the quotient rule twice and simplifying:", math: t`f''(x) = \frac{2x\left(x^{2} - 3\right)}{\left(x^{2} + 1\right)^{3}}` },
+          { text: "The denominator is always positive. The numerator is zero at x = 0 and x = ±√3, and changes sign at each, so all three are inflection points." },
+          { text: "f(0) = 0 and f(±√3) = ±√3/4." },
+        ],
+        answer: t`(0,\ 0),\ \left(\sqrt{3},\ \tfrac{\sqrt{3}}{4}\right),\ \left(-\sqrt{3},\ -\tfrac{\sqrt{3}}{4}\right)`,
+        check: { operation: "derivative", expression: "x/(x^2 + 1)", variable: "x", order: 2, expected: "2x (x^2 - 3)/(x^2 + 1)^3" },
+      },
+      {
+        title: "A logarithm",
+        problem: t`f(x) = \ln\left(x^{2} + 1\right)`,
+        steps: [
+          { text: "f′(x) = 2x/(x² + 1). The quotient rule again, simplified:", math: t`f''(x) = \frac{2\left(1 - x^{2}\right)}{\left(x^{2} + 1\right)^{2}}` },
+          { text: "f″ = 0 at x = ±1. It is positive between them (concave up) and negative outside (concave down), so both are inflection points." },
+          { text: "f(±1) = ln 2 ≈ 0.693." },
+        ],
+        answer: t`(-1,\ \ln 2) \text{ and } (1,\ \ln 2)`,
+        check: { operation: "derivative", expression: "ln(x^2 + 1)", variable: "x", order: 2, expected: "2(1 - x^2)/(x^2 + 1)^2" },
+      },
+    ],
+    faqs: [
+      {
+        q: "How do you find inflection points using the second derivative?",
+        a: "Find f″(x), solve f″(x) = 0 and find where f″ is undefined, then make a sign chart for f″. Each value where f″ changes sign, and where f is continuous, gives an inflection point (c, f(c)).",
+      },
+      {
+        q: "Is every point where f″(x) = 0 an inflection point?",
+        a: "No. f″ must change sign. For f(x) = x⁴, f″(0) = 0 but f″ is positive on both sides of 0, so there is no inflection point there.",
+      },
+      {
+        q: "Can an inflection point be a maximum or minimum?",
+        a: "Not a local maximum or minimum of f in the usual sense for smooth functions. But it can be a critical point: x³ has f′(0) = 0 and an inflection point at 0, a stationary inflection point.",
+      },
+      {
+        q: "Can a function have no inflection points?",
+        a: "Yes. f(x) = x², eˣ and x⁴ are concave up everywhere, so their concavity never changes. A function can also change concavity only across an asymptote, like 1/x, which still has no inflection point.",
+      },
+      {
+        q: "What does an inflection point mean in real life?",
+        a: "It is where a rate of change reaches its maximum or minimum: for example, the moment a growing population is increasing fastest, or the point of diminishing returns in economics.",
+      },
+    ],
+    calculator: { href: "/second-derivative-calculator", label: "Find f″(x) step by step with the Second Derivative Calculator" },
   },
 ];
 

@@ -119,6 +119,22 @@ function Motif({ slug, id }: { slug: string; id: (name: string) => string }) {
           </text>
         </g>
       );
+    case "how-to-identify-inflection-points-using-the-second-derivative":
+      // Concave up on the left (cup arc below), concave down on the right (cap arc above), inflection point between.
+      return (
+        <g>
+          <path d="M60 260 C 160 260, 240 230, 300 170 S 440 80, 540 80" fill="none" stroke="#c4a8ff" strokeWidth="5" strokeLinecap="round" />
+          <path d="M120 290 Q 190 330, 250 285" fill="none" stroke="#3fd1c1" strokeWidth="3" strokeLinecap="round" />
+          <path d="M350 60 Q 410 20, 480 60" fill="none" stroke="#3fd1c1" strokeWidth="3" strokeLinecap="round" />
+          <path d="M300 30 V310" stroke="#ffffff" strokeOpacity="0.35" strokeWidth="2" strokeDasharray="6 6" />
+          <circle cx="300" cy="170" r="9" fill="#ffffff" stroke="#7438f5" strokeWidth="4" />
+          <g fontSize="22" style={math}>
+            <text x="96" y="232" fill="#3fd1c1">{"f″ > 0"}</text>
+            <text x="420" y="130" fill="#3fd1c1">{"f″ < 0"}</text>
+            <text x="314" y="200" fill="#ffffff">{"f″ = 0"}</text>
+          </g>
+        </g>
+      );
     case "what-partial-derivatives-mean-geometrically":
       // A wireframe hill sliced along x and y, with the two tangent lines at one point.
       return (

@@ -62,7 +62,8 @@ export default function HowItWorksPage() {
       </p>
 
       <p>
-        <strong>Try it:</strong> <Link href="/derivative-calculator">Derivative Calculator</Link>, <Link href="/second-derivative-calculator">Second Derivative Calculator</Link>, <Link href="/chain-rule-calculator">Chain Rule Calculator</Link> and <Link href="/leibniz-vs-lagrange-notation-calculator">Leibniz vs Lagrange Notation</Link>, which writes each answer in every notation. The rules are explained in the <Link href="/guides/derivative-rules">derivative rules guide</Link>.
+        <strong>Try it:</strong> <Link href="/derivative-calculator">Derivative Calculator</Link>, <Link href="/second-derivative-calculator">Second Derivative Calculator</Link>, <Link href="/chain-rule-calculator">Chain Rule Calculator</Link> and <Link href="/leibniz-vs-lagrange-notation-calculator">Leibniz vs Lagrange Notation</Link>, which writes each answer in every notation. The rules are explained in the <Link href="/guides/derivative-rules">derivative rules guide</Link>, and the second derivative is put to work in{" "}
+        <Link href="/blog/how-to-identify-inflection-points-using-the-second-derivative">how to identify inflection points</Link>.
       </p>
 
       <h2>4. Integrals</h2>
