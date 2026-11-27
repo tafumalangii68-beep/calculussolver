@@ -243,6 +243,11 @@ export const guides: Guide[] = [
             text: "A common use of a definite integral is the average value of a function: the integral over [a, b] divided by b − a. Work one out step by step with",
             link: { href: "/average-value-of-a-function-calculator", label: "the average value calculator" },
           },
+          {
+            type: "p",
+            text: "For where the formula comes from and seven worked examples, read",
+            link: { href: "/blog/how-to-find-the-average-value-of-a-function-on-an-interval", label: "How to Find the Average Value of a Function on an Interval" },
+          },
         ],
       },
     ],

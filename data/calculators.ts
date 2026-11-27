@@ -289,7 +289,7 @@ const coreCalculators: Record<string, CalculatorPage> = {
     ],
     related: ["average-value-of-a-function-calculator", "derivative-calculator", "limit-calculator"],
     guide: { href: "/guides/integration-techniques", label: "Integration techniques: when to use each one" },
-    articles: ["how-to-find-the-derivative-of-a-function"],
+    articles: ["how-to-find-the-average-value-of-a-function-on-an-interval", "how-to-find-the-derivative-of-a-function"],
   },
 
   "limit-calculator": {

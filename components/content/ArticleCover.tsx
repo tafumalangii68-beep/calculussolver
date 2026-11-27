@@ -119,6 +119,23 @@ function Motif({ slug, id }: { slug: string; id: (name: string) => string }) {
           </text>
         </g>
       );
+    case "how-to-find-the-average-value-of-a-function-on-an-interval":
+      // The area under a hump and a dashed rectangle of equal area; its top is the average value.
+      return (
+        <g>
+          <path d="M100 290 V280 C 180 280, 220 70, 300 70 S 420 280, 500 280 V290 Z" fill="#7438f5" fillOpacity="0.18" />
+          <path d="M100 280 C 180 280, 220 70, 300 70 S 420 280, 500 280" fill="none" stroke="#c4a8ff" strokeWidth="5" strokeLinecap="round" />
+          <rect x="100" y="178" width="400" height="112" fill="none" stroke="#3fd1c1" strokeWidth="3" strokeDasharray="8 7" />
+          <path d="M80 290 H520" stroke="#ffffff" strokeOpacity="0.45" strokeWidth="2" />
+          <circle cx="226" cy="178" r="8" fill="#ffffff" stroke="#7438f5" strokeWidth="4" />
+          <g fontSize="22" style={math}>
+            <text x="510" y="184" fill="#3fd1c1">{"f_avg"}</text>
+            <text x="94" y="320" fill="#ffffff">a</text>
+            <text x="494" y="320" fill="#ffffff">b</text>
+            <text x="216" y="162" fill="#ffffff">c</text>
+          </g>
+        </g>
+      );
     case "how-to-identify-inflection-points-using-the-second-derivative":
       // Concave up on the left (cup arc below), concave down on the right (cap arc above), inflection point between.
       return (

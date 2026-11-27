@@ -459,6 +459,6 @@ export const extraCalculators: CalculatorPage[] = [
     ],
     related: ["integral-calculator", "derivative-calculator", "limit-calculator"],
     guide: { href: "/guides/integration-techniques", label: "Integration techniques for the integral step" },
-    articles: ["how-to-find-the-derivative-of-a-function"],
+    articles: ["how-to-find-the-average-value-of-a-function-on-an-interval", "how-to-find-the-derivative-of-a-function"],
   },
 ];

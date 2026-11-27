@@ -1605,6 +1605,238 @@ export const posts: Guide[] = [
     ],
     calculator: { href: "/second-derivative-calculator", label: "Find f″(x) step by step with the Second Derivative Calculator" },
   },
+  {
+    slug: "how-to-find-the-average-value-of-a-function-on-an-interval",
+    titleClass: "text-blog-average",
+    published: "2026-11-27",
+    title: "How to Find the Average Value of a Function on an Interval",
+    metaTitle: "How to Find the Average Value of a Function (With Examples)",
+    description:
+      "Learn how to find the average value of a function on [a, b] step by step: where the formula comes from, what it means on a graph, the mean value theorem for integrals, and seven worked examples.",
+    intro:
+      "Averaging a list of numbers is easy: add them up and divide by how many there are. But how do you average a function that takes infinitely many values on an interval? Calculus answers this with one integral. This guide shows where the average value formula comes from, how to use it step by step, what it means on a graph, and how to find the point where the function actually equals its average. Seven worked examples follow.",
+    sections: [
+      {
+        id: "formula",
+        heading: "The average value formula",
+        blocks: [
+          { type: "p", text: "The average value of a continuous function f on the interval [a, b] is:" },
+          { type: "math", latex: t`f_{\text{avg}} = \frac{1}{b - a}\int_{a}^{b} f(x)\,dx` },
+          {
+            type: "p",
+            text: "In words: integrate the function over the interval, then divide by the length of the interval. The integral plays the role of “add up all the values”, and b − a plays the role of “divide by how many there are”.",
+          },
+        ],
+      },
+      {
+        id: "why",
+        heading: "Where the formula comes from",
+        blocks: [
+          {
+            type: "p",
+            text: "Start with an ordinary average. Split [a, b] into n equal pieces of width Δx = (b − a)/n, pick one point xᵢ in each piece, and average the function values there:",
+          },
+          { type: "math", latex: t`\frac{f(x_1) + f(x_2) + \cdots + f(x_n)}{n}` },
+          {
+            type: "p",
+            text: "Since n = (b − a)/Δx, dividing by n is the same as multiplying by Δx/(b − a). So the sample average is a Riemann sum divided by the length of the interval:",
+          },
+          { type: "math", latex: t`\frac{1}{n}\sum_{i=1}^{n} f(x_i) = \frac{1}{b - a}\sum_{i=1}^{n} f(x_i)\,\Delta x \;\xrightarrow{\;n \to \infty\;}\; \frac{1}{b - a}\int_{a}^{b} f(x)\,dx` },
+          {
+            type: "p",
+            text: "As the samples get denser, the average of the samples approaches the integral formula. The average value is just the average of infinitely many, evenly spread function values.",
+          },
+        ],
+      },
+      {
+        id: "picture",
+        heading: "What the average value looks like on a graph",
+        blocks: [
+          {
+            type: "p",
+            text: "Multiply both sides of the formula by b − a and it says that a rectangle of height f_avg over [a, b] has the same area as the region under the curve:",
+          },
+          { type: "math", latex: t`f_{\text{avg}}\,(b - a) = \int_{a}^{b} f(x)\,dx` },
+          {
+            type: "p",
+            text: "Imagine the region under the curve is water in a tank, held in a wavy shape. Let the water settle flat: its level is the average value. Where the curve is above that level, the extra area exactly fills the gaps where the curve is below it.",
+          },
+          {
+            type: "p",
+            text: "Because the integral counts area below the x-axis as negative, the average value can be negative, or zero, as sin x is over a full period [0, 2π].",
+          },
+        ],
+      },
+      {
+        id: "method",
+        heading: "How to find the average value, step by step",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "Step 1: Identify the function f and the interval [a, b]. Check that f is continuous on it (no vertical asymptotes inside).",
+              "Step 2: Find the definite integral ∫ₐᵇ f(x) dx, usually by finding an antiderivative F and computing F(b) − F(a).",
+              "Step 3: Divide by the length of the interval, b − a.",
+              "Step 4 (if asked): Find c with f(c) = f_avg by solving that equation on [a, b].",
+              "Step 5: Sense check. The average must lie between the smallest and largest values of f on [a, b].",
+            ],
+          },
+          {
+            type: "p",
+            text: "Step 2 is where most of the work is. If the integral needs substitution or integration by parts, see the integration techniques guide. To check a full solution, including the point c, use",
+            link: { href: "/average-value-of-a-function-calculator", label: "the average value calculator" },
+          },
+        ],
+      },
+      {
+        id: "mvt",
+        heading: "The mean value theorem for integrals",
+        blocks: [
+          {
+            type: "p",
+            text: "A continuous function does not just have an average value: it actually reaches it. The mean value theorem for integrals says:",
+          },
+          { type: "math", latex: t`f \text{ continuous on } [a, b] \;\Longrightarrow\; f(c) = \frac{1}{b - a}\int_{a}^{b} f(x)\,dx \ \text{ for some } c \in [a, b]` },
+          {
+            type: "p",
+            text: "On the graph, c is where the curve crosses the flat “water level” of the rectangle. There may be more than one such c. The theorem needs continuity: a function with a jump can skip right over its average value.",
+          },
+        ],
+      },
+      {
+        id: "applications",
+        heading: "Where average value is used",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "Average temperature over a day, from a temperature function T(t).",
+              "Average velocity: the average value of v(t) over [a, b] is the displacement divided by the elapsed time.",
+              "Average cost, revenue or population over a period, from a continuous model.",
+              "Average rate of change: the average value of f′ on [a, b] equals (f(b) − f(a))/(b − a), linking this idea to the mean value theorem for derivatives.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "mistakes",
+        heading: "Common mistakes to avoid",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "Stopping at the integral. ∫ₐᵇ f(x) dx is the total (the area), not the average. You still need to divide by b − a.",
+              "Averaging the endpoints. (f(a) + f(b))/2 equals the average value only for linear functions.",
+              "Getting the length wrong. The length of [−1, 2] is 3, not 1: always compute b − a with signs.",
+              "Using an interval where f is not continuous. For 1/x² on [−1, 1], the integral diverges, so there is no average value.",
+              "Confusing the average value with the average rate of change. The average value of f uses ∫f; the average rate of change of f uses f(b) − f(a).",
+              "Forgetting that area below the axis counts as negative, which is why an average can be zero or negative.",
+            ],
+          },
+        ],
+      },
+    ],
+    examples: [
+      {
+        title: "A linear function",
+        problem: t`f(x) = 2x + 1 \ \text{on}\ [1, 3]`,
+        steps: [
+          { text: "Integrate:", math: t`\int_{1}^{3} (2x + 1)\,dx = \left[x^{2} + x\right]_{1}^{3} = 12 - 2 = 10` },
+          { text: "Divide by the length 3 − 1 = 2:", math: t`f_{\text{avg}} = \frac{10}{2} = 5` },
+          { text: "For a straight line, the average is the value at the midpoint: f(2) = 5. It also equals (f(1) + f(3))/2 = (3 + 7)/2, which only works because f is linear." },
+        ],
+        answer: t`f_{\text{avg}} = 5`,
+        check: { operation: "average-value", expression: "2x + 1", lower: "1", upper: "3", expected: "5" },
+      },
+      {
+        title: "A cubic, and the point c",
+        problem: t`f(x) = x^{3} \ \text{on}\ [0, 2]`,
+        steps: [
+          { text: "Integrate and divide by 2:", math: t`\frac{1}{2}\int_{0}^{2} x^{3}\,dx = \frac{1}{2}\left[\frac{x^{4}}{4}\right]_{0}^{2} = \frac{1}{2}\cdot 4 = 2` },
+          { text: "Solve f(c) = 2: c³ = 2, so c = ∛2 ≈ 1.26, which lies in [0, 2]." },
+          { text: "The endpoint average (0 + 8)/2 = 4 would be wrong: the curve spends most of the interval low and only shoots up at the end." },
+        ],
+        answer: t`f_{\text{avg}} = 2,\quad c = \sqrt[3]{2}`,
+        check: { operation: "average-value", expression: "x^3", lower: "0", upper: "2", expected: "2" },
+      },
+      {
+        title: "A trig function",
+        problem: t`f(x) = \cos x \ \text{on}\ \left[0, \tfrac{\pi}{2}\right]`,
+        steps: [
+          { text: "Integrate:", math: t`\int_{0}^{\pi/2} \cos x\,dx = \left[\sin x\right]_{0}^{\pi/2} = 1` },
+          { text: "Divide by π/2:", math: t`f_{\text{avg}} = \frac{1}{\pi/2} = \frac{2}{\pi} \approx 0.637` },
+          { text: "cos c = 2/π at c = arccos(2/π) ≈ 0.881." },
+        ],
+        answer: t`f_{\text{avg}} = \frac{2}{\pi}`,
+        check: { operation: "average-value", expression: "cos(x)", lower: "0", upper: "pi/2", expected: "2/pi" },
+      },
+      {
+        title: "An exponential",
+        problem: t`f(x) = e^{x} \ \text{on}\ [0, 1]`,
+        steps: [
+          { text: "The interval has length 1, so the average equals the integral:", math: t`f_{\text{avg}} = \int_{0}^{1} e^{x}\,dx = e - 1 \approx 1.718` },
+          { text: "e^c = e − 1 at c = ln(e − 1) ≈ 0.541, a little past the midpoint because eˣ grows faster towards the right." },
+        ],
+        answer: t`f_{\text{avg}} = e - 1`,
+        check: { operation: "average-value", expression: "e^x", lower: "0", upper: "1", expected: "e - 1" },
+      },
+      {
+        title: "An arctangent integral",
+        problem: t`f(x) = \frac{1}{1 + x^{2}} \ \text{on}\ [0, 1]`,
+        steps: [
+          { text: "The antiderivative is arctan x:", math: t`\int_{0}^{1} \frac{dx}{1 + x^{2}} = \arctan 1 - \arctan 0 = \frac{\pi}{4}` },
+          { text: "The length is 1, so f_avg = π/4 ≈ 0.785, between the minimum 1/2 and the maximum 1 of f on [0, 1]." },
+        ],
+        answer: t`f_{\text{avg}} = \frac{\pi}{4}`,
+        check: { operation: "average-value", expression: "1/(1 + x^2)", lower: "0", upper: "1", expected: "pi/4" },
+      },
+      {
+        title: "A negative average value",
+        problem: t`f(x) = x^{2} - 4 \ \text{on}\ [-1, 2]`,
+        steps: [
+          { text: "Integrate:", math: t`\int_{-1}^{2} \left(x^{2} - 4\right)dx = \left[\frac{x^{3}}{3} - 4x\right]_{-1}^{2} = \left(\frac{8}{3} - 8\right) - \left(-\frac{1}{3} + 4\right) = -9` },
+          { text: "The length is 2 − (−1) = 3:", math: t`f_{\text{avg}} = \frac{-9}{3} = -3` },
+          { text: "The curve is below the x-axis on the whole interval, so the average is negative. c² − 4 = −3 gives c = 1 (c = −1 is the endpoint)." },
+        ],
+        answer: t`f_{\text{avg}} = -3`,
+        check: { operation: "average-value", expression: "x^2 - 4", lower: "-1", upper: "2", expected: "-3" },
+      },
+      {
+        title: "Average temperature over a day",
+        problem: t`T(t) = 50 + 14\sin\!\left(\frac{\pi t}{12}\right) \ \text{on}\ [0, 24]`,
+        steps: [
+          { text: "T(t) is the temperature in °F, t hours after 9 a.m. The sine term completes one full cycle in 24 hours, so its integral is 0:", math: t`\int_{0}^{24} 14\sin\!\left(\frac{\pi t}{12}\right)dt = 0` },
+          { text: "So the integral is just 50 · 24 = 1200, and dividing by 24 gives the average." },
+          { text: "The day's average is the middle of the swing between 36°F and 64°F, reached at t = 12, that is at 9 p.m." },
+        ],
+        answer: t`T_{\text{avg}} = 50\,^{\circ}\text{F}`,
+        check: { operation: "average-value", expression: "50 + 14 sin(pi t/12)", variable: "t", lower: "0", upper: "24", expected: "50" },
+      },
+    ],
+    faqs: [
+      {
+        q: "What is the formula for the average value of a function?",
+        a: "f_avg = (1/(b − a)) ∫ₐᵇ f(x) dx. Integrate f over the interval, then divide by the interval's length.",
+      },
+      {
+        q: "Is the average value the same as (f(a) + f(b))/2?",
+        a: "Only for linear functions. For x³ on [0, 2], the endpoint average is 4 but the true average value is 2.",
+      },
+      {
+        q: "Can the average value of a function be negative?",
+        a: "Yes. The integral counts area below the x-axis as negative, so if more of the curve lies below the axis, the average is negative, as for x² − 4 on [−1, 2].",
+      },
+      {
+        q: "What is the difference between average value and average rate of change?",
+        a: "The average value of f is (1/(b − a)) ∫ₐᵇ f(x) dx, the average height of the curve. The average rate of change is (f(b) − f(a))/(b − a), the slope of the secant line. The average value of f′ equals the average rate of change of f.",
+      },
+      {
+        q: "Does every function reach its average value?",
+        a: "Every continuous function on [a, b] does, by the mean value theorem for integrals. A function with a jump can skip over its average value.",
+      },
+    ],
+    calculator: { href: "/average-value-of-a-function-calculator", label: "Find the average value and the point c with the Average Value Calculator" },
+  },
 ];
 
 export function getPost(slug: string): Guide | undefined {

@@ -72,6 +72,15 @@ export const articleMeta: Record<string, ArticleMeta> = {
       { after: "other-forms", kind: "tip", text: "For any power form, take logarithms: find the limit L of g(x)·ln f(x), and the answer is e^L." },
     ],
   },
+  "how-to-find-the-average-value-of-a-function-on-an-interval": {
+    category: "Integrals",
+    related: ["average-value-of-a-function-calculator", "integral-calculator", "derivative-calculator"],
+    callouts: [
+      { after: "formula", kind: "tip", text: "Think “total divided by length”: the integral is the total, b − a is how long the interval is." },
+      { after: "picture", kind: "note", text: "Area below the x-axis counts as negative, so an average value can be zero or negative." },
+      { after: "mvt", kind: "tip", text: "To find c, solve f(c) = f_avg and keep only the solutions that lie in [a, b]." },
+    ],
+  },
   "how-to-identify-inflection-points-using-the-second-derivative": {
     category: "Derivatives",
     related: ["second-derivative-calculator", "critical-points-calculator", "derivative-calculator"],

@@ -108,7 +108,8 @@ export default function HowItWorksPage() {
       <p>
         <strong>Try it:</strong> <Link href="/integral-calculator">Integral Calculator</Link>, and the{" "}
         <Link href="/average-value-of-a-function-calculator">Average Value Calculator</Link>, which divides a definite integral by
-        the length of the interval.
+        the length of the interval (see{" "}
+        <Link href="/blog/how-to-find-the-average-value-of-a-function-on-an-interval">how to find the average value of a function</Link>).
       </p>
 
       <h2>6. Limits</h2>
