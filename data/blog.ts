@@ -1608,6 +1608,7 @@ export const posts: Guide[] = [
   {
     slug: "how-to-find-the-average-value-of-a-function-on-an-interval",
     titleClass: "text-blog-average",
+    image: { src: "/images/blog-average-value.webp", alt: "A wavy curve over an interval with a dashed horizontal line at its average level, crossing the curve at two marked points", width: 1536, height: 1024, caption: "The dashed line is the average value: the level the area would settle at if it were levelled out. The marked points are where f(c) equals the average." },
     published: "2026-11-27",
     title: "How to Find the Average Value of a Function on an Interval",
     metaTitle: "How to Find the Average Value of a Function (With Examples)",
